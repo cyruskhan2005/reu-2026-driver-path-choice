@@ -1,0 +1,48 @@
+output_dir: "sflorida_outputs"
+mly_token: "token"
+fdot_gdb: "data/DOTShapesFGDB.gdb"
+gps_root: ""
+
+# Caching flags - set to true to skip stages already completed
+skip_osm: true
+skip_mly: true
+skip_conflation: true
+skip_fmm: false
+
+# Mapillary grid settings
+mly_grid_step: 0.009
+mly_grid_overlap: 0.001
+mly_workers: 32
+
+counties:
+  - name: "Miami-Dade County"
+    place_query: "Miami-Dade County, Florida, USA"
+    fdot_county_name: "Miami-Dade"
+    fdot_county_code: "87"
+    custom_geojson: "data/miami.geojson"
+    custom_speed_col: "SPEEDLIMIT"
+    custom_name_col: "SNAME"
+    custom_owner_col: "MAINTCODE"   # SR=state, CM=county, CI/CO=city
+    custom_min_vote: 0.6            
+
+  - name: "Broward County"
+    place_query: "Broward County, Florida, USA"
+    fdot_county_name: "Broward"
+    fdot_county_code: "86"
+    # No custom county GeoJSON available for Broward
+    custom_geojson: null
+    custom_speed_col: null
+    custom_name_col: null
+    custom_owner_col: null
+    custom_min_vote: null
+
+  - name: "Palm Beach County"
+    place_query: "Palm Beach County, Florida, USA"
+    fdot_county_name: "Palm Beach"
+    fdot_county_code: "93"
+    custom_geojson: "data/Road_Centerlines.geojson"
+    custom_speed_col: "SPEED_LIM"
+    custom_name_col: "NAME"
+    custom_owner_col: "RESP_AUTH"  
+    custom_min_vote: 0.6        
+    

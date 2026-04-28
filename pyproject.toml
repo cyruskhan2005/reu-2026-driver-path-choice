@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "roadnet"
+version = "1.0.0"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy", "pandas", "geopandas", "shapely",
+    "osmnx", "requests", "networkx", "pyproj",
+    "pyarrow", "pyogrio", "folium", "pyyaml",
+]
+
+[project.scripts]
+roadnet-run         = "roadnet.cli.run:main"
+roadnet-consolidate = "roadnet.cli.consolidate:main"
+
+[tool.setuptools.packages.find]
+include = ["roadnet*"]
