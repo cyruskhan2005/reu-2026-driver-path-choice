@@ -18,34 +18,6 @@ but usable with any OSMnx-accessible region.
 | Control node boolean features | `roadnet.pipeline` | `has_stop_sign_u/v`, `has_yield_u/v`, `has_traffic_signal_u/v` |
 | FMM map-matching + aggregation | `roadnet.fmm_pipeline` | Per-segment sensor aggregates (`sog`, accelerometer, OBD) |
 
-## Quick start
-
-```python
-from pathlib import Path
-from roadnet import CountyConfig, PipelineConfig, Pipeline
-
-cfg = PipelineConfig(
-    output_dir = Path("outputs"),
-    mly_token  = "MLY|...",
-    fdot_gdb   = Path("DOTShapesFGDB.gdb"),
-    counties   = [
-        CountyConfig(
-            name             = "Miami-Dade County",
-            place_query      = "Miami-Dade County, Florida, USA",
-            fdot_county_name = "Miami-Dade",
-            fdot_county_code = "87",
-            custom_geojson   = Path("miami.geojson"),
-            custom_speed_col = "SPEEDLIMIT",
-            custom_name_col  = "SNAME",
-        ),
-    ],
-    gps_root = Path("gps_sessions"),
-)
-
-results = Pipeline(cfg).run()
-network = results["Miami-Dade County"]   # GeoDataFrame
-```
-
 ## YAML config (recommended)
 
 ```yaml
