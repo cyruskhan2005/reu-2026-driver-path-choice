@@ -1,0 +1,30 @@
+.DS_Store
+
+# Local Python/build artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Generated pipeline outputs and caches
+data/
+*.gdb/
+sflorida_outputs/
+*_outputs/
+outputs/
+cache/
+
+# Large data/export formats
+*.parquet
+*.jsonl
+
+# Local run logs
+run_log*.txt
+
+# External drive mounts or copied mount contents
+/Volumes/
+Volumes/
+KINGSTON/
+/Volumes/KINGSTON/
