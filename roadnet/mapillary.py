@@ -626,6 +626,33 @@ def fetch_signs(
 
 # ── Snap ──────────────────────────────────────────────────────────────────────
 
+_SNAPPED_SIGN_COLUMNS = [
+    "mly_id",
+    "value",
+    "aligned_direction",
+    "camera_bearing",
+    "camera_lngs",
+    "camera_lats",
+    "camera_angles",
+    "bearing_source",
+    "lng",
+    "lat",
+    "snap_type",
+    "snap_edge_idx",
+    "mly:snap_edge_role",
+    "mly:snap_dist_m",
+    "mly:sign_label",
+]
+
+
+def _empty_snapped_signs(projected_crs: str) -> gpd.GeoDataFrame:
+    return gpd.GeoDataFrame(
+        {col: pd.Series(dtype="object") for col in _SNAPPED_SIGN_COLUMNS},
+        geometry=gpd.GeoSeries([], crs=projected_crs),
+        crs=projected_crs,
+    )
+
+
 def _snap_signs_to_network(
     signs_gdf: gpd.GeoDataFrame,
     nodes: gpd.GeoDataFrame,
@@ -662,7 +689,13 @@ def _snap_signs_to_network(
     # Build non-residential landuse spatial index
     lu_tree, lu_geoms = _build_nonresidential_landuse_tree(landuse, projected_crs)
 
+    if signs_gdf.empty or "value" not in signs_gdf.columns:
+        return _empty_snapped_signs(projected_crs)
+
     signs_gdf = signs_gdf[signs_gdf["value"].isin(MLY_SIGN_LABELS)].reset_index(drop=True)
+    if signs_gdf.empty:
+        return _empty_snapped_signs(projected_crs)
+
     signs_gdf = (
         gpd.GeoDataFrame(
             signs_gdf,
@@ -950,12 +983,16 @@ def _snap_signs_to_network(
 
     snapped = gpd.GeoDataFrame(
         results,
+        columns=_SNAPPED_SIGN_COLUMNS[:-1],
         geometry=gpd.points_from_xy(
             [r["lng"] for r in results],
             [r["lat"] for r in results],
         ),
         crs=WGS84,
     ).to_crs(projected_crs)
+    if snapped.empty or "value" not in snapped.columns:
+        return _empty_snapped_signs(projected_crs)
+
     snapped["mly:sign_label"] = (
         snapped["value"].map(MLY_SIGN_LABELS).fillna(snapped["value"])
     )
@@ -1080,11 +1117,24 @@ def attach_signs_to_edges(
         signs_raw, nodes, snap_edges, projected_crs, landuse=landuse
     )
 
+    required_cols = {"snap_type", "mly:snap_edge_role", "mly:sign_label"}
+    if snapped.empty or not required_cols.issubset(snapped.columns):
+        log.info("No Mapillary signs snapped; returning original edges unchanged")
+        enriched = edges.copy()
+        enriched.to_parquet(out_path)
+        return enriched
+
     matched = snapped[
         (snapped["snap_type"] != "unmatched")
         & (snapped["mly:snap_edge_role"].isin(["u_node", "v_node"]))
         & (snapped["mly:sign_label"].isin(MLY_SIGN_LABELS.values()))
     ].copy()
+
+    if matched.empty:
+        log.info("No Mapillary signs matched eligible network nodes; returning original edges unchanged")
+        enriched = edges.copy()
+        enriched.to_parquet(out_path)
+        return enriched
 
     role_prefix = {"u_node": "u", "v_node": "v"}
     matched["role_prefix"] = matched["mly:snap_edge_role"].map(role_prefix)

@@ -29,7 +29,7 @@ import os
 import subprocess
 import time
 from datetime import datetime
-from multiprocessing import Pool, cpu_count
+from multiprocessing import Pool, cpu_count, get_context
 from pathlib import Path
 from typing import Optional
 
@@ -143,7 +143,11 @@ def build_master_gps_parquet(
     if cache_path.exists() and meta_path.exists():
         try:
             meta = json.loads(meta_path.read_text())
-            if meta.get("counties") == current_counties:
+            cached_counties = meta.get("counties")
+            if (
+                cached_counties == current_counties or
+                set(cached_counties or []).issuperset(current_counties)
+            ):
                 log.info("Loading master GPS parquet from %s", cache_path)
                 return pd.read_parquet(cache_path)
             else:
@@ -567,12 +571,19 @@ def _aggregate_one_trip(
 def _worker(args: dict) -> dict:
     tid         = args["tid"]
     trip_rows   = args["trip_rows"]
-    gps_df_full = args["gps_df_full"]
+    gps_df_full = args.get("gps_df_full")
+    gps_path    = args.get("gps_path")
     session_dir = Path(args["session_dir"])
     out_path    = Path(args["out_path"])
     meta_coords = args["meta_coords"]
     meta_ts     = args["meta_ts"]
     gap_indices = args["gap_indices"]
+
+    if gps_df_full is None:
+        try:
+            gps_df_full = _read_jsonl(Path(gps_path)) if gps_path else pd.DataFrame()
+        except Exception:
+            gps_df_full = pd.DataFrame()
 
     acc_agg, obd_agg = _load_session_sensors(session_dir)
 
@@ -669,6 +680,242 @@ def _run_fmm_cli(
     return ok
 
 
+def _ubodt_generation_child(payload: dict) -> None:
+    try:
+        logging.basicConfig(
+            format="%(asctime)s  %(levelname)-8s  %(name)s  %(message)s",
+            datefmt="%H:%M:%S",
+            level=logging.INFO,
+            force=True,
+        )
+
+        county_name = payload["county_name"]
+        shp_path    = payload["shp_path"]
+        ubodt_path  = payload["ubodt_path"]
+
+        from fmm import Network, NetworkGraph, UBODTGenAlgorithm
+
+        log.info("[%s] Generating UBODT …", county_name)
+        net   = Network(shp_path, "fid", "u", "v")
+        graph = NetworkGraph(net)
+        UBODTGenAlgorithm(net, graph).generate_ubodt(
+            ubodt_path, 0.007, binary=False, use_omp=True)
+        log.info("[%s] UBODT written to %s", county_name, ubodt_path)
+        logging.shutdown()
+        # Bypass _fmm's SWIG/C++ destructors; normal teardown can segfault.
+        os._exit(0)
+    except Exception:
+        log.exception("UBODT generation failed")
+        logging.shutdown()
+        os._exit(1)
+
+
+def _generate_ubodt_native(county_name: str, shp_path: str, ubodt_path: str) -> None:
+    ctx = get_context("spawn")
+    proc = ctx.Process(
+        target=_ubodt_generation_child,
+        args=({
+            "county_name": county_name,
+            "shp_path":    shp_path,
+            "ubodt_path":  ubodt_path,
+        },),
+    )
+    proc.start()
+    proc.join()
+    if proc.exitcode != 0:
+        raise RuntimeError(
+            f"UBODT generation failed with exit code {proc.exitcode}"
+        )
+
+
+def _native_postprocess_child(payload: dict) -> None:
+    try:
+        logging.basicConfig(
+            format="%(asctime)s  %(levelname)-8s  %(name)s  %(message)s",
+            datefmt="%H:%M:%S",
+            level=logging.INFO,
+            force=True,
+        )
+
+        county_name = payload["county_name"]
+        shp_path    = payload["shp_path"]
+        ubodt_path  = payload["ubodt_path"]
+        trip_meta   = payload["trip_meta"]
+        failed_ids  = payload["failed_ids"]
+        gap_work    = payload["gap_work"]
+
+        net = graph = None
+
+        if not failed_ids:
+            log.info("[%s] No failed trips to retry", county_name)
+        else:
+            log.info("[%s] Retrying %d failed trips with split-matching …",
+                     county_name, len(failed_ids))
+            from fmm import Network, NetworkGraph, FastMapMatch, UBODT, FastMapMatchConfig
+
+            net    = Network(shp_path, "fid", "u", "v")
+            graph  = NetworkGraph(net)
+            ubodt  = UBODT.read_ubodt_csv(ubodt_path)
+            model  = FastMapMatch(net, graph, ubodt)
+            config = FastMapMatchConfig(
+                FMM_K, FMM_RETRY_RADIUS_M / _DEG,
+                FMM_RETRY_ERROR_M / _DEG, reverse_tolerance=1)
+            session_cache: dict = {}
+            rescued = 0
+
+            for tid in failed_ids:
+                meta = trip_meta.get(tid)
+                if meta is None or len(meta["coords"]) < 2:
+                    continue
+
+                results       = _match_with_splits(meta["coords"], model, config)
+                matched_count = sum(1 for _, fid in results if fid != -1)
+                if matched_count == 0:
+                    continue
+
+                coord_to_ts  = {c: t for c, t in zip(meta["coords"], meta["ts"])}
+                result_fids  = [fid for _, fid in results]
+                result_ts    = [coord_to_ts.get(c, meta["ts"][0]) for c, _ in results]
+                n            = len(result_fids)
+
+                trip_rows_df = pd.DataFrame({
+                    "point_idx": list(range(n)),
+                    "timestamp": _to_ts(pd.Series(result_ts[:n])),
+                    "fid":       result_fids[:n],
+                })
+
+                acc_agg, obd_agg = _get_session_sensors(meta["session_dir"], session_cache)
+                try:
+                    gps_df_full = _read_jsonl(meta["gps_path"])
+                except Exception:
+                    gps_df_full = pd.DataFrame()
+                out_p = meta["gps_path"].parent / \
+                    f"{county_name}_{meta['prefix']}_fid_aggregated.jsonl"
+
+                if _write_aggregation(
+                    trip_rows_df, gps_df_full, meta["session_dir"],
+                    acc_agg, obd_agg, session_cache,
+                    county_name, meta["prefix"], out_p,
+                ):
+                    rescued += 1
+
+            log.info("[%s] Split-match rescued %d / %d failed trips",
+                     county_name, rescued, len(failed_ids))
+
+        if gap_work:
+            if net is None or graph is None:
+                from fmm import Network, NetworkGraph
+
+                net   = Network(shp_path, "fid", "u", "v")
+                graph = NetworkGraph(net)
+
+            from fmm import STMATCH, STMATCHConfig
+            log.info("[%s] STMatch gap bridging for %d trips …",
+                     county_name, len(gap_work))
+            stm_model  = STMATCH(net, graph)
+            stm_config = STMATCHConfig(
+                STM_K, STM_RADIUS_M / _DEG, STM_ERROR_M / _DEG,
+                STM_VMAX_MS, STM_FACTOR,
+            )
+            gap_bridged = 0
+
+            for out_p, _gps_path, _session_dir, _prefix, gap_pairs in gap_work:
+                if not out_p.exists():
+                    continue
+
+                stmatch_fids: set[int] = set()
+                insertions:   list[tuple[int, list[int]]] = []
+
+                for gap_pair in gap_pairs:
+                    coord_before  = gap_pair[0]
+                    coord_after   = gap_pair[1]
+                    gap_coord_idx = gap_pair[4]
+                    total_coords  = gap_pair[5]
+
+                    gap_cpath = _stmatch_gap(
+                        coord_before, coord_after, stm_model, stm_config)
+                    if not gap_cpath:
+                        continue
+
+                    gap_bridged += 1
+                    stmatch_fids.update(gap_cpath)
+                    insertions.append((gap_coord_idx, total_coords, gap_cpath))
+
+                if not insertions:
+                    continue
+
+                existing: list[dict] = []
+                fmm_fids: set[int]   = set()
+                with open(out_p) as f:
+                    for line in f:
+                        try:
+                            r = json.loads(line)
+                            existing.append(r)
+                            if r.get("match_method", "fmm") == "fmm":
+                                fmm_fids.add(int(r["fid"]))
+                        except Exception:
+                            pass
+
+                if not existing:
+                    continue
+
+                n_records = len(existing)
+                resolved: list[tuple[int, list[int]]] = []
+                for gap_coord_idx, total_coords, gap_cpath in insertions:
+                    if total_coords > 1:
+                        frac         = gap_coord_idx / (total_coords - 1)
+                        insert_after = min(int(frac * n_records), n_records - 1)
+                    else:
+                        insert_after = n_records - 1
+                    resolved.append((insert_after, gap_cpath))
+
+                resolved.sort(key=lambda x: x[0])
+
+                result: list[dict] = []
+                prev  = -1
+
+                for insert_after, gap_cpath in resolved:
+                    result.extend(existing[prev + 1: insert_after + 1])
+                    prev = insert_after
+                    for fid in gap_cpath:
+                        if int(fid) in fmm_fids:
+                            continue
+                        result.append({"fid": fid, "match_method": "stmatch"})
+
+                result.extend(existing[prev + 1:])
+
+                for i, r in enumerate(result):
+                    r["seq_idx"] = i
+
+                with open(out_p, "w") as f:
+                    for record in result:
+                        f.write(json.dumps(
+                            {k: (None if pd.isna(v) else v)
+                             for k, v in record.items()}
+                        ) + "\n")
+
+            log.info("[%s] STMatch bridged %d gap segments", county_name, gap_bridged)
+
+        logging.shutdown()
+        # Bypass _fmm's SWIG/C++ destructors; normal teardown can segfault.
+        os._exit(0)
+    except Exception:
+        log.exception("Native FMM postprocess failed")
+        logging.shutdown()
+        os._exit(1)
+
+
+def _run_native_postprocess(payload: dict) -> None:
+    ctx = get_context("spawn")
+    proc = ctx.Process(target=_native_postprocess_child, args=(payload,))
+    proc.start()
+    proc.join()
+    if proc.exitcode != 0:
+        raise RuntimeError(
+            f"Native FMM postprocess failed with exit code {proc.exitcode}"
+        )
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Public entry-point
 # ─────────────────────────────────────────────────────────────────────────────
@@ -683,24 +930,21 @@ def run_county(
     master_gps_df: Optional[pd.DataFrame] = None,
     n_workers:     int = max(1, cpu_count() - 1),
 ) -> None:
-    from fmm import (
-        Network, NetworkGraph, FastMapMatch, UBODT, FastMapMatchConfig,
-        UBODTGenAlgorithm,
-    )
-
     shp_path   = str(shp_dir / "edges.shp")
     ubodt_path = str(shp_dir / "ubodt.txt")
     gps_csv    = str(out_dir / f"{county_name}_gps.csv")
     fmm_out    = str(out_dir / f"{county_name}_matched.csv")
 
+    worker_override = os.getenv("ROADNET_FMM_WORKERS")
+    if worker_override:
+        try:
+            n_workers = max(1, int(worker_override))
+        except ValueError:
+            log.warning("Ignoring invalid ROADNET_FMM_WORKERS=%r", worker_override)
+
     # ── Generate UBODT if absent ──────────────────────────────────────────────
     if not os.path.exists(ubodt_path):
-        log.info("[%s] Generating UBODT …", county_name)
-        net   = Network(shp_path, "fid", "u", "v")
-        graph = NetworkGraph(net)
-        UBODTGenAlgorithm(net, graph).generate_ubodt(
-            ubodt_path, 0.007, binary=False, use_omp=True)
-        log.info("[%s] UBODT written to %s", county_name, ubodt_path)
+        _generate_ubodt_native(county_name, shp_path, ubodt_path)
     else:
         log.info("[%s] UBODT already exists — skipping generation", county_name)
 
@@ -809,27 +1053,35 @@ def run_county(
     log.info("[%s] GPS CSV ready — %d points / %d trips",
              county_name, len(gps_df), trip_id)
 
-    # ── Pre-load GPS JSONL files into memory ──────────────────────────────────
-    log.info("[%s] Pre-loading GPS JSONL files into memory …", county_name)
-    unique_gps_paths = {str(meta["gps_path"]) for meta in trip_meta.values()}
-    for gps_path_str in unique_gps_paths:
-        try:
-            gps_file_cache[gps_path_str] = _read_jsonl(Path(gps_path_str))
-        except Exception:
-            gps_file_cache[gps_path_str] = pd.DataFrame()
-    log.info("[%s] Loaded %d GPS files into memory",
-             county_name, len(gps_file_cache))
+    # ── Pre-load GPS JSONL files for the serial path only ─────────────────────
+    # Sending these full dataframes through multiprocessing pickles a large
+    # object per trip and can stall the pool after FMM on large counties.
+    if n_workers <= 1:
+        log.info("[%s] Pre-loading GPS JSONL files into memory …", county_name)
+        unique_gps_paths = {str(meta["gps_path"]) for meta in trip_meta.values()}
+        for gps_path_str in unique_gps_paths:
+            try:
+                gps_file_cache[gps_path_str] = _read_jsonl(Path(gps_path_str))
+            except Exception:
+                gps_file_cache[gps_path_str] = pd.DataFrame()
+        log.info("[%s] Loaded %d GPS files into memory",
+                 county_name, len(gps_file_cache))
 
     # ── Run fmm CLI ───────────────────────────────────────────────────────────
-    t_fmm = time.time()
-    ok = _run_fmm_cli(shp_path, ubodt_path, gps_csv, fmm_out, fmm_bin=fmm_bin)
-    log.info("[%s] FMM CLI finished in %.1f s", county_name, time.time() - t_fmm)
-    if not ok:
-        return
+    reuse_matched = os.getenv("ROADNET_FMM_REUSE_MATCHED") == "1"
+    if reuse_matched and os.path.exists(fmm_out):
+        log.info("[%s] Reusing existing FMM output %s", county_name, fmm_out)
+    else:
+        t_fmm = time.time()
+        ok = _run_fmm_cli(shp_path, ubodt_path, gps_csv, fmm_out, fmm_bin=fmm_bin)
+        log.info("[%s] FMM CLI finished in %.1f s", county_name, time.time() - t_fmm)
+        if not ok:
+            return
 
     # ── Read matched CSV, build worker args ───────────────────────────────────
-    log.info("[%s] Aggregating sensor data (parallel, %d workers) …",
-             county_name, n_workers)
+    mode = "sequential" if n_workers <= 1 else "parallel"
+    log.info("[%s] Aggregating sensor data (%s, %d worker%s) …",
+             county_name, mode, n_workers, "" if n_workers == 1 else "s")
     t_agg   = time.time()
     matched = pd.read_csv(fmm_out, sep=";")
 
@@ -868,48 +1120,90 @@ def run_county(
             "fid":       opath_fids[:n],
         })
 
-        gps_df_full = gps_file_cache.get(str(meta["gps_path"]), pd.DataFrame())
         out_p = meta["gps_path"].parent / \
             f"{county_name}_{meta['prefix']}_fid_aggregated.jsonl"
 
-        worker_args.append({
+        worker_arg = {
             "tid":         tid,
             "trip_rows":   trip_rows_df,
-            "gps_df_full": gps_df_full,
+            "gps_path":    str(meta["gps_path"]),
             "session_dir": str(meta["session_dir"]),
             "out_path":    str(out_p),
             "meta_coords": meta["coords"],
             "meta_ts":     meta["ts"],
             "gap_indices": meta.get("gap_indices", []),
-        })
+        }
+        if n_workers <= 1:
+            worker_arg["gps_df_full"] = gps_file_cache.get(
+                str(meta["gps_path"]), pd.DataFrame()
+            )
+        worker_args.append(worker_arg)
 
     # ── Run workers in parallel ───────────────────────────────────────────────
     done      = 0
     gap_work: list[tuple] = []
 
+    total_work = len(worker_args)
     if worker_args:
-        with Pool(processes=n_workers) as pool:
-            results = pool.map(_worker, worker_args)
+        log.info("[%s] Aggregating %d trips with %d worker(s)",
+                 county_name, total_work, n_workers)
 
-        for res in results:
-            if res["success"]:
-                done += 1
-            for gap_entry in res["gap_entries"]:
-                out_p_str, session_dir_str, gap_pairs = gap_entry
-                tid  = res["tid"]
-                meta = trip_meta.get(tid)
-                if meta:
-                    gap_work.append((
-                        Path(out_p_str),
-                        meta["gps_path"],
-                        Path(session_dir_str),
-                        meta["prefix"],
-                        gap_pairs,
-                    ))
+        pool = None
+        if n_workers <= 1:
+            result_iter = map(_worker, worker_args)
+        else:
+            pool = Pool(processes=n_workers)
+            result_iter = pool.imap_unordered(_worker, worker_args, chunksize=1)
+
+        completed = 0
+        pool_failed = False
+        try:
+            for res in result_iter:
+                completed += 1
+                if res["success"]:
+                    done += 1
+                if completed == 1 or completed % 25 == 0 or completed == total_work:
+                    log.info(
+                        "[%s] Aggregation progress: %d / %d trips (%d successful)",
+                        county_name, completed, total_work, done,
+                    )
+                for gap_entry in res["gap_entries"]:
+                    out_p_str, session_dir_str, gap_pairs = gap_entry
+                    tid  = res["tid"]
+                    meta = trip_meta.get(tid)
+                    if meta:
+                        gap_work.append((
+                            Path(out_p_str),
+                            meta["gps_path"],
+                            Path(session_dir_str),
+                            meta["prefix"],
+                            gap_pairs,
+                        ))
+        except Exception:
+            pool_failed = True
+            raise
+        finally:
+            if pool is not None:
+                if pool_failed:
+                    pool.terminate()
+                else:
+                    pool.close()
+                pool.join()
+                result_iter = None
+                pool = None
 
     log.info("[%s] Aggregated %d trips in %.1f s",
              county_name, done, time.time() - t_agg)
     log.info("[%s] Failed trips: %d", county_name, len(failed_ids))
+
+    agg_only = os.getenv("ROADNET_FMM_AGG_ONLY") == "1"
+    if agg_only:
+        log.info("[%s] ROADNET_FMM_AGG_ONLY=1 — skipping failed-trip retry and STMatch",
+                 county_name)
+        del matched, gps_df
+        gc.collect()
+        log.info("[%s] County aggregation complete", county_name)
+        return
 
     # Collect gap_work for failed trips
     for tid in failed_ids:
@@ -937,174 +1231,49 @@ def run_county(
     del matched, gps_df
     gc.collect()
 
-    # ── Retry failed trips (serial) ───────────────────────────────────────────
-    if not failed_ids:
-        log.info("[%s] No failed trips to retry", county_name)
+    # ── Native FMM retry + STMatch gap bridging ───────────────────────────────
+    filtered_gap_work: list[tuple] = []
+    for out_p, gps_path, session_dir, prefix, gap_pairs in gap_work:
+        filtered_pairs = []
+        for gap_pair in gap_pairs:
+            coord_before = gap_pair[0]
+            coord_after  = gap_pair[1]
+
+            # Skip if gap crosses a county boundary — STMatch only has the
+            # current county's shapefile so it can't bridge across.
+            county_before = assigner.assign(coord_before[0], coord_before[1])
+            county_after  = assigner.assign(coord_after[0],  coord_after[1])
+            if county_before != county_name or county_after != county_name:
+                log.debug("Skipping cross-county gap (%s -> %s)",
+                          county_before, county_after)
+                continue
+
+            # Skip if gap endpoints are more than 1km apart — STMatch can't
+            # reliably bridge large gaps and may route through wrong roads.
+            gap_dist_deg = ((coord_after[0] - coord_before[0])**2 +
+                            (coord_after[1] - coord_before[1])**2) ** 0.5
+            gap_dist_m   = gap_dist_deg * 111000
+            if gap_dist_m > 1000:
+                log.debug("Skipping large gap (%.0fm)", gap_dist_m)
+                continue
+
+            filtered_pairs.append(gap_pair)
+
+        if filtered_pairs:
+            filtered_gap_work.append((out_p, gps_path, session_dir, prefix,
+                                      filtered_pairs))
+
+    if failed_ids or filtered_gap_work:
+        _run_native_postprocess({
+            "county_name": county_name,
+            "shp_path":    shp_path,
+            "ubodt_path":  ubodt_path,
+            "trip_meta":   trip_meta,
+            "failed_ids":  failed_ids,
+            "gap_work":    filtered_gap_work,
+        })
     else:
-        log.info("[%s] Retrying %d failed trips with split-matching …",
-                 county_name, len(failed_ids))
-        net    = Network(shp_path, "fid", "u", "v")
-        graph  = NetworkGraph(net)
-        ubodt  = UBODT.read_ubodt_csv(ubodt_path)
-        model  = FastMapMatch(net, graph, ubodt)
-        config = FastMapMatchConfig(
-            FMM_K, FMM_RETRY_RADIUS_M / _DEG,
-            FMM_RETRY_ERROR_M / _DEG, reverse_tolerance=1)
-        session_cache: dict = {}
-        rescued = 0
+        log.info("[%s] No failed trips to retry", county_name)
 
-        for tid in failed_ids:
-            meta = trip_meta.get(tid)
-            if meta is None or len(meta["coords"]) < 2:
-                continue
-
-            results       = _match_with_splits(meta["coords"], model, config)
-            matched_count = sum(1 for _, fid in results if fid != -1)
-            if matched_count == 0:
-                continue
-
-            coord_to_ts  = {c: t for c, t in zip(meta["coords"], meta["ts"])}
-            result_fids  = [fid for _, fid in results]
-            result_ts    = [coord_to_ts.get(c, meta["ts"][0]) for c, _ in results]
-            n            = len(result_fids)
-
-            trip_rows_df = pd.DataFrame({
-                "point_idx": list(range(n)),
-                "timestamp": _to_ts(pd.Series(result_ts[:n])),
-                "fid":       result_fids[:n],
-            })
-
-            acc_agg, obd_agg = _get_session_sensors(meta["session_dir"], session_cache)
-            gps_df_full      = gps_file_cache.get(str(meta["gps_path"]), pd.DataFrame())
-            out_p = meta["gps_path"].parent / \
-                f"{county_name}_{meta['prefix']}_fid_aggregated.jsonl"
-
-            if _write_aggregation(
-                trip_rows_df, gps_df_full, meta["session_dir"],
-                acc_agg, obd_agg, session_cache,
-                county_name, meta["prefix"], out_p,
-            ):
-                rescued += 1
-
-        del model, ubodt
-        gc.collect()
-        log.info("[%s] Split-match rescued %d / %d failed trips",
-                 county_name, rescued, len(failed_ids))
-
-    # ── STMatch gap bridging (serial) ─────────────────────────────────────────
-    if gap_work:
-        if "net" not in dir():
-            net   = Network(shp_path, "fid", "u", "v")
-            graph = NetworkGraph(net)
-
-        from fmm import STMATCH, STMATCHConfig
-        log.info("[%s] STMatch gap bridging for %d trips …",
-                 county_name, len(gap_work))
-        stm_model  = STMATCH(net, graph)
-        stm_config = STMATCHConfig(
-            STM_K, STM_RADIUS_M / _DEG, STM_ERROR_M / _DEG,
-            STM_VMAX_MS, STM_FACTOR,
-        )
-        gap_bridged = 0
-
-        for out_p, gps_path, session_dir, prefix, gap_pairs in gap_work:
-            if not out_p.exists():
-                continue
-
-            stmatch_fids: set[int] = set()
-            insertions:   list[tuple[int, list[int]]] = []
-
-            for gap_pair in gap_pairs:
-                coord_before  = gap_pair[0]
-                coord_after   = gap_pair[1]
-                gap_coord_idx = gap_pair[4]
-                total_coords  = gap_pair[5]
-
-                # Skip if gap crosses a county boundary — STMatch only has
-                # the current county's shapefile so it can't bridge across.
-                county_before = assigner.assign(coord_before[0], coord_before[1])
-                county_after  = assigner.assign(coord_after[0],  coord_after[1])
-                if county_before != county_name or county_after != county_name:
-                    log.debug("Skipping cross-county gap (%s -> %s)",
-                              county_before, county_after)
-                    continue
-
-                # Skip if gap endpoints are more than 1km apart — STMatch
-                # can't reliably bridge large gaps and may route through
-                # completely wrong roads.
-                gap_dist_deg = ((coord_after[0] - coord_before[0])**2 +
-                                (coord_after[1] - coord_before[1])**2) ** 0.5
-                gap_dist_m   = gap_dist_deg * 111000
-                if gap_dist_m > 1000:
-                    log.debug("Skipping large gap (%.0fm)", gap_dist_m)
-                    continue
-
-                gap_cpath = _stmatch_gap(
-                    coord_before, coord_after, stm_model, stm_config)
-                if not gap_cpath:
-                    continue
-
-                gap_bridged += 1
-                stmatch_fids.update(gap_cpath)
-                insertions.append((gap_coord_idx, total_coords, gap_cpath))
-
-            if not insertions:
-                continue
-
-            existing: list[dict] = []
-            fmm_fids: set[int]   = set()
-            with open(out_p) as f:
-                for line in f:
-                    try:
-                        r = json.loads(line)
-                        existing.append(r)
-                        if r.get("match_method", "fmm") == "fmm":
-                            fmm_fids.add(int(r["fid"]))
-                    except Exception:
-                        pass
-
-            if not existing:
-                continue
-
-            n_records = len(existing)
-            resolved: list[tuple[int, list[int]]] = []
-            for gap_coord_idx, total_coords, gap_cpath in insertions:
-                if total_coords > 1:
-                    frac         = gap_coord_idx / (total_coords - 1)
-                    insert_after = min(int(frac * n_records), n_records - 1)
-                else:
-                    insert_after = n_records - 1
-                resolved.append((insert_after, gap_cpath))
-
-            resolved.sort(key=lambda x: x[0])
-
-            result: list[dict] = []
-            prev  = -1
-
-            for insert_after, gap_cpath in resolved:
-                result.extend(existing[prev + 1: insert_after + 1])
-                prev = insert_after
-                for fid in gap_cpath:
-                    if int(fid) in fmm_fids:
-                        continue
-                    result.append({"fid": fid, "match_method": "stmatch"})
-
-            result.extend(existing[prev + 1:])
-
-            for i, r in enumerate(result):
-                r["seq_idx"] = i
-
-            with open(out_p, "w") as f:
-                for record in result:
-                    f.write(json.dumps(
-                        {k: (None if pd.isna(v) else v)
-                         for k, v in record.items()}
-                    ) + "\n")
-
-        del stm_model
-        gc.collect()
-        log.info("[%s] STMatch bridged %d gap segments", county_name, gap_bridged)
-
-    del net, graph
     gc.collect()
     log.info("[%s] County complete", county_name)
