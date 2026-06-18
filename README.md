@@ -253,6 +253,26 @@ GPS traces are map-matched using the Fast Map-Matching (FMM) library:
 - **Multi-source agreement** — OSM + FDOT within 5 mph +0.12, all three sources agree +0.18 additional
 - **Land-use plausibility** — speed consistent with land-use type +0.08, residential >45 mph −0.10
 
+## Recent Stability Improvements (June 2026)
+
+FMM failed-trip recovery now has bounded split attempts, per-trip progress
+logging, and a parent watchdog that skips a pathological match instead of
+blocking a county indefinitely. Pre-flight checks also validate Mapillary
+authentication, output-directory permissions and formats, input cache freshness,
+and graph-dependent UBODT freshness before long validation runs.
+
+See [`docs/2026-06-18-fmm-investigation.md`](docs/2026-06-18-fmm-investigation.md)
+for the investigation details and remaining risks.
+
+## Tomorrow Full Validation Checklist
+
+- [ ] Run with host filesystem access so aggregation can write to `/Volumes/KINGSTON`.
+- [ ] Confirm `/Volumes/KINGSTON` is mounted, writable, and has free space.
+- [ ] Disable system sleep for the duration of the run.
+- [ ] Verify `load_config()` reads the valid Mapillary token before starting.
+- [ ] Monitor Broward split-match progress and watchdog messages.
+- [ ] Verify all expected `*_fid_aggregated.jsonl` outputs are nonempty and readable.
+
 ## Caching flags
 
 | Flag | Skips |
