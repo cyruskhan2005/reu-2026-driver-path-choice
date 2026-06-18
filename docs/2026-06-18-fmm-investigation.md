@@ -54,7 +54,7 @@ The investigation included:
 `config.yaml` initially contained the literal placeholder `token`. The fetcher
 silently converted HTTP failures into empty result lists, so all grid cells
 completed with zero signs. A direct diagnostic request returned OAuth error 190
-(`Invalid OAuth access token`). The professor-provided token was then installed
+(`Invalid OAuth access token`). The provided token was then installed
 and verified through the project's real `load_config()` path. A small Mapillary
 request returned HTTP 200, and a subsequent partial run began finding signs.
 
