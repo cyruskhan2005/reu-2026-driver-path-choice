@@ -7,7 +7,7 @@ Miami-Dade, Broward, and Palm Beach counties, map-matches driver GPS traces with
 FMM, and aggregates GPS, accelerometer, and OBD measurements by matched road
 segment.
 
-## Professor-Requested Run
+## Zero-Skipping Run
 
 The requested validation is a full three-county run with OSM download,
 Mapillary collection, conflation, and FMM enabled:
