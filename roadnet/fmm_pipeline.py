@@ -290,17 +290,21 @@ def _load_session_sensors(
             raw     = pd.concat(valid, ignore_index=True).set_index("timestamp").sort_index()
             obd_agg = raw.resample("1s").mean().reset_index()
 
-    try:
-        if not acc_agg.empty:
-            acc_agg.to_parquet(acc_cache_path, index=False)
-        else:
-            pd.DataFrame().to_parquet(acc_cache_path, index=False)
-        if not obd_agg.empty:
-            obd_agg.to_parquet(obd_cache_path, index=False)
-        else:
-            pd.DataFrame().to_parquet(obd_cache_path, index=False)
-    except Exception:
-        pass
+    if os.getenv("ROADNET_FMM_DISABLE_SENSOR_CACHE_WRITE") == "1":
+        log.info("Sensor cache writes disabled; using in-memory data for %s",
+                 session_dir)
+    else:
+        try:
+            if not acc_agg.empty:
+                acc_agg.to_parquet(acc_cache_path, index=False)
+            else:
+                pd.DataFrame().to_parquet(acc_cache_path, index=False)
+            if not obd_agg.empty:
+                obd_agg.to_parquet(obd_cache_path, index=False)
+            else:
+                pd.DataFrame().to_parquet(obd_cache_path, index=False)
+        except Exception:
+            pass
 
     return acc_agg, obd_agg
 
