@@ -71,10 +71,4 @@ Node bundle:
 - `sflorida_outputs/Palm_Beach_County/osm_nodes.prj` (424B)
 - `sflorida_outputs/Palm_Beach_County/osm_nodes.cpg` (5B)
 
-## Delivery note
-
-If Professor Jang needs the actual shapefile bundles, provide them through
-Google Drive, Box, Dropbox, a GitHub Release asset, or another large-file
-delivery channel. Do not place the multi-GB shapefile bundles directly in
-normal Git history.
 
