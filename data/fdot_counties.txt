@@ -1,0 +1,71 @@
+COUNTY                         COUNTYDOT
+---------------------------------------------
+Alachua                        26
+Baker                          27
+Bay                            46
+Bradford                       28
+Brevard                        70
+Broward                        86
+Calhoun                        47
+Charlotte                      01
+Citrus                         02
+Clay                           71
+Collier                        03
+Columbia                       29
+Desoto                         04
+Dixie                          30
+Duval                          72
+Escambia                       48
+Flagler                        73
+Franklin                       49
+Gadsden                        50
+Gilchrist                      31
+Glades                         05
+Gulf                           51
+Hamilton                       32
+Hardee                         06
+Hendry                         07
+Hernando                       08
+Highlands                      09
+Hillsborough                   10
+Holmes                         52
+Indian River                   88
+Jackson                        53
+Jefferson                      54
+Lafayette                      33
+Lake                           11
+Lee                            12
+Leon                           55
+Levy                           34
+Liberty                        56
+Madison                        35
+Manatee                        13
+Marion                         36
+Martin                         89
+Miami-Dade                     87
+Monroe                         90
+Nassau                         74
+Okaloosa                       57
+Okeechobee                     91
+Orange                         75
+Osceola                        92
+Palm Beach                     93
+Pasco                          14
+Pinellas                       15
+Polk                           16
+Putnam                         76
+Santa Rosa                     58
+Sarasota                       17
+Seminole                       77
+St. Johns                      78
+St. Lucie                      94
+Sumter                         18
+Suwannee                       37
+Taylor                         38
+Union                          39
+Volusia                        79
+Wakulla                        59
+Walton                         60
+Washington                     61
+
+Total: 67 counties

@@ -290,17 +290,21 @@ def _load_session_sensors(
             raw     = pd.concat(valid, ignore_index=True).set_index("timestamp").sort_index()
             obd_agg = raw.resample("1s").mean().reset_index()
 
-    try:
-        if not acc_agg.empty:
-            acc_agg.to_parquet(acc_cache_path, index=False)
-        else:
-            pd.DataFrame().to_parquet(acc_cache_path, index=False)
-        if not obd_agg.empty:
-            obd_agg.to_parquet(obd_cache_path, index=False)
-        else:
-            pd.DataFrame().to_parquet(obd_cache_path, index=False)
-    except Exception:
-        pass
+    if os.getenv("ROADNET_FMM_DISABLE_SENSOR_CACHE_WRITE") == "1":
+        log.info("Sensor cache writes disabled; using in-memory data for %s",
+                 session_dir)
+    else:
+        try:
+            if not acc_agg.empty:
+                acc_agg.to_parquet(acc_cache_path, index=False)
+            else:
+                pd.DataFrame().to_parquet(acc_cache_path, index=False)
+            if not obd_agg.empty:
+                obd_agg.to_parquet(obd_cache_path, index=False)
+            else:
+                pd.DataFrame().to_parquet(obd_cache_path, index=False)
+        except Exception:
+            pass
 
     return acc_agg, obd_agg
 
@@ -323,6 +327,7 @@ def _match_with_splits(
     coords: list[tuple[float, float]],
     model:  object,
     config: object,
+    max_attempts: int = 64,
 ) -> list[tuple[tuple, int]]:
     try:
         from fmm import FastMapMatchConfig  # noqa: F401
@@ -331,36 +336,37 @@ def _match_with_splits(
 
     results:   list[tuple[tuple, int]] = []
     remaining: list                    = list(coords)
+    attempts = 0
 
-    while len(remaining) >= FMM_MIN_SEGMENT:
+    def try_match(points: list[tuple[float, float]]) -> list[int]:
+        nonlocal attempts
+        if attempts >= max_attempts:
+            return []
+        attempts += 1
         try:
-            r     = model.match_wkt(LineString(remaining).wkt, config)
-            opath = list(r.opath)
+            match_result = model.match_wkt(LineString(points).wkt, config)
+            return list(match_result.opath)
         except Exception:
-            opath = []
+            return []
+
+    while len(remaining) >= FMM_MIN_SEGMENT and attempts < max_attempts:
+        opath = try_match(remaining)
 
         if opath:
             results.extend(zip(remaining[: len(opath)], opath))
+            remaining = []
             break
 
         lo, hi = FMM_MIN_SEGMENT, len(remaining)
-        while lo < hi - 1:
+        while lo < hi - 1 and attempts < max_attempts:
             mid = (lo + hi) // 2
-            try:
-                r_test     = model.match_wkt(LineString(remaining[:mid]).wkt, config)
-                opath_test = list(r_test.opath)
-            except Exception:
-                opath_test = []
+            opath_test = try_match(remaining[:mid])
             if opath_test:
                 lo = mid
             else:
                 hi = mid
 
-        try:
-            r_good     = model.match_wkt(LineString(remaining[:lo]).wkt, config)
-            opath_good = list(r_good.opath)
-        except Exception:
-            opath_good = []
+        opath_good = try_match(remaining[:lo])
 
         if not opath_good:
             break
@@ -369,6 +375,9 @@ def _match_with_splits(
         results.extend((c, -1) for c in remaining[len(opath_good): gap_end])
         remaining = remaining[gap_end:]
 
+    if attempts >= max_attempts and remaining:
+        log.warning("Split-match reached the %d-attempt limit with %d points remaining",
+                    max_attempts, len(remaining))
     return results
 
 
@@ -674,6 +683,9 @@ def _run_fmm_cli(
     for line in proc.stderr:
         log.info("[fmm] %s", line.rstrip())
     proc.wait()
+    if proc.returncode != 0:
+        log.warning("fmm exited with status %d", proc.returncode)
+        return False
     ok = os.path.exists(out_csv) and os.path.getsize(out_csv) > 0
     if not ok:
         log.warning("fmm produced no output (exit %d)", proc.returncode)
@@ -712,20 +724,28 @@ def _ubodt_generation_child(payload: dict) -> None:
 
 def _generate_ubodt_native(county_name: str, shp_path: str, ubodt_path: str) -> None:
     ctx = get_context("spawn")
+    final_path = Path(ubodt_path)
+    temp_path = final_path.with_name(
+        f".{final_path.name}.{os.getpid()}.tmp"
+    )
     proc = ctx.Process(
         target=_ubodt_generation_child,
         args=({
             "county_name": county_name,
             "shp_path":    shp_path,
-            "ubodt_path":  ubodt_path,
+            "ubodt_path":  str(temp_path),
         },),
     )
-    proc.start()
-    proc.join()
-    if proc.exitcode != 0:
-        raise RuntimeError(
-            f"UBODT generation failed with exit code {proc.exitcode}"
-        )
+    try:
+        proc.start()
+        proc.join()
+        if proc.exitcode != 0:
+            raise RuntimeError(
+                f"UBODT generation failed with exit code {proc.exitcode}"
+            )
+        os.replace(temp_path, final_path)
+    finally:
+        temp_path.unlink(missing_ok=True)
 
 
 def _native_postprocess_child(payload: dict) -> None:
@@ -743,6 +763,7 @@ def _native_postprocess_child(payload: dict) -> None:
         trip_meta   = payload["trip_meta"]
         failed_ids  = payload["failed_ids"]
         gap_work    = payload["gap_work"]
+        progress    = payload.get("progress")
 
         net = graph = None
 
@@ -763,41 +784,64 @@ def _native_postprocess_child(payload: dict) -> None:
             session_cache: dict = {}
             rescued = 0
 
-            for tid in failed_ids:
-                meta = trip_meta.get(tid)
-                if meta is None or len(meta["coords"]) < 2:
-                    continue
-
-                results       = _match_with_splits(meta["coords"], model, config)
-                matched_count = sum(1 for _, fid in results if fid != -1)
-                if matched_count == 0:
-                    continue
-
-                coord_to_ts  = {c: t for c, t in zip(meta["coords"], meta["ts"])}
-                result_fids  = [fid for _, fid in results]
-                result_ts    = [coord_to_ts.get(c, meta["ts"][0]) for c, _ in results]
-                n            = len(result_fids)
-
-                trip_rows_df = pd.DataFrame({
-                    "point_idx": list(range(n)),
-                    "timestamp": _to_ts(pd.Series(result_ts[:n])),
-                    "fid":       result_fids[:n],
-                })
-
-                acc_agg, obd_agg = _get_session_sensors(meta["session_dir"], session_cache)
+            max_attempts = max(1, int(os.getenv(
+                "ROADNET_FMM_SPLIT_MAX_ATTEMPTS", "64")))
+            total_failed = len(failed_ids)
+            for retry_idx, tid in enumerate(failed_ids, start=1):
+                started = time.monotonic()
+                if progress is not None:
+                    progress.send(("start", tid, retry_idx, total_failed))
+                log.info("[%s] Split-match trip %d / %d starting: %s",
+                         county_name, retry_idx, total_failed, tid)
+                status = "not rescued"
                 try:
-                    gps_df_full = _read_jsonl(meta["gps_path"])
-                except Exception:
-                    gps_df_full = pd.DataFrame()
-                out_p = meta["gps_path"].parent / \
-                    f"{county_name}_{meta['prefix']}_fid_aggregated.jsonl"
+                    meta = trip_meta.get(tid)
+                    if meta is None or len(meta["coords"]) < 2:
+                        status = "skipped (fewer than 2 points)"
+                        continue
 
-                if _write_aggregation(
-                    trip_rows_df, gps_df_full, meta["session_dir"],
-                    acc_agg, obd_agg, session_cache,
-                    county_name, meta["prefix"], out_p,
-                ):
-                    rescued += 1
+                    results = _match_with_splits(
+                        meta["coords"], model, config, max_attempts=max_attempts)
+                    if progress is not None:
+                        progress.send(("match_done", tid, retry_idx, total_failed))
+                    matched_count = sum(1 for _, fid in results if fid != -1)
+                    if matched_count == 0:
+                        continue
+
+                    coord_to_ts = {c: t for c, t in zip(meta["coords"], meta["ts"])}
+                    result_fids = [fid for _, fid in results]
+                    result_ts = [coord_to_ts.get(c, meta["ts"][0]) for c, _ in results]
+                    n = len(result_fids)
+
+                    trip_rows_df = pd.DataFrame({
+                        "point_idx": list(range(n)),
+                        "timestamp": _to_ts(pd.Series(result_ts[:n])),
+                        "fid":       result_fids[:n],
+                    })
+
+                    acc_agg, obd_agg = _get_session_sensors(
+                        meta["session_dir"], session_cache)
+                    try:
+                        gps_df_full = _read_jsonl(meta["gps_path"])
+                    except Exception:
+                        gps_df_full = pd.DataFrame()
+                    out_p = meta["gps_path"].parent / \
+                        f"{county_name}_{meta['prefix']}_fid_aggregated.jsonl"
+
+                    if _write_aggregation(
+                        trip_rows_df, gps_df_full, meta["session_dir"],
+                        acc_agg, obd_agg, session_cache,
+                        county_name, meta["prefix"], out_p,
+                    ):
+                        rescued += 1
+                        status = f"rescued ({matched_count} matched points)"
+                finally:
+                    elapsed = time.monotonic() - started
+                    log.info("[%s] Split-match trip %d / %d %s in %.1f s: %s",
+                             county_name, retry_idx, total_failed, status,
+                             elapsed, tid)
+                    if progress is not None:
+                        progress.send(("done", tid, retry_idx, total_failed))
 
             log.info("[%s] Split-match rescued %d / %d failed trips",
                      county_name, rescued, len(failed_ids))
@@ -907,13 +951,69 @@ def _native_postprocess_child(payload: dict) -> None:
 
 def _run_native_postprocess(payload: dict) -> None:
     ctx = get_context("spawn")
-    proc = ctx.Process(target=_native_postprocess_child, args=(payload,))
-    proc.start()
-    proc.join()
-    if proc.exitcode != 0:
-        raise RuntimeError(
-            f"Native FMM postprocess failed with exit code {proc.exitcode}"
-        )
+    timeout_s = max(1, int(os.getenv("ROADNET_FMM_RETRY_TIMEOUT_S", "300")))
+    remaining_ids = list(payload["failed_ids"])
+
+    while True:
+        parent_progress, child_progress = ctx.Pipe(duplex=False)
+        child_payload = dict(payload)
+        child_payload["failed_ids"] = remaining_ids
+        child_payload["progress"] = child_progress
+        proc = ctx.Process(target=_native_postprocess_child, args=(child_payload,))
+        proc.start()
+        child_progress.close()
+
+        active_tid = None
+        active_started = None
+        completed_ids = set()
+        timed_out_tid = None
+
+        while proc.is_alive():
+            if parent_progress.poll(1.0):
+                try:
+                    event, tid, _retry_idx, _total_failed = parent_progress.recv()
+                except EOFError:
+                    break
+                if event == "start":
+                    active_tid = tid
+                    active_started = time.monotonic()
+                elif event == "match_done":
+                    active_tid = None
+                    active_started = None
+                elif event == "done":
+                    completed_ids.add(tid)
+                    active_tid = None
+                    active_started = None
+
+            if (active_tid is not None and active_started is not None and
+                    time.monotonic() - active_started >= timeout_s):
+                timed_out_tid = active_tid
+                log.warning(
+                    "[%s] Split-match timed out after %d s; skipping trip %s",
+                    payload["county_name"], timeout_s, timed_out_tid,
+                )
+                proc.terminate()
+                proc.join(10)
+                if proc.is_alive():
+                    proc.kill()
+                    proc.join()
+                break
+
+        if timed_out_tid is not None:
+            parent_progress.close()
+            remaining_ids = [
+                tid for tid in remaining_ids
+                if tid not in completed_ids and tid != timed_out_tid
+            ]
+            continue
+
+        proc.join()
+        parent_progress.close()
+        if proc.exitcode != 0:
+            raise RuntimeError(
+                f"Native FMM postprocess failed with exit code {proc.exitcode}"
+            )
+        return
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -943,7 +1043,14 @@ def run_county(
             log.warning("Ignoring invalid ROADNET_FMM_WORKERS=%r", worker_override)
 
     # ── Generate UBODT if absent ──────────────────────────────────────────────
-    if not os.path.exists(ubodt_path):
+    ubodt_stale = (
+        os.path.exists(ubodt_path) and
+        os.path.getmtime(ubodt_path) < os.path.getmtime(shp_path)
+    )
+    if not os.path.exists(ubodt_path) or ubodt_stale:
+        if ubodt_stale:
+            log.info("[%s] Network is newer than UBODT — regenerating",
+                     county_name)
         _generate_ubodt_native(county_name, shp_path, ubodt_path)
     else:
         log.info("[%s] UBODT already exists — skipping generation", county_name)
@@ -1091,11 +1198,19 @@ def run_county(
         if not pd.isna(row.get("opath", float("nan")))
         and str(row.get("opath", "")) != ""
     }
-    failed_ids = set(
+    reported_failed_ids = set(
         matched.loc[
             matched["opath"].isna() | (matched["opath"] == ""), "id"
         ].astype(int).tolist()
     )
+    successful_ids = set(matched_map)
+    missing_ids = set(trip_meta) - successful_ids
+    failed_ids = (reported_failed_ids | missing_ids) - successful_ids
+    if missing_ids - reported_failed_ids:
+        log.warning(
+            "[%s] FMM output omitted %d trip IDs; treating them as failed",
+            county_name, len(missing_ids - reported_failed_ids),
+        )
 
     worker_args: list[dict] = []
 
