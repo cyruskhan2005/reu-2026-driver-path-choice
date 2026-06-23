@@ -91,8 +91,10 @@ Key columns in the output `enriched_network.parquet`:
 
 | Column | Description |
 |---|---|
-| `estimated_speed_limit` | Best available speed limit estimate (mph) |
-| `speed_source` | Which data source the speed came from (`osm`, `custom_primary`, `fdot_primary`, `functional_class`, …) |
+| `estimated_speed_limit` | Best available speed limit value in mph; graph/default estimates are rounded to the nearest 5 mph |
+| `speed_source` | Which data source the speed came from (`osm`, `custom_primary`, `fdot_primary`, `graph_acceleration`, `functional_class`, …) |
+| `speed_limit_is_estimated` | `True` when the value was inferred from graph context, road-name mode, or defaults rather than read from OSM/FDOT/county speed fields |
+| `speed_limit_label` | Display label for maps/reports: `Speed limit` or `Estimated speed limit` |
 | `speed_limit_confidence_score` | 0–1 confidence score incorporating source authority, name match, multi-source agreement, and land-use plausibility |
 | `FDOT_SPEED` | Raw FDOT speed limit where matched |
 | `FDOT_DESCR` | FDOT road description |
@@ -246,7 +248,7 @@ GPS traces are map-matched using the Fast Map-Matching (FMM) library:
 
 `speed_limit_confidence_score` is built from:
 
-- **Base score** by speed source (OSM: 0.40, FDOT: 0.38, custom county: 0.35, functional class default: 0.04)
+- **Base score** by speed source (OSM: 0.40, FDOT: 0.35–0.42, custom county: 0.35, graph connector estimate: 0.12–0.22, functional class default: 0.04)
 - **Authority bonus** — Miami-Dade `MAINTCODE=SR` +0.20, PBC `RESP_AUTH=FDOT` +0.20
 - **Functional class bonus** — FDOT interstate +0.12, arterial +0.08; PBC `U-PA` +0.10
 - **Name match bonus** — vectorized word-intersection between OSM name, county name, and FDOT description
