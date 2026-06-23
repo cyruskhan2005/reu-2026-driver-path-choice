@@ -70,6 +70,7 @@ def make_map(matches: gpd.GeoDataFrame, map_path: Path, fdot_gdf=None, county_gd
         colour     = colours[i % 2]
         speed      = row.get("estimated_speed_limit", "?")
         source     = row.get("speed_source", "?")
+        speed_label = row.get("speed_limit_label", "Estimated speed limit")
         conf       = row.get("speed_limit_confidence_score", None)
         conf_str   = f"{conf:.2f}" if conf is not None and conf == conf else "?"
         custom_spd = row.get("CUSTOM_SPEED", None)
@@ -79,7 +80,7 @@ def make_map(matches: gpd.GeoDataFrame, map_path: Path, fdot_gdf=None, county_gd
             f"<b>FID: {idx}</b><br>"
             f"<b>{row.get('name', '?')}</b><br>"
             f"highway: {row.get('highway', '?')}<br>"
-            f"estimated_speed_limit: {speed} mph<br>"
+            f"{speed_label}: {speed} mph<br>"
             f"speed_source: {source}<br>"
             f"confidence: {conf_str}<br>"
             f"osm_maxspeed: {row.get('osm_maxspeed', '—')}<br>"
@@ -248,7 +249,10 @@ def check_road(
 
     # ── Speed ─────────────────────────────────────────────────────────────────
     print("\n── Speed ────────────────────────────────────────────────")
-    speed_cols = ["estimated_speed_limit", "speed_source", "speed_limit_confidence_score", "osm_maxspeed"]
+    speed_cols = [
+        "estimated_speed_limit", "speed_source", "speed_limit_is_estimated",
+        "speed_limit_confidence_score", "osm_maxspeed",
+    ]
     for col in speed_cols:
         if col in matches.columns:
             if col == "speed_limit_confidence_score":
@@ -323,6 +327,7 @@ def check_road(
     print(f"\n── All Edges ({len(matches):,}) ──────────────────────────────────")
     show_cols = [c for c in [
         "name", "highway", "estimated_speed_limit", "speed_source", "speed_limit_confidence_score",
+        "speed_limit_is_estimated", "speed_limit_label",
         "FDOT_SPEED", "FDOT_DESCR", "CUSTOM_SPEED", "CUSTOM_NAME",
         "osm_maxspeed", "landuse",
     ] if c in matches.columns]

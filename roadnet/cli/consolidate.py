@@ -32,7 +32,8 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 _KEEP_COLS = [
-    "estimated_speed_limit", "speed_limit_confidence_score", "FDOT_AADT", "FDOT_TruckAADT",
+    "estimated_speed_limit", "speed_source", "speed_limit_is_estimated", "speed_limit_label",
+    "speed_limit_confidence_score", "FDOT_AADT", "FDOT_TruckAADT",
     "has_stop_sign_u", "has_stop_sign_v", "has_yield_u", "has_yield_v",
     "has_traffic_signal_u", "has_traffic_signal_v", "connector_transition", "name",
 ]

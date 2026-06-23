@@ -202,7 +202,13 @@ class Pipeline:
             custom_owner_col = custom_owner_col,
             custom_name_col  = custom_name_col,
         )
-        for col in ("estimated_speed_limit", "speed_source", "speed_limit_confidence_score"):
+        for col in (
+            "estimated_speed_limit",
+            "speed_source",
+            "speed_limit_confidence_score",
+            "speed_limit_is_estimated",
+            "speed_limit_label",
+        ):
             if col in network_df.columns:
                 network[col] = network_df[col].values
 

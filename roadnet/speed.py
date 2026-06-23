@@ -28,6 +28,23 @@ from .config import (
 log = logging.getLogger(__name__)
 
 
+ESTIMATED_SPEED_SOURCES = {
+    "road_name_mode",
+    "functional_class",
+    "roundabout_default",
+}
+
+
+def _round_speed_to_nearest_5(speed: float) -> int:
+    """Round mph to the nearest 5, with .5 increments rounded upward."""
+    return int(np.floor((float(speed) / 5.0) + 0.5) * 5)
+
+
+def _round_speed_series_to_nearest_5(speed: pd.Series) -> pd.Series:
+    numeric = pd.to_numeric(speed, errors="coerce")
+    return np.floor((numeric / 5.0) + 0.5) * 5
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Connector speed resolution
 # ─────────────────────────────────────────────────────────────────────────────
@@ -79,24 +96,28 @@ def _infer_connector_speed(
     up_valid   = pd.notna(up_spd)
     down_valid = pd.notna(down_spd)
 
+    def _connector_speed(spd: float) -> int:
+        capped = max(15, min(float(spd), float(parent_spd)))
+        return _round_speed_to_nearest_5(capped)
+
     if up_valid and down_valid:
         delta = down_spd - up_spd
         if not is_oneway:
-            return "lateral", int(round((up_spd + down_spd) / 2))
+            return "lateral", _connector_speed((up_spd + down_spd) / 2)
         if delta > 5:
-            spd = int(round(up_spd + delta * 0.65))
-            return "acceleration", max(15, min(spd, parent_spd))
+            spd = up_spd + delta * 0.65
+            return "acceleration", _connector_speed(spd)
         if delta < -5:
-            spd = int(round(up_spd + delta * 0.65))
-            return "deceleration", max(15, min(spd, parent_spd))
-        return "lateral", int(round((up_spd + down_spd) / 2))
+            spd = up_spd + delta * 0.65
+            return "deceleration", _connector_speed(spd)
+        return "lateral", _connector_speed((up_spd + down_spd) / 2)
 
     if down_valid:
         t = "entry_only" if is_oneway else "lateral"
-        return t, int(min(down_spd, parent_spd))
+        return t, _connector_speed(down_spd)
     if up_valid:
         t = "exit_only" if is_oneway else "lateral"
-        return t, int(min(up_spd, parent_spd))
+        return t, _connector_speed(up_spd)
 
     return "unknown", None
 
@@ -336,13 +357,15 @@ def arbitrate_speed(
     estimated[mask] = custom_speed[mask]
 
     # Mode by road name
+    road_mode_source = pd.Series(False, index=df.index)
     if "name" in df.columns:
         road_mode = (
             pd.DataFrame({"name": df["name"], "spd": estimated})
             .groupby("name")["spd"]
             .transform(lambda x: x.mode().iloc[0] if len(x.mode()) else np.nan)
         )
-        estimated = estimated.fillna(road_mode)
+        road_mode_source = estimated.isna() & road_mode.notna()
+        estimated[road_mode_source] = road_mode[road_mode_source]
 
     # Functional-class defaults
     for hw_type, default_spd in HIGHWAY_SPEED_DEFAULTS.items():
@@ -356,8 +379,6 @@ def arbitrate_speed(
         over30 = ra_mask & (estimated > 30)
         if over30.sum():
             estimated[over30] = 25
-
-    df["estimated_speed_limit"] = estimated
 
     # ── Speed source tracking ─────────────────────────────────────────────────
     source = pd.Series("none", index=df.index)
@@ -393,6 +414,8 @@ def arbitrate_speed(
             mask = (df["connector_transition"] == t) & (source == "osm")
             source[mask] = f"graph_{t}"
 
+    source[road_mode_source & (source == "none")] = "road_name_mode"
+
     # Functional class and roundabout defaults
     for hw_type in HIGHWAY_SPEED_DEFAULTS:
         mask = (df.get("highway") == hw_type) & (source == "none")
@@ -402,6 +425,13 @@ def arbitrate_speed(
         source[(df["junction"] == "roundabout") & (source == "none")] = "roundabout_default"
 
     df["speed_source"] = source
+
+    is_estimated_source = source.str.startswith("graph_", na=False) | source.isin(ESTIMATED_SPEED_SOURCES)
+    estimated[is_estimated_source] = _round_speed_series_to_nearest_5(estimated[is_estimated_source])
+
+    df["estimated_speed_limit"] = estimated
+    df["speed_limit_is_estimated"] = is_estimated_source
+    df["speed_limit_label"] = np.where(is_estimated_source, "Estimated speed limit", "Speed limit")
 
     # ── Confidence scoring (fully vectorized) ─────────────────────────────────
     source_base = {
@@ -417,6 +447,7 @@ def arbitrate_speed(
         "graph_deceleration":0.18,
         "graph_entry_only":  0.12,
         "graph_exit_only":   0.12,
+        "road_name_mode":    0.18,
         "functional_class":  0.04,
     }
     conf = np.zeros(len(df))
