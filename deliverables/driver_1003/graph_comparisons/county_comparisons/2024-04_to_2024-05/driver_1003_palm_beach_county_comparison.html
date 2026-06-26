@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Driver 1003 Palm Beach County 2024-04 to 2024-05 FID Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_bf9b26820aedc8b86cca7683c34db5c9 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="position:fixed;top:18px;left:55px;z-index:9999;background:white;
+      border:1px solid #cbd5e1;border-radius:12px;padding:14px 16px;
+      box-shadow:0 4px 16px rgba(15,23,42,.20);font-family:Arial,sans-serif;
+      max-width:560px;">
+      <div style="font-size:17px;font-weight:800;margin-bottom:4px;">
+        Driver 1003 County-Specific Comparison
+      </div>
+      <div style="font-size:14px;font-weight:700;color:#334155;margin-bottom:8px;">
+        Palm Beach County · 2024-04 → 2024-05
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(92px,1fr));
+        gap:8px;margin-bottom:10px;font-size:12px;">
+        <div><span style="color:#64748b;">Trips</span><br><strong>2 → 0</strong></div>
+        <div><span style="color:#64748b;">Unique FIDs</span><br><strong>77 → 0</strong></div>
+        <div><span style="color:#64748b;">Quality</span><br><strong>month_b_no_trips</strong></div>
+        <div><span style="color:#64748b;">Shared</span><br><strong>0</strong></div>
+        <div><span style="color:#64748b;">Added</span><br><strong>0</strong></div>
+        <div><span style="color:#64748b;">Removed</span><br><strong>77</strong></div>
+      </div>
+      <div style="background:#fff7ed;color:#7c2d12;border:1px solid #fed7aa;border-radius:8px;padding:8px;margin-bottom:9px;font-size:12px;line-height:1.4;">No observations exist for this county in 2024-05. All displayed FIDs were removed after 2024-04.</div>
+      <div style="font-size:13px;line-height:1.5;">
+        <span style="color:#64748b">━━</span> Shared FIDs<br>
+        <span style="color:#16a34a">━━</span> Added FIDs<br>
+        <span style="color:#dc2626">━━</span> Removed FIDs
+      </div>
+    </div>
+    
+    
+            <div class="folium-map" id="map_bf9b26820aedc8b86cca7683c34db5c9" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_bf9b26820aedc8b86cca7683c34db5c9 = L.map(
+                "map_bf9b26820aedc8b86cca7683c34db5c9",
+                {
+                    center: [26.3493359, -80.0936423],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_bf9b26820aedc8b86cca7683c34db5c9);
+
+            
+
+        
+    
+            var tile_layer_7fd016d180b939898c412866f570c982 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7fd016d180b939898c412866f570c982.addTo(map_bf9b26820aedc8b86cca7683c34db5c9);
+        
+    
+            var feature_group_5825640024f3b19d0565bda9ebf59072 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_5825640024f3b19d0565bda9ebf59072.addTo(map_bf9b26820aedc8b86cca7683c34db5c9);
+        
+    
+            var feature_group_fae0e3fb14b1f73de5453336045b2c72 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_fae0e3fb14b1f73de5453336045b2c72.addTo(map_bf9b26820aedc8b86cca7683c34db5c9);
+        
+    
+            var feature_group_bea20e7c12f255fe652a5c49bf6f8b6f = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var poly_line_8cab192ef34ec54f89225ae0e823d59c = L.polyline(
+                [[26.342743299999995, -80.0886866], [26.342539, -80.088731], [26.342390000000005, -80.088767], [26.342233, -80.088816], [26.3419384, -80.0889256]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_b87820078316ab0d7a40fc409d891b94 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_2581b5a2000e2137ce2f5cf3eddcbc2c = $(`<div id="html_2581b5a2000e2137ce2f5cf3eddcbc2c" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>368</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_b87820078316ab0d7a40fc409d891b94.setContent(html_2581b5a2000e2137ce2f5cf3eddcbc2c);
+            
+        
+
+        poly_line_8cab192ef34ec54f89225ae0e823d59c.bindPopup(popup_b87820078316ab0d7a40fc409d891b94)
+        ;
+
+        
+    
+    
+            poly_line_8cab192ef34ec54f89225ae0e823d59c.bindTooltip(
+                `<div>
+                     FID 368 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_8fd01ee8842101530879e3e82e72617a = L.polyline(
+                [[26.3435932, -80.088656], [26.3433516, -80.0886535], [26.343210899999995, -80.0886524], [26.3429439, -80.0886642], [26.342743299999995, -80.0886866]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_c760f5a493ed1e26a7cf3e93db0d0bf0 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_47d4880862a01c3533b56397e8ddd74a = $(`<div id="html_47d4880862a01c3533b56397e8ddd74a" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>374</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_c760f5a493ed1e26a7cf3e93db0d0bf0.setContent(html_47d4880862a01c3533b56397e8ddd74a);
+            
+        
+
+        poly_line_8fd01ee8842101530879e3e82e72617a.bindPopup(popup_c760f5a493ed1e26a7cf3e93db0d0bf0)
+        ;
+
+        
+    
+    
+            poly_line_8fd01ee8842101530879e3e82e72617a.bindTooltip(
+                `<div>
+                     FID 374 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ebce6a91e13177949a30277db55b2d16 = L.polyline(
+                [[26.3419384, -80.0889256], [26.3417982, -80.0889797]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_48014f6a72352d23d4781ac5266e33e0 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_7ea2ba851c6ac17e41c47c934e71a299 = $(`<div id="html_7ea2ba851c6ac17e41c47c934e71a299" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>375</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_48014f6a72352d23d4781ac5266e33e0.setContent(html_7ea2ba851c6ac17e41c47c934e71a299);
+            
+        
+
+        poly_line_ebce6a91e13177949a30277db55b2d16.bindPopup(popup_48014f6a72352d23d4781ac5266e33e0)
+        ;
+
+        
+    
+    
+            poly_line_ebce6a91e13177949a30277db55b2d16.bindTooltip(
+                `<div>
+                     FID 375 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d8c384f6a3ce93b3f0b3d8e60f3f28d6 = L.polyline(
+                [[26.365750899999995, -80.0980717], [26.365442199999997, -80.0981473], [26.365117699999995, -80.098162], [26.364892199999996, -80.09813410000001], [26.3647147, -80.0981037], [26.364620299999995, -80.0980829], [26.364358699999997, -80.09798180000001], [26.364249, -80.0979394], [26.364070299999998, -80.0978927], [26.363987, -80.0978968], [26.3638889, -80.097915], [26.363794900000002, -80.0979504], [26.3637108, -80.09800430000001], [26.3633897, -80.0982283]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_6953feb13c7bb99f18464cf83fbdf9bf = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_427dd17a38409afbeab845064a645055 = $(`<div id="html_427dd17a38409afbeab845064a645055" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>731</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_6953feb13c7bb99f18464cf83fbdf9bf.setContent(html_427dd17a38409afbeab845064a645055);
+            
+        
+
+        poly_line_d8c384f6a3ce93b3f0b3d8e60f3f28d6.bindPopup(popup_6953feb13c7bb99f18464cf83fbdf9bf)
+        ;
+
+        
+    
+    
+            poly_line_d8c384f6a3ce93b3f0b3d8e60f3f28d6.bindTooltip(
+                `<div>
+                     FID 731 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1ce794e70ba617fe512ddcc87c934872 = L.polyline(
+                [[26.3301834, -80.0924926], [26.3300794, -80.0925753]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_066eedbf1d8ab9cc15d9e5c5e1008258 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_461be98139ab4385803c5cf34b734e77 = $(`<div id="html_461be98139ab4385803c5cf34b734e77" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>2091</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_066eedbf1d8ab9cc15d9e5c5e1008258.setContent(html_461be98139ab4385803c5cf34b734e77);
+            
+        
+
+        poly_line_1ce794e70ba617fe512ddcc87c934872.bindPopup(popup_066eedbf1d8ab9cc15d9e5c5e1008258)
+        ;
+
+        
+    
+    
+            poly_line_1ce794e70ba617fe512ddcc87c934872.bindTooltip(
+                `<div>
+                     FID 2091 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e7624912efbde2d11c1fae1151bb0213 = L.polyline(
+                [[26.3596998, -80.0862807], [26.3593977, -80.0863278]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_e6c42799fda58663a6cafade9451e446 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f5d160bae0ac6cef03ab9d9a49671b2d = $(`<div id="html_f5d160bae0ac6cef03ab9d9a49671b2d" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>9929</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_e6c42799fda58663a6cafade9451e446.setContent(html_f5d160bae0ac6cef03ab9d9a49671b2d);
+            
+        
+
+        poly_line_e7624912efbde2d11c1fae1151bb0213.bindPopup(popup_e6c42799fda58663a6cafade9451e446)
+        ;
+
+        
+    
+    
+            poly_line_e7624912efbde2d11c1fae1151bb0213.bindTooltip(
+                `<div>
+                     FID 9929 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_286f4248dfeb20e4b6b956ab5ec01898 = L.polyline(
+                [[26.3593977, -80.0863278], [26.359158900000004, -80.0863651]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_14d2d6689d5b29fac398814c8d671d45 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_2cded9a4b2c7dabd47c7db7e18a5f039 = $(`<div id="html_2cded9a4b2c7dabd47c7db7e18a5f039" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>9933</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_14d2d6689d5b29fac398814c8d671d45.setContent(html_2cded9a4b2c7dabd47c7db7e18a5f039);
+            
+        
+
+        poly_line_286f4248dfeb20e4b6b956ab5ec01898.bindPopup(popup_14d2d6689d5b29fac398814c8d671d45)
+        ;
+
+        
+    
+    
+            poly_line_286f4248dfeb20e4b6b956ab5ec01898.bindTooltip(
+                `<div>
+                     FID 9933 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c088f4599782be4aae56839ef61f94d5 = L.polyline(
+                [[26.360622699999993, -80.0861359], [26.3596998, -80.0862807]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_cd7413879a847403348838146a236b12 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_5d2201886806575f409bec598051c1f0 = $(`<div id="html_5d2201886806575f409bec598051c1f0" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>9936</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_cd7413879a847403348838146a236b12.setContent(html_5d2201886806575f409bec598051c1f0);
+            
+        
+
+        poly_line_c088f4599782be4aae56839ef61f94d5.bindPopup(popup_cd7413879a847403348838146a236b12)
+        ;
+
+        
+    
+    
+            poly_line_c088f4599782be4aae56839ef61f94d5.bindTooltip(
+                `<div>
+                     FID 9936 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_009d037987870a5b10875c16bca80297 = L.polyline(
+                [[26.3629284, -80.0984258], [26.3628503, -80.098297], [26.3626875, -80.0979792], [26.362477599999995, -80.0975626], [26.362359500000004, -80.0973033], [26.362161199999996, -80.0968122], [26.362036199999995, -80.0964635], [26.3619459, -80.09618], [26.3617993, -80.0956374], [26.361724199999994, -80.0953303], [26.3616956, -80.0951922], [26.3616499, -80.0949535], [26.3616109, -80.0947174], [26.361574799999996, -80.094474], [26.3615378, -80.0941683], [26.361533599999998, -80.09412880000001], [26.361529299999997, -80.0940893], [26.361510900000003, -80.093918]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_0260782f3d2246333c4ba9ff0ae8772f = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_8837c288b9f112660ef3ed45d8a04fc4 = $(`<div id="html_8837c288b9f112660ef3ed45d8a04fc4" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>11606</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_0260782f3d2246333c4ba9ff0ae8772f.setContent(html_8837c288b9f112660ef3ed45d8a04fc4);
+            
+        
+
+        poly_line_009d037987870a5b10875c16bca80297.bindPopup(popup_0260782f3d2246333c4ba9ff0ae8772f)
+        ;
+
+        
+    
+    
+            poly_line_009d037987870a5b10875c16bca80297.bindTooltip(
+                `<div>
+                     FID 11606 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1f8b8988096176fb4e50a9b29e8d989e = L.polyline(
+                [[26.361510900000003, -80.093918], [26.3615041, -80.0938195]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_6aa75af8e60d0795e634e97bccb0b2fa = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_9645f4987a06d6197a0f9793d74d5d89 = $(`<div id="html_9645f4987a06d6197a0f9793d74d5d89" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>11609</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_6aa75af8e60d0795e634e97bccb0b2fa.setContent(html_9645f4987a06d6197a0f9793d74d5d89);
+            
+        
+
+        poly_line_1f8b8988096176fb4e50a9b29e8d989e.bindPopup(popup_6aa75af8e60d0795e634e97bccb0b2fa)
+        ;
+
+        
+    
+    
+            poly_line_1f8b8988096176fb4e50a9b29e8d989e.bindTooltip(
+                `<div>
+                     FID 11609 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2bfb6243de041d0f9d606184268ed333 = L.polyline(
+                [[26.350495799999997, -80.0877474], [26.3503778, -80.0877652], [26.350372099999998, -80.0877667], [26.349649700000004, -80.0878817], [26.349289599999995, -80.0879403], [26.348664299999996, -80.088042]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_50d9c73d68369ac777dcb68d1ab21f80 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_493313553b16890005aade25bcc2e687 = $(`<div id="html_493313553b16890005aade25bcc2e687" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20007</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_50d9c73d68369ac777dcb68d1ab21f80.setContent(html_493313553b16890005aade25bcc2e687);
+            
+        
+
+        poly_line_2bfb6243de041d0f9d606184268ed333.bindPopup(popup_50d9c73d68369ac777dcb68d1ab21f80)
+        ;
+
+        
+    
+    
+            poly_line_2bfb6243de041d0f9d606184268ed333.bindTooltip(
+                `<div>
+                     FID 20007 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_b217c86b642046feccec8b11c8af5e13 = L.polyline(
+                [[26.348664299999996, -80.088042], [26.347847800000004, -80.0882013], [26.347525299999997, -80.0881976]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_69b14320b6a47b01753c5a962216679c = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_3691da0a777d9a7960d61ceed718f144 = $(`<div id="html_3691da0a777d9a7960d61ceed718f144" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20014</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_69b14320b6a47b01753c5a962216679c.setContent(html_3691da0a777d9a7960d61ceed718f144);
+            
+        
+
+        poly_line_b217c86b642046feccec8b11c8af5e13.bindPopup(popup_69b14320b6a47b01753c5a962216679c)
+        ;
+
+        
+    
+    
+            poly_line_b217c86b642046feccec8b11c8af5e13.bindTooltip(
+                `<div>
+                     FID 20014 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d39c304f94dbbf9033ac1de4c7c44293 = L.polyline(
+                [[26.347525299999997, -80.0881976], [26.347405099999996, -80.088217], [26.347011399999996, -80.0882806]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_7c29cb8f6135688c7908943613490ead = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_dd04b81abd4fe07ca2101ef9183c354c = $(`<div id="html_dd04b81abd4fe07ca2101ef9183c354c" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20019</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_7c29cb8f6135688c7908943613490ead.setContent(html_dd04b81abd4fe07ca2101ef9183c354c);
+            
+        
+
+        poly_line_d39c304f94dbbf9033ac1de4c7c44293.bindPopup(popup_7c29cb8f6135688c7908943613490ead)
+        ;
+
+        
+    
+    
+            poly_line_d39c304f94dbbf9033ac1de4c7c44293.bindTooltip(
+                `<div>
+                     FID 20019 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_57c2ad2de9b71effd7a07608f3801f92 = L.polyline(
+                [[26.347011399999996, -80.0882806], [26.3462705, -80.0884037]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_fa543222a65c848953dab8ab347fed95 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_a2cf79732f05dd13f2fde83b2c1f79db = $(`<div id="html_a2cf79732f05dd13f2fde83b2c1f79db" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20020</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_fa543222a65c848953dab8ab347fed95.setContent(html_a2cf79732f05dd13f2fde83b2c1f79db);
+            
+        
+
+        poly_line_57c2ad2de9b71effd7a07608f3801f92.bindPopup(popup_fa543222a65c848953dab8ab347fed95)
+        ;
+
+        
+    
+    
+            poly_line_57c2ad2de9b71effd7a07608f3801f92.bindTooltip(
+                `<div>
+                     FID 20020 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_cb8b58908b73078c53631b64ebaaba70 = L.polyline(
+                [[26.3462705, -80.0884037], [26.345856200000004, -80.0884725], [26.345292999999998, -80.088566]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_79240fc1b95da79291f9abb74d22c56d = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_2e1ea48fd1af15a106ceb55b14d91c85 = $(`<div id="html_2e1ea48fd1af15a106ceb55b14d91c85" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20024</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_79240fc1b95da79291f9abb74d22c56d.setContent(html_2e1ea48fd1af15a106ceb55b14d91c85);
+            
+        
+
+        poly_line_cb8b58908b73078c53631b64ebaaba70.bindPopup(popup_79240fc1b95da79291f9abb74d22c56d)
+        ;
+
+        
+    
+    
+            poly_line_cb8b58908b73078c53631b64ebaaba70.bindTooltip(
+                `<div>
+                     FID 20024 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1c2609444d2f1d30f2cab9c2464a06a7 = L.polyline(
+                [[26.345292999999998, -80.088566], [26.3449307, -80.0886084], [26.3444468, -80.0886539]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_765a50c996be4dbe3ffc5b2fc12cfe37 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_c9d61558ab993f1c51362053fc5e03ad = $(`<div id="html_c9d61558ab993f1c51362053fc5e03ad" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20031</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_765a50c996be4dbe3ffc5b2fc12cfe37.setContent(html_c9d61558ab993f1c51362053fc5e03ad);
+            
+        
+
+        poly_line_1c2609444d2f1d30f2cab9c2464a06a7.bindPopup(popup_765a50c996be4dbe3ffc5b2fc12cfe37)
+        ;
+
+        
+    
+    
+            poly_line_1c2609444d2f1d30f2cab9c2464a06a7.bindTooltip(
+                `<div>
+                     FID 20031 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_8b0a22b2906e972202ad4bc1c704ddc1 = L.polyline(
+                [[26.3444468, -80.0886539], [26.3441154, -80.0886647]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_94a75c0ac360b2163b78f3dc675c48e6 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_a691f7426126a058683a39324d9817c3 = $(`<div id="html_a691f7426126a058683a39324d9817c3" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20036</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_94a75c0ac360b2163b78f3dc675c48e6.setContent(html_a691f7426126a058683a39324d9817c3);
+            
+        
+
+        poly_line_8b0a22b2906e972202ad4bc1c704ddc1.bindPopup(popup_94a75c0ac360b2163b78f3dc675c48e6)
+        ;
+
+        
+    
+    
+            poly_line_8b0a22b2906e972202ad4bc1c704ddc1.bindTooltip(
+                `<div>
+                     FID 20036 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6a51ab3fba5741f96ee6875457119721 = L.polyline(
+                [[26.3441154, -80.0886647], [26.3440085, -80.0886641], [26.3439424, -80.0886638]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_fd9c390072649af7d23ebe93955f618f = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_857dd9103e8e96da28bd4d76268a06a6 = $(`<div id="html_857dd9103e8e96da28bd4d76268a06a6" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20041</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_fd9c390072649af7d23ebe93955f618f.setContent(html_857dd9103e8e96da28bd4d76268a06a6);
+            
+        
+
+        poly_line_6a51ab3fba5741f96ee6875457119721.bindPopup(popup_fd9c390072649af7d23ebe93955f618f)
+        ;
+
+        
+    
+    
+            poly_line_6a51ab3fba5741f96ee6875457119721.bindTooltip(
+                `<div>
+                     FID 20041 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_677c277c1c5627fe9448a3cfd96476fa = L.polyline(
+                [[26.3417982, -80.0889797], [26.341712599999997, -80.0890095], [26.3414998, -80.0890811]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_7dafd0cb6cde800c841406a0c92ab36e = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f5e9aa793db9df0d0c4dbfbf61331293 = $(`<div id="html_f5e9aa793db9df0d0c4dbfbf61331293" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20052</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_7dafd0cb6cde800c841406a0c92ab36e.setContent(html_f5e9aa793db9df0d0c4dbfbf61331293);
+            
+        
+
+        poly_line_677c277c1c5627fe9448a3cfd96476fa.bindPopup(popup_7dafd0cb6cde800c841406a0c92ab36e)
+        ;
+
+        
+    
+    
+            poly_line_677c277c1c5627fe9448a3cfd96476fa.bindTooltip(
+                `<div>
+                     FID 20052 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d225b707f8c0165e0a02b4062dce472d = L.polyline(
+                [[26.3412881, -80.0891483], [26.341164899999995, -80.08918280000002], [26.341072799999996, -80.0892111], [26.340974099999997, -80.0892306]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_b385cc7530b2c8ea4581d1f5688824e2 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_0eb2d0969f334d6c4d444de34bf33582 = $(`<div id="html_0eb2d0969f334d6c4d444de34bf33582" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20058</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_b385cc7530b2c8ea4581d1f5688824e2.setContent(html_0eb2d0969f334d6c4d444de34bf33582);
+            
+        
+
+        poly_line_d225b707f8c0165e0a02b4062dce472d.bindPopup(popup_b385cc7530b2c8ea4581d1f5688824e2)
+        ;
+
+        
+    
+    
+            poly_line_d225b707f8c0165e0a02b4062dce472d.bindTooltip(
+                `<div>
+                     FID 20058 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_09c9e56cf6246ecf7b2ed4a1a5db3451 = L.polyline(
+                [[26.3414998, -80.0890811], [26.34142, -80.089108], [26.3412881, -80.0891483]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_b95a316575396cba710f413476d3a0ea = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_596878372506ff0224cc70cb290805d8 = $(`<div id="html_596878372506ff0224cc70cb290805d8" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20059</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_b95a316575396cba710f413476d3a0ea.setContent(html_596878372506ff0224cc70cb290805d8);
+            
+        
+
+        poly_line_09c9e56cf6246ecf7b2ed4a1a5db3451.bindPopup(popup_b95a316575396cba710f413476d3a0ea)
+        ;
+
+        
+    
+    
+            poly_line_09c9e56cf6246ecf7b2ed4a1a5db3451.bindTooltip(
+                `<div>
+                     FID 20059 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_df437a4c49051c5c191f3f9582f5a859 = L.polyline(
+                [[26.340974099999997, -80.0892306], [26.340811499999997, -80.0892621]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_6cff4d60e16db0f254e8c129fa32fb2b = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_b7d7d26722928faf7b5d38d062d43228 = $(`<div id="html_b7d7d26722928faf7b5d38d062d43228" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20062</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_6cff4d60e16db0f254e8c129fa32fb2b.setContent(html_b7d7d26722928faf7b5d38d062d43228);
+            
+        
+
+        poly_line_df437a4c49051c5c191f3f9582f5a859.bindPopup(popup_6cff4d60e16db0f254e8c129fa32fb2b)
+        ;
+
+        
+    
+    
+            poly_line_df437a4c49051c5c191f3f9582f5a859.bindTooltip(
+                `<div>
+                     FID 20062 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_49292c06e0fec8c749ff2a9afdff7390 = L.polyline(
+                [[26.340811499999997, -80.0892621], [26.3406774, -80.0892913], [26.340014899999996, -80.0893972], [26.3399088, -80.0894137]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_7dbb26358414af82ce3a5a64639b9b4d = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_6c8e4102b80e6c7c2936bbff4b5d9b2c = $(`<div id="html_6c8e4102b80e6c7c2936bbff4b5d9b2c" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20067</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_7dbb26358414af82ce3a5a64639b9b4d.setContent(html_6c8e4102b80e6c7c2936bbff4b5d9b2c);
+            
+        
+
+        poly_line_49292c06e0fec8c749ff2a9afdff7390.bindPopup(popup_7dbb26358414af82ce3a5a64639b9b4d)
+        ;
+
+        
+    
+    
+            poly_line_49292c06e0fec8c749ff2a9afdff7390.bindTooltip(
+                `<div>
+                     FID 20067 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3dec80d48c08fab86b11ed1fb9299ad4 = L.polyline(
+                [[26.3399088, -80.0894137], [26.339702400000004, -80.0894468]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_2f92251762a690dee5dd02ca608eb2d1 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_6d1edced07ded67a1553654cf115badd = $(`<div id="html_6d1edced07ded67a1553654cf115badd" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20070</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_2f92251762a690dee5dd02ca608eb2d1.setContent(html_6d1edced07ded67a1553654cf115badd);
+            
+        
+
+        poly_line_3dec80d48c08fab86b11ed1fb9299ad4.bindPopup(popup_2f92251762a690dee5dd02ca608eb2d1)
+        ;
+
+        
+    
+    
+            poly_line_3dec80d48c08fab86b11ed1fb9299ad4.bindTooltip(
+                `<div>
+                     FID 20070 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0376ed4206d3d37d752b9a4cacbe1abf = L.polyline(
+                [[26.339702400000004, -80.0894468], [26.339541200000003, -80.0894722], [26.3391677, -80.0895311]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_e0244665a7c39eec872f6e4da208a36e = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_2b2aeabb9426c3b905b42390526ee2e4 = $(`<div id="html_2b2aeabb9426c3b905b42390526ee2e4" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20074</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_e0244665a7c39eec872f6e4da208a36e.setContent(html_2b2aeabb9426c3b905b42390526ee2e4);
+            
+        
+
+        poly_line_0376ed4206d3d37d752b9a4cacbe1abf.bindPopup(popup_e0244665a7c39eec872f6e4da208a36e)
+        ;
+
+        
+    
+    
+            poly_line_0376ed4206d3d37d752b9a4cacbe1abf.bindTooltip(
+                `<div>
+                     FID 20074 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_24e108b9459674e4f81c8133fe87044b = L.polyline(
+                [[26.337272, -80.08983], [26.336831000000004, -80.0898996], [26.336335, -80.089978]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_c0f14eb32342bb7a56ca437084ea9606 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_b150e463918eebe728162dc30428f2aa = $(`<div id="html_b150e463918eebe728162dc30428f2aa" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20077</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_c0f14eb32342bb7a56ca437084ea9606.setContent(html_b150e463918eebe728162dc30428f2aa);
+            
+        
+
+        poly_line_24e108b9459674e4f81c8133fe87044b.bindPopup(popup_c0f14eb32342bb7a56ca437084ea9606)
+        ;
+
+        
+    
+    
+            poly_line_24e108b9459674e4f81c8133fe87044b.bindTooltip(
+                `<div>
+                     FID 20077 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_021bf5f0b3f5b20c62d8f0effd9097bd = L.polyline(
+                [[26.338263999999995, -80.0896736], [26.337988399999997, -80.0897171], [26.337272, -80.08983]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_50e98df70ca1bdfa53b9d9e5fcb6002b = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_c7a4bb837e3377a3c8d03085bd362fee = $(`<div id="html_c7a4bb837e3377a3c8d03085bd362fee" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20084</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_50e98df70ca1bdfa53b9d9e5fcb6002b.setContent(html_c7a4bb837e3377a3c8d03085bd362fee);
+            
+        
+
+        poly_line_021bf5f0b3f5b20c62d8f0effd9097bd.bindPopup(popup_50e98df70ca1bdfa53b9d9e5fcb6002b)
+        ;
+
+        
+    
+    
+            poly_line_021bf5f0b3f5b20c62d8f0effd9097bd.bindTooltip(
+                `<div>
+                     FID 20084 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_587e8ebac78f2ce788fbee8bf54a62b0 = L.polyline(
+                [[26.336335, -80.089978], [26.335976000000002, -80.090036], [26.335929999999998, -80.090042], [26.335569200000002, -80.0900944]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_045943abfdc582eaa853fd5ee5c1bc4f = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_c187e0cba49cc6277f2d74180e7ea9ff = $(`<div id="html_c187e0cba49cc6277f2d74180e7ea9ff" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20087</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_045943abfdc582eaa853fd5ee5c1bc4f.setContent(html_c187e0cba49cc6277f2d74180e7ea9ff);
+            
+        
+
+        poly_line_587e8ebac78f2ce788fbee8bf54a62b0.bindPopup(popup_045943abfdc582eaa853fd5ee5c1bc4f)
+        ;
+
+        
+    
+    
+            poly_line_587e8ebac78f2ce788fbee8bf54a62b0.bindTooltip(
+                `<div>
+                     FID 20087 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_154f6e4c0f83d77d3f50c9c87dbbff71 = L.polyline(
+                [[26.335569200000002, -80.0900944], [26.3350065, -80.090176], [26.334655799999997, -80.0902453]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_c135b08064e01518c8425b2b678860d1 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_d3051ce31582246f198f00997b62294d = $(`<div id="html_d3051ce31582246f198f00997b62294d" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20092</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_c135b08064e01518c8425b2b678860d1.setContent(html_d3051ce31582246f198f00997b62294d);
+            
+        
+
+        poly_line_154f6e4c0f83d77d3f50c9c87dbbff71.bindPopup(popup_c135b08064e01518c8425b2b678860d1)
+        ;
+
+        
+    
+    
+            poly_line_154f6e4c0f83d77d3f50c9c87dbbff71.bindTooltip(
+                `<div>
+                     FID 20092 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_eff5e3fdb17a3bf6ef639c106bbca8a4 = L.polyline(
+                [[26.3300794, -80.0925753], [26.330005899999996, -80.09263390000001], [26.3297539, -80.0928352]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_716b381251a37b344edf2cff88d37f05 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_4a0f9c8f7c7aea86395ec39c581c89f1 = $(`<div id="html_4a0f9c8f7c7aea86395ec39c581c89f1" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20095</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_716b381251a37b344edf2cff88d37f05.setContent(html_4a0f9c8f7c7aea86395ec39c581c89f1);
+            
+        
+
+        poly_line_eff5e3fdb17a3bf6ef639c106bbca8a4.bindPopup(popup_716b381251a37b344edf2cff88d37f05)
+        ;
+
+        
+    
+    
+            poly_line_eff5e3fdb17a3bf6ef639c106bbca8a4.bindTooltip(
+                `<div>
+                     FID 20095 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f9402f810467d3b69f3bf18dc1d978f7 = L.polyline(
+                [[26.3314251, -80.0915027], [26.3312372, -80.0916298], [26.330978099999996, -80.0918212], [26.3307377, -80.0920175], [26.3302677, -80.0924176], [26.3301834, -80.0924926]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_a0476408fefb76398dcb5e3538df8770 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_84e69042651514604b28a0acf2d64ab5 = $(`<div id="html_84e69042651514604b28a0acf2d64ab5" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20100</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_a0476408fefb76398dcb5e3538df8770.setContent(html_84e69042651514604b28a0acf2d64ab5);
+            
+        
+
+        poly_line_f9402f810467d3b69f3bf18dc1d978f7.bindPopup(popup_a0476408fefb76398dcb5e3538df8770)
+        ;
+
+        
+    
+    
+            poly_line_f9402f810467d3b69f3bf18dc1d978f7.bindTooltip(
+                `<div>
+                     FID 20100 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a86cf159700cc6d143b2eb2412219119 = L.polyline(
+                [[26.3277487, -80.0944818], [26.3258712, -80.0960186]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_88afdf74a28138c360b7772e093e4866 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_88d3cc5c22254438f7bcf49306e16cd1 = $(`<div id="html_88d3cc5c22254438f7bcf49306e16cd1" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20102</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_88afdf74a28138c360b7772e093e4866.setContent(html_88d3cc5c22254438f7bcf49306e16cd1);
+            
+        
+
+        poly_line_a86cf159700cc6d143b2eb2412219119.bindPopup(popup_88afdf74a28138c360b7772e093e4866)
+        ;
+
+        
+    
+    
+            poly_line_a86cf159700cc6d143b2eb2412219119.bindTooltip(
+                `<div>
+                     FID 20102 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_463c2968c3b3d406d144963e4d9ff7cd = L.polyline(
+                [[26.3258712, -80.0960186], [26.3255943, -80.0963042], [26.324761999999996, -80.0969838], [26.324586399999998, -80.0971253], [26.3244038, -80.0972625], [26.324218000000002, -80.0973934], [26.324045900000005, -80.0975108]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_7acfa0a0e6a232bbbbd4caa9f046a07e = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_11fa4b0a2a89e1cdbe121aac2cd61543 = $(`<div id="html_11fa4b0a2a89e1cdbe121aac2cd61543" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>20106</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_7acfa0a0e6a232bbbbd4caa9f046a07e.setContent(html_11fa4b0a2a89e1cdbe121aac2cd61543);
+            
+        
+
+        poly_line_463c2968c3b3d406d144963e4d9ff7cd.bindPopup(popup_7acfa0a0e6a232bbbbd4caa9f046a07e)
+        ;
+
+        
+    
+    
+            poly_line_463c2968c3b3d406d144963e4d9ff7cd.bindTooltip(
+                `<div>
+                     FID 20106 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_124e27daecb13c8b1c323d72f188e51f = L.polyline(
+                [[26.361505999999995, -80.0900361], [26.3615087, -80.0899342], [26.361516700000003, -80.0896298], [26.3615307, -80.089302]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_790a490917a669efcd889d3e743dc1be = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_d7c52e8ae625d7653f62930d0272240a = $(`<div id="html_d7c52e8ae625d7653f62930d0272240a" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>34689</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_790a490917a669efcd889d3e743dc1be.setContent(html_d7c52e8ae625d7653f62930d0272240a);
+            
+        
+
+        poly_line_124e27daecb13c8b1c323d72f188e51f.bindPopup(popup_790a490917a669efcd889d3e743dc1be)
+        ;
+
+        
+    
+    
+            poly_line_124e27daecb13c8b1c323d72f188e51f.bindTooltip(
+                `<div>
+                     FID 34689 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_cc000c1bc2dfde6ee562f936693a5a3d = L.polyline(
+                [[26.3615307, -80.089302], [26.361557899999994, -80.0886638]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_5a32ffb4d27ff4e397b9b83235fc976e = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_8aee3f2b7f8db16522211283785f736c = $(`<div id="html_8aee3f2b7f8db16522211283785f736c" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>34692</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_5a32ffb4d27ff4e397b9b83235fc976e.setContent(html_8aee3f2b7f8db16522211283785f736c);
+            
+        
+
+        poly_line_cc000c1bc2dfde6ee562f936693a5a3d.bindPopup(popup_5a32ffb4d27ff4e397b9b83235fc976e)
+        ;
+
+        
+    
+    
+            poly_line_cc000c1bc2dfde6ee562f936693a5a3d.bindTooltip(
+                `<div>
+                     FID 34692 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_da091dc5f1264d20e190706bd8501129 = L.polyline(
+                [[26.3615041, -80.0938195], [26.3614919, -80.0936442], [26.3614798, -80.0934709], [26.361469799999995, -80.0931389], [26.361471999999996, -80.0925233], [26.3614751, -80.0921961], [26.361478999999996, -80.0917742], [26.361483699999997, -80.091273], [26.3614894, -80.09066440000001], [26.361499999999996, -80.0902619], [26.3615027, -80.0901571]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_92b0c3ba553355ee6f1fe6629126c9fc = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_21d94e6af1817e13c70bcc74028686e5 = $(`<div id="html_21d94e6af1817e13c70bcc74028686e5" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>51359</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_92b0c3ba553355ee6f1fe6629126c9fc.setContent(html_21d94e6af1817e13c70bcc74028686e5);
+            
+        
+
+        poly_line_da091dc5f1264d20e190706bd8501129.bindPopup(popup_92b0c3ba553355ee6f1fe6629126c9fc)
+        ;
+
+        
+    
+    
+            poly_line_da091dc5f1264d20e190706bd8501129.bindTooltip(
+                `<div>
+                     FID 51359 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f8fffd7c74e59633937a20bd33049ff1 = L.polyline(
+                [[26.3523339, -80.0874159], [26.352185900000002, -80.0874806], [26.352156999999995, -80.0874932], [26.351912199999997, -80.0875256], [26.351887799999997, -80.0875291], [26.351691199999998, -80.0875574], [26.351475999999995, -80.0875931], [26.3512299, -80.0876319], [26.350647, -80.0877253], [26.350495799999997, -80.0877474]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_999f1589d82bf301d9ed68778fe8faaf = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f0715b8aeae6441aa07c344ab362102d = $(`<div id="html_f0715b8aeae6441aa07c344ab362102d" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>63076</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_999f1589d82bf301d9ed68778fe8faaf.setContent(html_f0715b8aeae6441aa07c344ab362102d);
+            
+        
+
+        poly_line_f8fffd7c74e59633937a20bd33049ff1.bindPopup(popup_999f1589d82bf301d9ed68778fe8faaf)
+        ;
+
+        
+    
+    
+            poly_line_f8fffd7c74e59633937a20bd33049ff1.bindTooltip(
+                `<div>
+                     FID 63076 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_63776e60631ccf48b02fca33152144ff = L.polyline(
+                [[26.361671899999997, -80.0859451], [26.361577999999998, -80.085961], [26.361138000000004, -80.0860432], [26.361020499999995, -80.08606360000002]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_c5f6fa6ce5e20c01b0c00a84c33bf914 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_61b18036a477a3b8eab2fc0806c2f153 = $(`<div id="html_61b18036a477a3b8eab2fc0806c2f153" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>66549</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_c5f6fa6ce5e20c01b0c00a84c33bf914.setContent(html_61b18036a477a3b8eab2fc0806c2f153);
+            
+        
+
+        poly_line_63776e60631ccf48b02fca33152144ff.bindPopup(popup_c5f6fa6ce5e20c01b0c00a84c33bf914)
+        ;
+
+        
+    
+    
+            poly_line_63776e60631ccf48b02fca33152144ff.bindTooltip(
+                `<div>
+                     FID 66549 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5e9c7d50c36943f77cdf54283f82efa0 = L.polyline(
+                [[26.361020499999995, -80.08606360000002], [26.360622699999993, -80.0861359]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_ae46c7fbfd4c433a7cdfbc04fbcc5894 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f33b5fa9d13f366932fecf77b303b3f7 = $(`<div id="html_f33b5fa9d13f366932fecf77b303b3f7" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>66554</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_ae46c7fbfd4c433a7cdfbc04fbcc5894.setContent(html_f33b5fa9d13f366932fecf77b303b3f7);
+            
+        
+
+        poly_line_5e9c7d50c36943f77cdf54283f82efa0.bindPopup(popup_ae46c7fbfd4c433a7cdfbc04fbcc5894)
+        ;
+
+        
+    
+    
+            poly_line_5e9c7d50c36943f77cdf54283f82efa0.bindTooltip(
+                `<div>
+                     FID 66554 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_7142bb51edf076350fd3ada7b6971b86 = L.polyline(
+                [[26.3578471, -80.0865697], [26.357592, -80.0866138]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_5d98593b7da2680d0822cbac741f2ead = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_cd28921595d39d7507e1043bc069a9db = $(`<div id="html_cd28921595d39d7507e1043bc069a9db" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>80344</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_5d98593b7da2680d0822cbac741f2ead.setContent(html_cd28921595d39d7507e1043bc069a9db);
+            
+        
+
+        poly_line_7142bb51edf076350fd3ada7b6971b86.bindPopup(popup_5d98593b7da2680d0822cbac741f2ead)
+        ;
+
+        
+    
+    
+            poly_line_7142bb51edf076350fd3ada7b6971b86.bindTooltip(
+                `<div>
+                     FID 80344 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9f56781ba2e0309d716dbf7d175f97d0 = L.polyline(
+                [[26.358739099999994, -80.0864306], [26.3578471, -80.0865697]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_760668d8ba4e687cb80b044f64195192 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_96f3f8f0a3d95b52d5f05452a0da76ba = $(`<div id="html_96f3f8f0a3d95b52d5f05452a0da76ba" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>80347</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_760668d8ba4e687cb80b044f64195192.setContent(html_96f3f8f0a3d95b52d5f05452a0da76ba);
+            
+        
+
+        poly_line_9f56781ba2e0309d716dbf7d175f97d0.bindPopup(popup_760668d8ba4e687cb80b044f64195192)
+        ;
+
+        
+    
+    
+            poly_line_9f56781ba2e0309d716dbf7d175f97d0.bindTooltip(
+                `<div>
+                     FID 80347 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_7fbbcf522b5c32f2361ba5d49749e752 = L.polyline(
+                [[26.357592, -80.0866138], [26.3573838, -80.0866541]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_cf4a3105952af8ef8f092739c63cc386 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_be59b76ec196a457f3df6c15b5323b20 = $(`<div id="html_be59b76ec196a457f3df6c15b5323b20" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>80350</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_cf4a3105952af8ef8f092739c63cc386.setContent(html_be59b76ec196a457f3df6c15b5323b20);
+            
+        
+
+        poly_line_7fbbcf522b5c32f2361ba5d49749e752.bindPopup(popup_cf4a3105952af8ef8f092739c63cc386)
+        ;
+
+        
+    
+    
+            poly_line_7fbbcf522b5c32f2361ba5d49749e752.bindTooltip(
+                `<div>
+                     FID 80350 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d00f1835ee62c212759ec98ec22bdce7 = L.polyline(
+                [[26.353020200000003, -80.0873183], [26.35242749999999, -80.0874026], [26.3523339, -80.0874159]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_fc030f98f379c23949068bf7c5ab0d49 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_44a4d347e0a2a38f2e39dcfe0260866d = $(`<div id="html_44a4d347e0a2a38f2e39dcfe0260866d" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>84421</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_fc030f98f379c23949068bf7c5ab0d49.setContent(html_44a4d347e0a2a38f2e39dcfe0260866d);
+            
+        
+
+        poly_line_d00f1835ee62c212759ec98ec22bdce7.bindPopup(popup_fc030f98f379c23949068bf7c5ab0d49)
+        ;
+
+        
+    
+    
+            poly_line_d00f1835ee62c212759ec98ec22bdce7.bindTooltip(
+                `<div>
+                     FID 84421 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_51c10f4463419e05c3f9b5ab1c841e1b = L.polyline(
+                [[26.370794399999998, -80.0973455], [26.3702728, -80.0973779], [26.3700193, -80.0973852], [26.3696895, -80.0973902], [26.369584699999997, -80.0973871]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_4964f4f2a9b04f5c4012131f947061f8 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_90e4ecd11595c103245c6b7b9a373d08 = $(`<div id="html_90e4ecd11595c103245c6b7b9a373d08" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92391</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_4964f4f2a9b04f5c4012131f947061f8.setContent(html_90e4ecd11595c103245c6b7b9a373d08);
+            
+        
+
+        poly_line_51c10f4463419e05c3f9b5ab1c841e1b.bindPopup(popup_4964f4f2a9b04f5c4012131f947061f8)
+        ;
+
+        
+    
+    
+            poly_line_51c10f4463419e05c3f9b5ab1c841e1b.bindTooltip(
+                `<div>
+                     FID 92391 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f849f3976d2816df854380a33959b75f = L.polyline(
+                [[26.3670494, -80.0976659], [26.365886299999993, -80.0980285], [26.365750899999995, -80.0980717]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_2a9813790010a7e01d91fb109ef16a51 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_8fcee31d9a4fe35377dea16f06c82c87 = $(`<div id="html_8fcee31d9a4fe35377dea16f06c82c87" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92401</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_2a9813790010a7e01d91fb109ef16a51.setContent(html_8fcee31d9a4fe35377dea16f06c82c87);
+            
+        
+
+        poly_line_f849f3976d2816df854380a33959b75f.bindPopup(popup_2a9813790010a7e01d91fb109ef16a51)
+        ;
+
+        
+    
+    
+            poly_line_f849f3976d2816df854380a33959b75f.bindTooltip(
+                `<div>
+                     FID 92401 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9e7a423410608edcbeeec80f5a8f8218 = L.polyline(
+                [[26.371985499999997, -80.0973377], [26.37172999999999, -80.0973359]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_9f2251d2c2d39245c1360c9cc54f1e07 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f477a32fb0d535b864e1e4a8d8257841 = $(`<div id="html_f477a32fb0d535b864e1e4a8d8257841" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92413</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_9f2251d2c2d39245c1360c9cc54f1e07.setContent(html_f477a32fb0d535b864e1e4a8d8257841);
+            
+        
+
+        poly_line_9e7a423410608edcbeeec80f5a8f8218.bindPopup(popup_9f2251d2c2d39245c1360c9cc54f1e07)
+        ;
+
+        
+    
+    
+            poly_line_9e7a423410608edcbeeec80f5a8f8218.bindTooltip(
+                `<div>
+                     FID 92413 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5cec50a4eb8668921dc5a9aad1cd8085 = L.polyline(
+                [[26.37172999999999, -80.0973359], [26.3716452, -80.0973369], [26.370937700000002, -80.0973424], [26.370794399999998, -80.0973455]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_6507e13bae4f4cbb7ecbbc3e9b91261c = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_4a1f8748dc8491d5b3c005dffd895638 = $(`<div id="html_4a1f8748dc8491d5b3c005dffd895638" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92427</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_6507e13bae4f4cbb7ecbbc3e9b91261c.setContent(html_4a1f8748dc8491d5b3c005dffd895638);
+            
+        
+
+        poly_line_5cec50a4eb8668921dc5a9aad1cd8085.bindPopup(popup_6507e13bae4f4cbb7ecbbc3e9b91261c)
+        ;
+
+        
+    
+    
+            poly_line_5cec50a4eb8668921dc5a9aad1cd8085.bindTooltip(
+                `<div>
+                     FID 92427 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_edc1b7b8eacea40aeb5874ff01fa80b1 = L.polyline(
+                [[26.374624500000003, -80.1001942], [26.374624700000002, -80.100035], [26.374625899999998, -80.0990159], [26.374625500000004, -80.0988856], [26.37462, -80.0987886], [26.374600800000003, -80.09862760000001], [26.374557600000003, -80.0984399], [26.374466299999995, -80.0981877], [26.3743397, -80.0979729], [26.374257399999998, -80.0978609]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_7d886147211c6d5d8ff3dc57cccdcab4 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_5a12cf0a6f163768103ad617c721ed29 = $(`<div id="html_5a12cf0a6f163768103ad617c721ed29" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92439</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_7d886147211c6d5d8ff3dc57cccdcab4.setContent(html_5a12cf0a6f163768103ad617c721ed29);
+            
+        
+
+        poly_line_edc1b7b8eacea40aeb5874ff01fa80b1.bindPopup(popup_7d886147211c6d5d8ff3dc57cccdcab4)
+        ;
+
+        
+    
+    
+            poly_line_edc1b7b8eacea40aeb5874ff01fa80b1.bindTooltip(
+                `<div>
+                     FID 92439 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_68b681eff416dcab625b44665686f2e9 = L.polyline(
+                [[26.374257399999998, -80.0978609], [26.374176699999996, -80.0977721]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_e28379ddad2ea9a15adc4a4f6a483d73 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_38e33350648ff812497be7ccab650efe = $(`<div id="html_38e33350648ff812497be7ccab650efe" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92442</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_e28379ddad2ea9a15adc4a4f6a483d73.setContent(html_38e33350648ff812497be7ccab650efe);
+            
+        
+
+        poly_line_68b681eff416dcab625b44665686f2e9.bindPopup(popup_e28379ddad2ea9a15adc4a4f6a483d73)
+        ;
+
+        
+    
+    
+            poly_line_68b681eff416dcab625b44665686f2e9.bindTooltip(
+                `<div>
+                     FID 92442 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e84540548beaffcf09d2332decc8c48c = L.polyline(
+                [[26.3746183, -80.1013224], [26.374623700000004, -80.1004245], [26.374624899999997, -80.1002786]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_d4014da948485040154c4da474d2b6db = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_8cfff88e05b357f3cca1bd92f95a47a2 = $(`<div id="html_8cfff88e05b357f3cca1bd92f95a47a2" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92444</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_d4014da948485040154c4da474d2b6db.setContent(html_8cfff88e05b357f3cca1bd92f95a47a2);
+            
+        
+
+        poly_line_e84540548beaffcf09d2332decc8c48c.bindPopup(popup_d4014da948485040154c4da474d2b6db)
+        ;
+
+        
+    
+    
+            poly_line_e84540548beaffcf09d2332decc8c48c.bindTooltip(
+                `<div>
+                     FID 92444 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_12eb10bf2a1599fb8b87fe2c9d2e2c4f = L.polyline(
+                [[26.3744083, -80.101327], [26.374508599999995, -80.1013248], [26.374543499999998, -80.1013241], [26.3746183, -80.1013224]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_08713468395d1dddcbee3eddb14a7541 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_cfef8e21160f3c8df841a8aea1dabb83 = $(`<div id="html_cfef8e21160f3c8df841a8aea1dabb83" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92446</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>service</td></tr></table></div>`)[0];
+                popup_08713468395d1dddcbee3eddb14a7541.setContent(html_cfef8e21160f3c8df841a8aea1dabb83);
+            
+        
+
+        poly_line_12eb10bf2a1599fb8b87fe2c9d2e2c4f.bindPopup(popup_08713468395d1dddcbee3eddb14a7541)
+        ;
+
+        
+    
+    
+            poly_line_12eb10bf2a1599fb8b87fe2c9d2e2c4f.bindTooltip(
+                `<div>
+                     FID 92446 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3b42d9d1d2df0b1a9e51d3ee8cb73875 = L.polyline(
+                [[26.374624899999997, -80.1002786], [26.374624500000003, -80.1001942]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_10e99ff3674f340b1331e56ee51fbd80 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_4775c8728424dd696e7d2d26acf1fd1d = $(`<div id="html_4775c8728424dd696e7d2d26acf1fd1d" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92448</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_10e99ff3674f340b1331e56ee51fbd80.setContent(html_4775c8728424dd696e7d2d26acf1fd1d);
+            
+        
+
+        poly_line_3b42d9d1d2df0b1a9e51d3ee8cb73875.bindPopup(popup_10e99ff3674f340b1331e56ee51fbd80)
+        ;
+
+        
+    
+    
+            poly_line_3b42d9d1d2df0b1a9e51d3ee8cb73875.bindTooltip(
+                `<div>
+                     FID 92448 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_08a6dfd8ee6c84e32d1f6e19cb8be9cb = L.polyline(
+                [[26.374176699999996, -80.0977721], [26.3741339, -80.0977342], [26.3740722, -80.0976781], [26.3739216, -80.0975813], [26.373756099999998, -80.0974906], [26.3736148, -80.097438], [26.373576799999995, -80.0974273], [26.373496800000005, -80.0974047], [26.373387599999997, -80.0973856], [26.373278599999995, -80.0973746]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_0d62bd2d78f75e5ab59e45d0a82266e9 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_d1dbf32363837f8f44aa55cc159a6acb = $(`<div id="html_d1dbf32363837f8f44aa55cc159a6acb" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92557</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_0d62bd2d78f75e5ab59e45d0a82266e9.setContent(html_d1dbf32363837f8f44aa55cc159a6acb);
+            
+        
+
+        poly_line_08a6dfd8ee6c84e32d1f6e19cb8be9cb.bindPopup(popup_0d62bd2d78f75e5ab59e45d0a82266e9)
+        ;
+
+        
+    
+    
+            poly_line_08a6dfd8ee6c84e32d1f6e19cb8be9cb.bindTooltip(
+                `<div>
+                     FID 92557 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_660b3bfdfbf12dfd1de3f1f5729282b8 = L.polyline(
+                [[26.373278599999995, -80.0973746], [26.372913700000005, -80.0973659]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_de6561704f2a813d2a696b13d7d3a77a = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_3c1645ed463693c15a65d7b421b1812f = $(`<div id="html_3c1645ed463693c15a65d7b421b1812f" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92560</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_de6561704f2a813d2a696b13d7d3a77a.setContent(html_3c1645ed463693c15a65d7b421b1812f);
+            
+        
+
+        poly_line_660b3bfdfbf12dfd1de3f1f5729282b8.bindPopup(popup_de6561704f2a813d2a696b13d7d3a77a)
+        ;
+
+        
+    
+    
+            poly_line_660b3bfdfbf12dfd1de3f1f5729282b8.bindTooltip(
+                `<div>
+                     FID 92560 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0845a16c92f13e2f4da36166362e4f7b = L.polyline(
+                [[26.372913700000005, -80.0973659], [26.3720513, -80.0973395], [26.371985499999997, -80.0973377]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_c8752f6c9d060861b3b65068c8ac7180 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_80dd65e20525e5840451cce306500382 = $(`<div id="html_80dd65e20525e5840451cce306500382" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92567</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_c8752f6c9d060861b3b65068c8ac7180.setContent(html_80dd65e20525e5840451cce306500382);
+            
+        
+
+        poly_line_0845a16c92f13e2f4da36166362e4f7b.bindPopup(popup_c8752f6c9d060861b3b65068c8ac7180)
+        ;
+
+        
+    
+    
+            poly_line_0845a16c92f13e2f4da36166362e4f7b.bindTooltip(
+                `<div>
+                     FID 92567 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_003c685f2182a28b8119a53213036945 = L.polyline(
+                [[26.369584699999997, -80.0973871], [26.369284400000005, -80.097378], [26.368737399999997, -80.097386], [26.368524, -80.0973893], [26.3683146, -80.0973979], [26.368079000000005, -80.097425], [26.367870099999998, -80.0974564], [26.367649500000002, -80.0974973], [26.3674899, -80.0975344], [26.367327399999997, -80.0975803], [26.3670494, -80.0976659]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_2b81c6ac1fe2c507f75ee9667e991182 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_158c1c8a51ceed890042e079d1d48b94 = $(`<div id="html_158c1c8a51ceed890042e079d1d48b94" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92580</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_2b81c6ac1fe2c507f75ee9667e991182.setContent(html_158c1c8a51ceed890042e079d1d48b94);
+            
+        
+
+        poly_line_003c685f2182a28b8119a53213036945.bindPopup(popup_2b81c6ac1fe2c507f75ee9667e991182)
+        ;
+
+        
+    
+    
+            poly_line_003c685f2182a28b8119a53213036945.bindTooltip(
+                `<div>
+                     FID 92580 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5ece67240962a31963e3941f48b988e2 = L.polyline(
+                [[26.3633897, -80.0982283], [26.363217999999993, -80.0983594], [26.3631354, -80.0984223]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_f2d50cbe61ff64f1311b3bc961b47cf5 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_938f1f3934ae3b984be93d9cb08bb829 = $(`<div id="html_938f1f3934ae3b984be93d9cb08bb829" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92586</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_f2d50cbe61ff64f1311b3bc961b47cf5.setContent(html_938f1f3934ae3b984be93d9cb08bb829);
+            
+        
+
+        poly_line_5ece67240962a31963e3941f48b988e2.bindPopup(popup_f2d50cbe61ff64f1311b3bc961b47cf5)
+        ;
+
+        
+    
+    
+            poly_line_5ece67240962a31963e3941f48b988e2.bindTooltip(
+                `<div>
+                     FID 92586 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_b064f418e2ff7b1540a72c3b749723f0 = L.polyline(
+                [[26.373797299999996, -80.1013356], [26.3738406, -80.1013395], [26.373909899999997, -80.101338], [26.3741202, -80.1013334], [26.3744083, -80.101327]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_d570a8d525c9e79c7fff41b8a8fcd6eb = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_49a318da05843d80b095362bd188528b = $(`<div id="html_49a318da05843d80b095362bd188528b" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93502</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>service</td></tr></table></div>`)[0];
+                popup_d570a8d525c9e79c7fff41b8a8fcd6eb.setContent(html_49a318da05843d80b095362bd188528b);
+            
+        
+
+        poly_line_b064f418e2ff7b1540a72c3b749723f0.bindPopup(popup_d570a8d525c9e79c7fff41b8a8fcd6eb)
+        ;
+
+        
+    
+    
+            poly_line_b064f418e2ff7b1540a72c3b749723f0.bindTooltip(
+                `<div>
+                     FID 93502 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_aed6ae5a83c85ddaebd95449eab3cfb1 = L.polyline(
+                [[26.373798299999997, -80.1011823], [26.373797299999996, -80.1013356]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_4588876b0d83b34f281743473bb36ab7 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_98d02d194a4c7126e5c6e94de183e4ee = $(`<div id="html_98d02d194a4c7126e5c6e94de183e4ee" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93961</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>service</td></tr></table></div>`)[0];
+                popup_4588876b0d83b34f281743473bb36ab7.setContent(html_98d02d194a4c7126e5c6e94de183e4ee);
+            
+        
+
+        poly_line_aed6ae5a83c85ddaebd95449eab3cfb1.bindPopup(popup_4588876b0d83b34f281743473bb36ab7)
+        ;
+
+        
+    
+    
+            poly_line_aed6ae5a83c85ddaebd95449eab3cfb1.bindTooltip(
+                `<div>
+                     FID 93961 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e5fcd0c3b60fb506400ae27b5f2b9877 = L.polyline(
+                [[26.3631354, -80.0984223], [26.362992400000003, -80.0985315]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_27e61ea90994224367851cdf368019f3 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_5ff381e49af915fe0b1a346926d860ba = $(`<div id="html_5ff381e49af915fe0b1a346926d860ba" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>97792</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_27e61ea90994224367851cdf368019f3.setContent(html_5ff381e49af915fe0b1a346926d860ba);
+            
+        
+
+        poly_line_e5fcd0c3b60fb506400ae27b5f2b9877.bindPopup(popup_27e61ea90994224367851cdf368019f3)
+        ;
+
+        
+    
+    
+            poly_line_e5fcd0c3b60fb506400ae27b5f2b9877.bindTooltip(
+                `<div>
+                     FID 97792 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_710cd381edc92d0e610e75a09416441e = L.polyline(
+                [[26.373799599999998, -80.1009981], [26.374411000000002, -80.1010037]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_049028aff453ee40634ee29305045068 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_98ca4111b9b3e2e8f12313e8069994cd = $(`<div id="html_98ca4111b9b3e2e8f12313e8069994cd" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>111056</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>service</td></tr></table></div>`)[0];
+                popup_049028aff453ee40634ee29305045068.setContent(html_98ca4111b9b3e2e8f12313e8069994cd);
+            
+        
+
+        poly_line_710cd381edc92d0e610e75a09416441e.bindPopup(popup_049028aff453ee40634ee29305045068)
+        ;
+
+        
+    
+    
+            poly_line_710cd381edc92d0e610e75a09416441e.bindTooltip(
+                `<div>
+                     FID 111056 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_dd7f5cf5eb5b9f86de83aea7cb5c3db7 = L.polyline(
+                [[26.373799599999998, -80.1009981], [26.373798299999997, -80.1011823]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_f1be587ce54c4a50672a94f8ede676eb = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_6c23d29d318b296c44f63fff16a979fa = $(`<div id="html_6c23d29d318b296c44f63fff16a979fa" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>111057</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>service</td></tr></table></div>`)[0];
+                popup_f1be587ce54c4a50672a94f8ede676eb.setContent(html_6c23d29d318b296c44f63fff16a979fa);
+            
+        
+
+        poly_line_dd7f5cf5eb5b9f86de83aea7cb5c3db7.bindPopup(popup_f1be587ce54c4a50672a94f8ede676eb)
+        ;
+
+        
+    
+    
+            poly_line_dd7f5cf5eb5b9f86de83aea7cb5c3db7.bindTooltip(
+                `<div>
+                     FID 111057 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4a1193bc1c04373db6017ccf34df537f = L.polyline(
+                [[26.3565108, -80.0868027], [26.355617099999996, -80.086938], [26.3550379, -80.0870155]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_0955be27b00e01b6e811b05b41e7efb2 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_4603c8b45f37a3cf0c7bc6755264b4a0 = $(`<div id="html_4603c8b45f37a3cf0c7bc6755264b4a0" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>113362</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_0955be27b00e01b6e811b05b41e7efb2.setContent(html_4603c8b45f37a3cf0c7bc6755264b4a0);
+            
+        
+
+        poly_line_4a1193bc1c04373db6017ccf34df537f.bindPopup(popup_0955be27b00e01b6e811b05b41e7efb2)
+        ;
+
+        
+    
+    
+            poly_line_4a1193bc1c04373db6017ccf34df537f.bindTooltip(
+                `<div>
+                     FID 113362 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5b87111295262053fb594955b3991eca = L.polyline(
+                [[26.3573838, -80.0866541], [26.3565108, -80.0868027]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_fe4fd5031cfa351945389a600fb242f0 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_cc9138b288cb810aaef15972b3bbb134 = $(`<div id="html_cc9138b288cb810aaef15972b3bbb134" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>113364</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_fe4fd5031cfa351945389a600fb242f0.setContent(html_cc9138b288cb810aaef15972b3bbb134);
+            
+        
+
+        poly_line_5b87111295262053fb594955b3991eca.bindPopup(popup_fe4fd5031cfa351945389a600fb242f0)
+        ;
+
+        
+    
+    
+            poly_line_5b87111295262053fb594955b3991eca.bindTooltip(
+                `<div>
+                     FID 113364 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_b0f4fab9d021bc431be5d15f831fa2d4 = L.polyline(
+                [[26.3550379, -80.0870155], [26.3537964, -80.0872031]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_d0974c0c76b9e9ce4584091279c4a412 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f3b0f07e1a607113f2f1c4457b879fea = $(`<div id="html_f3b0f07e1a607113f2f1c4457b879fea" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>113365</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_d0974c0c76b9e9ce4584091279c4a412.setContent(html_f3b0f07e1a607113f2f1c4457b879fea);
+            
+        
+
+        poly_line_b0f4fab9d021bc431be5d15f831fa2d4.bindPopup(popup_d0974c0c76b9e9ce4584091279c4a412)
+        ;
+
+        
+    
+    
+            poly_line_b0f4fab9d021bc431be5d15f831fa2d4.bindTooltip(
+                `<div>
+                     FID 113365 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3b24ded67d8f2bab4af86fbe753f2786 = L.polyline(
+                [[26.374411000000002, -80.1010037], [26.373799599999998, -80.1009981]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_7bde5b3ea92dd2fd4d69304de06431e0 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_d679ecd167a4cb6a3afa2e182241b23f = $(`<div id="html_d679ecd167a4cb6a3afa2e182241b23f" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>118388</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>service</td></tr></table></div>`)[0];
+                popup_7bde5b3ea92dd2fd4d69304de06431e0.setContent(html_d679ecd167a4cb6a3afa2e182241b23f);
+            
+        
+
+        poly_line_3b24ded67d8f2bab4af86fbe753f2786.bindPopup(popup_7bde5b3ea92dd2fd4d69304de06431e0)
+        ;
+
+        
+    
+    
+            poly_line_3b24ded67d8f2bab4af86fbe753f2786.bindTooltip(
+                `<div>
+                     FID 118388 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0e91bf999c5e535d513031976d47d536 = L.polyline(
+                [[26.3297539, -80.0928352], [26.3295077, -80.0930374], [26.3292529, -80.0932467], [26.3278136, -80.0944287]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_f176ebc671f2141480f7b1619e692663 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_4ec24c38b87dd6a78107943f32d01319 = $(`<div id="html_4ec24c38b87dd6a78107943f32d01319" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>118723</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_f176ebc671f2141480f7b1619e692663.setContent(html_4ec24c38b87dd6a78107943f32d01319);
+            
+        
+
+        poly_line_0e91bf999c5e535d513031976d47d536.bindPopup(popup_f176ebc671f2141480f7b1619e692663)
+        ;
+
+        
+    
+    
+            poly_line_0e91bf999c5e535d513031976d47d536.bindTooltip(
+                `<div>
+                     FID 118723 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9e2c16308052598a1f965b16045cdc82 = L.polyline(
+                [[26.3391677, -80.0895311], [26.338263999999995, -80.0896736]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_bb099ea9593bb0ca72695cb24409afc0 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_59a802ce1ef1f2b3c6f954dadfc227db = $(`<div id="html_59a802ce1ef1f2b3c6f954dadfc227db" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>129707</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_bb099ea9593bb0ca72695cb24409afc0.setContent(html_59a802ce1ef1f2b3c6f954dadfc227db);
+            
+        
+
+        poly_line_9e2c16308052598a1f965b16045cdc82.bindPopup(popup_bb099ea9593bb0ca72695cb24409afc0)
+        ;
+
+        
+    
+    
+            poly_line_9e2c16308052598a1f965b16045cdc82.bindTooltip(
+                `<div>
+                     FID 129707 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_141ed108420b456a451af0f75d3664fc = L.polyline(
+                [[26.334655799999997, -80.0902453], [26.3344632, -80.0902833], [26.334011299999997, -80.0903799], [26.3337451, -80.0904502]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_de48bb3d79fc987e576824f7e6f486ed = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_604cd49ea07759f6599a8eaf7c8aa57c = $(`<div id="html_604cd49ea07759f6599a8eaf7c8aa57c" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>129835</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_de48bb3d79fc987e576824f7e6f486ed.setContent(html_604cd49ea07759f6599a8eaf7c8aa57c);
+            
+        
+
+        poly_line_141ed108420b456a451af0f75d3664fc.bindPopup(popup_de48bb3d79fc987e576824f7e6f486ed)
+        ;
+
+        
+    
+    
+            poly_line_141ed108420b456a451af0f75d3664fc.bindTooltip(
+                `<div>
+                     FID 129835 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_000bf4c74a10eab24223cce1660ae420 = L.polyline(
+                [[26.3337451, -80.0904502], [26.333645899999997, -80.0904764], [26.3334033, -80.0905554]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_c390ab34daaaaa7a14ce19fdceb1ec7e = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_a7853158c9fb7c2a1daac91ce3e41702 = $(`<div id="html_a7853158c9fb7c2a1daac91ce3e41702" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>129838</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_c390ab34daaaaa7a14ce19fdceb1ec7e.setContent(html_a7853158c9fb7c2a1daac91ce3e41702);
+            
+        
+
+        poly_line_000bf4c74a10eab24223cce1660ae420.bindPopup(popup_c390ab34daaaaa7a14ce19fdceb1ec7e)
+        ;
+
+        
+    
+    
+            poly_line_000bf4c74a10eab24223cce1660ae420.bindTooltip(
+                `<div>
+                     FID 129838 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ad57b883126fa8342b194e6adf0dd87e = L.polyline(
+                [[26.3334033, -80.0905554], [26.3331844, -80.0906266], [26.3327901, -80.0907661], [26.332472800000005, -80.0909217], [26.3321219, -80.0910772], [26.331867000000003, -80.09122740000001], [26.331554499999996, -80.0914152], [26.3314251, -80.0915027]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_eb2865a35e1cfd3ed1f0f5773d110634 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_a067f1671f34906c6efd3c67a92c298c = $(`<div id="html_a067f1671f34906c6efd3c67a92c298c" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>129856</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_eb2865a35e1cfd3ed1f0f5773d110634.setContent(html_a067f1671f34906c6efd3c67a92c298c);
+            
+        
+
+        poly_line_ad57b883126fa8342b194e6adf0dd87e.bindPopup(popup_eb2865a35e1cfd3ed1f0f5773d110634)
+        ;
+
+        
+    
+    
+            poly_line_ad57b883126fa8342b194e6adf0dd87e.bindTooltip(
+                `<div>
+                     FID 129856 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_553216207420d3ac78c90bbeb5ca997e = L.polyline(
+                [[26.3439424, -80.0886638], [26.343660500000006, -80.0886573]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_13ef0dd3395abd06ae161eabd5fcd009 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_23490a3e464ff45a51fb6c3f62c5b26f = $(`<div id="html_23490a3e464ff45a51fb6c3f62c5b26f" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>130806</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>South Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_13ef0dd3395abd06ae161eabd5fcd009.setContent(html_23490a3e464ff45a51fb6c3f62c5b26f);
+            
+        
+
+        poly_line_553216207420d3ac78c90bbeb5ca997e.bindPopup(popup_13ef0dd3395abd06ae161eabd5fcd009)
+        ;
+
+        
+    
+    
+            poly_line_553216207420d3ac78c90bbeb5ca997e.bindTooltip(
+                `<div>
+                     FID 130806 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_b8a5bbf495a91da8efadc7874b3c4165 = L.polyline(
+                [[26.3531651, -80.0872965], [26.353020200000003, -80.0873183]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_ac5b8b8d77d4a31dffe9814406974795 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_39cf3fc97021d5349d53e05a31f6cc28 = $(`<div id="html_39cf3fc97021d5349d53e05a31f6cc28" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>132156</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_ac5b8b8d77d4a31dffe9814406974795.setContent(html_39cf3fc97021d5349d53e05a31f6cc28);
+            
+        
+
+        poly_line_b8a5bbf495a91da8efadc7874b3c4165.bindPopup(popup_ac5b8b8d77d4a31dffe9814406974795)
+        ;
+
+        
+    
+    
+            poly_line_b8a5bbf495a91da8efadc7874b3c4165.bindTooltip(
+                `<div>
+                     FID 132156 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_782856f5557fe4172bfee8842e3aefca = L.polyline(
+                [[26.3537964, -80.0872031], [26.3531651, -80.0872965]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_8385a4b2362903a035f2f8cc85f540db = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_b2f796a3dcf98c2bd9c562a23f50c584 = $(`<div id="html_b2f796a3dcf98c2bd9c562a23f50c584" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>132167</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_8385a4b2362903a035f2f8cc85f540db.setContent(html_b2f796a3dcf98c2bd9c562a23f50c584);
+            
+        
+
+        poly_line_782856f5557fe4172bfee8842e3aefca.bindPopup(popup_8385a4b2362903a035f2f8cc85f540db)
+        ;
+
+        
+    
+    
+            poly_line_782856f5557fe4172bfee8842e3aefca.bindTooltip(
+                `<div>
+                     FID 132167 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_54c885518a20df3e1d66f7231c0d166c = L.polyline(
+                [[26.361557899999994, -80.0886638], [26.361578499999997, -80.0881799]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_42c768d5f0e09c75603dd6223eb60206 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_4d3cc0c0b6f538c3ffb9ff246c768bf9 = $(`<div id="html_4d3cc0c0b6f538c3ffb9ff246c768bf9" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>181215</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_42c768d5f0e09c75603dd6223eb60206.setContent(html_4d3cc0c0b6f538c3ffb9ff246c768bf9);
+            
+        
+
+        poly_line_54c885518a20df3e1d66f7231c0d166c.bindPopup(popup_42c768d5f0e09c75603dd6223eb60206)
+        ;
+
+        
+    
+    
+            poly_line_54c885518a20df3e1d66f7231c0d166c.bindTooltip(
+                `<div>
+                     FID 181215 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d2698bb37e23573cd2827cfba404692b = L.polyline(
+                [[26.361578499999997, -80.0881799], [26.3615838, -80.0880566], [26.36161149999999, -80.0874916], [26.3616637, -80.0862727], [26.361665199999994, -80.0862282], [26.361667299999997, -80.0861381], [26.361671899999997, -80.0859451]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_f0cb20868d152396ae21eee93722f248 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_0071af3a9a007396893ac4451442f60b = $(`<div id="html_0071af3a9a007396893ac4451442f60b" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>181227</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_f0cb20868d152396ae21eee93722f248.setContent(html_0071af3a9a007396893ac4451442f60b);
+            
+        
+
+        poly_line_d2698bb37e23573cd2827cfba404692b.bindPopup(popup_f0cb20868d152396ae21eee93722f248)
+        ;
+
+        
+    
+    
+            poly_line_d2698bb37e23573cd2827cfba404692b.bindTooltip(
+                `<div>
+                     FID 181227 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e60e3e5d70d7eef22f1141b401445146 = L.polyline(
+                [[26.359158900000004, -80.0863651], [26.358739099999994, -80.0864306]],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#dc2626", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_bea20e7c12f255fe652a5c49bf6f8b6f);
+        
+    
+        var popup_684a16aa2856eea087e31c4c4175588e = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_82d16187e0bf924356330b0c5da34478 = $(`<div id="html_82d16187e0bf924356330b0c5da34478" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>181259</td></tr><tr><th>Status</th><td>removed</td></tr><tr><th>2024-04 trips</th><td>1</td></tr><tr><th>2024-05 trips</th><td>0</td></tr><tr><th>Count delta</th><td>-1</td></tr><tr><th>Road</th><td>North Dixie Highway</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_684a16aa2856eea087e31c4c4175588e.setContent(html_82d16187e0bf924356330b0c5da34478);
+            
+        
+
+        poly_line_e60e3e5d70d7eef22f1141b401445146.bindPopup(popup_684a16aa2856eea087e31c4c4175588e)
+        ;
+
+        
+    
+    
+            poly_line_e60e3e5d70d7eef22f1141b401445146.bindTooltip(
+                `<div>
+                     FID 181259 · removed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_bea20e7c12f255fe652a5c49bf6f8b6f.addTo(map_bf9b26820aedc8b86cca7683c34db5c9);
+        
+    
+            map_bf9b26820aedc8b86cca7683c34db5c9.fitBounds(
+                [[26.324045900000005, -80.1013395], [26.374625899999998, -80.0859451]],
+                {}
+            );
+        
+    
+            var layer_control_22095d6f1a5248b9c47fdfc130636d9c_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_7fd016d180b939898c412866f570c982,
+                },
+                overlays :  {
+                    "Shared FIDs" : feature_group_5825640024f3b19d0565bda9ebf59072,
+                    "Added in 2024-05" : feature_group_fae0e3fb14b1f73de5453336045b2c72,
+                    "Removed after 2024-04" : feature_group_bea20e7c12f255fe652a5c49bf6f8b6f,
+                },
+            };
+            let layer_control_22095d6f1a5248b9c47fdfc130636d9c = L.control.layers(
+                layer_control_22095d6f1a5248b9c47fdfc130636d9c_layers.base_layers,
+                layer_control_22095d6f1a5248b9c47fdfc130636d9c_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_bf9b26820aedc8b86cca7683c34db5c9);
+
+        
+</script>
+</html>

@@ -31,3 +31,11 @@ KINGSTON/
 
 # Large generated delivery bundle (prepared locally for Google Drive)
 /deliverables/google_drive_phase2/
+
+# Driver 1003 HTML research deliverables are intentionally committed.
+# Keep any accidental data/debug artifacts out of that curated tree.
+/deliverables/driver_1003/**/*.csv
+/deliverables/driver_1003/**/*.parquet
+/deliverables/driver_1003/**/*.jsonl
+/deliverables/driver_1003/**/debug/
+/deliverables/driver_1003/**/legacy_selected_maps/

@@ -2,6 +2,10 @@
 
 ## Research definition
 
+This phase focuses on the longitudinal analysis of **Driver 1003**. Phase 1
+produced the FMM map matching outputs and enriched road network attributes used
+to build these monthly graphs.
+
 Dr. Jang requested a month-by-month graph for the same driver. The graph used
 in this phase is:
 
@@ -164,6 +168,19 @@ deliverables/google_drive_phase2/driver_1003_monthly_graphs/
 Canonical generated copies also remain under
 `sflorida_outputs/phase2/monthly_graphs/driver_1003/`.
 
+Presentation-ready HTML deliverables are committed under:
+
+```text
+deliverables/driver_1003/monthly_graphs/
+  driver_1003_monthly_graph_overview.html
+  driver_1003_broward_county_2023-08_graph.html
+  maps/*.html
+```
+
+The committed HTML files are intended for advisor review on GitHub. Raw CSV,
+Parquet, JSONL, cache, and intermediate output folders are not committed as
+Phase 2 deliverables.
+
 ## Maps
 
 Monthly maps retain the road/FID usage layer colored and weighted by
@@ -204,6 +221,7 @@ produce node or edge files.
   numbers of trips; normalized shares are included for this reason.
 - Origin–destination route comparison remains deferred.
 
-The next research stage is graph-to-graph comparison across months using these
-stable FID-node and directed-transition-edge tables. No comparison metric is
-implemented in this phase.
+The next research stage is Phase 2C graph-to-graph comparison across
+consecutive months using these stable FID-node and directed-transition-edge
+tables. The subsequent research phase is development of a Driver Path Choice
+Change Metric using the comparison outputs.
