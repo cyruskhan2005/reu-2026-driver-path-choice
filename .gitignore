@@ -28,3 +28,6 @@ run_log*.txt
 Volumes/
 KINGSTON/
 /Volumes/KINGSTON/
+
+# Large generated delivery bundle (prepared locally for Google Drive)
+/deliverables/google_drive_phase2/
