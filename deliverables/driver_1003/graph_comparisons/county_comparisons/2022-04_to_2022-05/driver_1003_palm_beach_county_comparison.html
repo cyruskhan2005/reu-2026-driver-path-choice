@@ -1,0 +1,2628 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Driver 1003 Palm Beach County 2022-04 to 2022-05 FID Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_dc20399e93454de2e7ae4215b18c26f6 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="position:fixed;top:18px;left:55px;z-index:9999;background:white;
+      border:1px solid #cbd5e1;border-radius:12px;padding:14px 16px;
+      box-shadow:0 4px 16px rgba(15,23,42,.20);font-family:Arial,sans-serif;
+      max-width:560px;">
+      <div style="font-size:17px;font-weight:800;margin-bottom:4px;">
+        Driver 1003 County-Specific Comparison
+      </div>
+      <div style="font-size:14px;font-weight:700;color:#334155;margin-bottom:8px;">
+        Palm Beach County · 2022-04 → 2022-05
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(92px,1fr));
+        gap:8px;margin-bottom:10px;font-size:12px;">
+        <div><span style="color:#64748b;">Trips</span><br><strong>0 → 1</strong></div>
+        <div><span style="color:#64748b;">Unique FIDs</span><br><strong>0 → 74</strong></div>
+        <div><span style="color:#64748b;">Quality</span><br><strong>month_a_no_trips</strong></div>
+        <div><span style="color:#64748b;">Shared</span><br><strong>0</strong></div>
+        <div><span style="color:#64748b;">Added</span><br><strong>74</strong></div>
+        <div><span style="color:#64748b;">Removed</span><br><strong>0</strong></div>
+      </div>
+      <div style="background:#fff7ed;color:#7c2d12;border:1px solid #fed7aa;border-radius:8px;padding:8px;margin-bottom:9px;font-size:12px;line-height:1.4;">No observations exist for this county in 2022-04. All displayed FIDs are newly observed in 2022-05.</div>
+      <div style="font-size:13px;line-height:1.5;">
+        <span style="color:#64748b">━━</span> Shared FIDs<br>
+        <span style="color:#16a34a">━━</span> Added FIDs<br>
+        <span style="color:#dc2626">━━</span> Removed FIDs
+      </div>
+    </div>
+    
+    
+            <div class="folium-map" id="map_dc20399e93454de2e7ae4215b18c26f6" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_dc20399e93454de2e7ae4215b18c26f6 = L.map(
+                "map_dc20399e93454de2e7ae4215b18c26f6",
+                {
+                    center: [26.353193399999995, -80.12758525000001],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_dc20399e93454de2e7ae4215b18c26f6);
+
+            
+
+        
+    
+            var tile_layer_c4cba7df1aa4e9d28f3ea2edf0015043 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c4cba7df1aa4e9d28f3ea2edf0015043.addTo(map_dc20399e93454de2e7ae4215b18c26f6);
+        
+    
+            var feature_group_22b32109fd9e614e42d18969968c3782 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_22b32109fd9e614e42d18969968c3782.addTo(map_dc20399e93454de2e7ae4215b18c26f6);
+        
+    
+            var feature_group_59948c1fdbe42baccd7c2cdfc12c341a = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var poly_line_a2aadac31e30f8a3b79ba8ad8b42fbe6 = L.polyline(
+                [[26.365750899999995, -80.0980717], [26.365442199999997, -80.0981473], [26.365117699999995, -80.098162], [26.364892199999996, -80.09813410000001], [26.3647147, -80.0981037], [26.364620299999995, -80.0980829], [26.364358699999997, -80.09798180000001], [26.364249, -80.0979394], [26.364070299999998, -80.0978927], [26.363987, -80.0978968], [26.3638889, -80.097915], [26.363794900000002, -80.0979504], [26.3637108, -80.09800430000001], [26.3633897, -80.0982283]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_ba2451707b11b9fabc9e2ddbe04ac791 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_6a372c5b1e850d2b2d069e08eb8ff51e = $(`<div id="html_6a372c5b1e850d2b2d069e08eb8ff51e" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>731</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_ba2451707b11b9fabc9e2ddbe04ac791.setContent(html_6a372c5b1e850d2b2d069e08eb8ff51e);
+            
+        
+
+        poly_line_a2aadac31e30f8a3b79ba8ad8b42fbe6.bindPopup(popup_ba2451707b11b9fabc9e2ddbe04ac791)
+        ;
+
+        
+    
+    
+            poly_line_a2aadac31e30f8a3b79ba8ad8b42fbe6.bindTooltip(
+                `<div>
+                     FID 731 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1bf86563dca48aa7b47d915aff2bc650 = L.polyline(
+                [[26.3688134, -80.1374391], [26.3688188, -80.1376068], [26.368906500000005, -80.1434405], [26.368891399999992, -80.1447634], [26.368878999999993, -80.1455232], [26.3688762, -80.1456458]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_5665fc6405f3c812b23a2520950684d8 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_2eca648ca5d36a941600dd2257b061fa = $(`<div id="html_2eca648ca5d36a941600dd2257b061fa" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>13623</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_5665fc6405f3c812b23a2520950684d8.setContent(html_2eca648ca5d36a941600dd2257b061fa);
+            
+        
+
+        poly_line_1bf86563dca48aa7b47d915aff2bc650.bindPopup(popup_5665fc6405f3c812b23a2520950684d8)
+        ;
+
+        
+    
+    
+            poly_line_1bf86563dca48aa7b47d915aff2bc650.bindTooltip(
+                `<div>
+                     FID 13623 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1205a2ee8a5ceea0283a8267d4b42188 = L.polyline(
+                [[26.3655579, -80.1033024], [26.365573200000004, -80.1035319], [26.365587299999998, -80.1042467], [26.3655967, -80.1045052]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_6877a1026bff1b97a4354f63aa4e9adf = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_7298f6133f7c300d752e73ca8dba76d8 = $(`<div id="html_7298f6133f7c300d752e73ca8dba76d8" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>50516</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_6877a1026bff1b97a4354f63aa4e9adf.setContent(html_7298f6133f7c300d752e73ca8dba76d8);
+            
+        
+
+        poly_line_1205a2ee8a5ceea0283a8267d4b42188.bindPopup(popup_6877a1026bff1b97a4354f63aa4e9adf)
+        ;
+
+        
+    
+    
+            poly_line_1205a2ee8a5ceea0283a8267d4b42188.bindTooltip(
+                `<div>
+                     FID 50516 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d36861f2aeb909d957f3fa8cc0a10081 = L.polyline(
+                [[26.3403139, -80.1538175], [26.33542479999999, -80.1537345], [26.335239799999997, -80.1537325], [26.3328609, -80.153685], [26.331997899999998, -80.1536577], [26.3318637, -80.1536541]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_cf2f94f05f0d8809977880547ae6f7ef = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_59efd2de33e049480961f4be50205ca0 = $(`<div id="html_59efd2de33e049480961f4be50205ca0" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>52570</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_cf2f94f05f0d8809977880547ae6f7ef.setContent(html_59efd2de33e049480961f4be50205ca0);
+            
+        
+
+        poly_line_d36861f2aeb909d957f3fa8cc0a10081.bindPopup(popup_cf2f94f05f0d8809977880547ae6f7ef)
+        ;
+
+        
+    
+    
+            poly_line_d36861f2aeb909d957f3fa8cc0a10081.bindTooltip(
+                `<div>
+                     FID 52570 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_bc207008c9885e31b2e8dd5a8ed16f84 = L.polyline(
+                [[26.3628669, -80.1504518], [26.3627865, -80.1505811], [26.36252779999999, -80.150997], [26.3622618, -80.1513569], [26.3620406, -80.1516064]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_8885e264d634f6b67ffc275b1f131afb = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_0154c2e4f12d6dad6ca1951d26cb6b6c = $(`<div id="html_0154c2e4f12d6dad6ca1951d26cb6b6c" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>54712</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_8885e264d634f6b67ffc275b1f131afb.setContent(html_0154c2e4f12d6dad6ca1951d26cb6b6c);
+            
+        
+
+        poly_line_bc207008c9885e31b2e8dd5a8ed16f84.bindPopup(popup_8885e264d634f6b67ffc275b1f131afb)
+        ;
+
+        
+    
+    
+            poly_line_bc207008c9885e31b2e8dd5a8ed16f84.bindTooltip(
+                `<div>
+                     FID 54712 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_06026eda05f5ceaf5cfbb8ddc7927d70 = L.polyline(
+                [[26.343955499999996, -80.1538817], [26.343826300000003, -80.153879]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_24d0f19a2144aaa53a6fd63a03a8086a = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_7b57a3bd65aea6083495aec0be0f1e14 = $(`<div id="html_7b57a3bd65aea6083495aec0be0f1e14" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>59055</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_24d0f19a2144aaa53a6fd63a03a8086a.setContent(html_7b57a3bd65aea6083495aec0be0f1e14);
+            
+        
+
+        poly_line_06026eda05f5ceaf5cfbb8ddc7927d70.bindPopup(popup_24d0f19a2144aaa53a6fd63a03a8086a)
+        ;
+
+        
+    
+    
+            poly_line_06026eda05f5ceaf5cfbb8ddc7927d70.bindTooltip(
+                `<div>
+                     FID 59055 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6d412be02f83fd06dac14c65952a5b29 = L.polyline(
+                [[26.350426, -80.1539786], [26.350254500000002, -80.1539776]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_f5bf37469f9fc2007139376c056bf00c = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_c854dc2be97d3708cb49321cae3d85ff = $(`<div id="html_c854dc2be97d3708cb49321cae3d85ff" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>59063</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_f5bf37469f9fc2007139376c056bf00c.setContent(html_c854dc2be97d3708cb49321cae3d85ff);
+            
+        
+
+        poly_line_6d412be02f83fd06dac14c65952a5b29.bindPopup(popup_f5bf37469f9fc2007139376c056bf00c)
+        ;
+
+        
+    
+    
+            poly_line_6d412be02f83fd06dac14c65952a5b29.bindTooltip(
+                `<div>
+                     FID 59063 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_554579fe552870ed23b0088c535f760c = L.polyline(
+                [[26.35213459999999, -80.1540104], [26.35118, -80.1539927], [26.350553099999992, -80.153981], [26.350426, -80.1539786]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_648fb5f808eed386891bfb0feedd295a = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_898030165d5c8566a939009427255857 = $(`<div id="html_898030165d5c8566a939009427255857" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>59068</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_648fb5f808eed386891bfb0feedd295a.setContent(html_898030165d5c8566a939009427255857);
+            
+        
+
+        poly_line_554579fe552870ed23b0088c535f760c.bindPopup(popup_648fb5f808eed386891bfb0feedd295a)
+        ;
+
+        
+    
+    
+            poly_line_554579fe552870ed23b0088c535f760c.bindTooltip(
+                `<div>
+                     FID 59068 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f19975e6ba8eba586367d4fa36f628b3 = L.polyline(
+                [[26.353735999999998, -80.1540288], [26.353582899999996, -80.154027], [26.353235599999998, -80.154023]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_4092ba9626b2b3366fbbfe803f9336cd = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f6933f7c510b38383ff515c8b914f711 = $(`<div id="html_f6933f7c510b38383ff515c8b914f711" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>59073</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_4092ba9626b2b3366fbbfe803f9336cd.setContent(html_f6933f7c510b38383ff515c8b914f711);
+            
+        
+
+        poly_line_f19975e6ba8eba586367d4fa36f628b3.bindPopup(popup_4092ba9626b2b3366fbbfe803f9336cd)
+        ;
+
+        
+    
+    
+            poly_line_f19975e6ba8eba586367d4fa36f628b3.bindTooltip(
+                `<div>
+                     FID 59073 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4815d06f6496a046ee4d8f8b8fe5ee8a = L.polyline(
+                [[26.3620406, -80.1516064], [26.361816999999995, -80.1518481], [26.3615157, -80.1521397], [26.361441899999996, -80.1521972]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_cc49e63031b81eb33ff5a24e52e8b576 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_6cc222f329cd84b98a66e3ebe521b45f = $(`<div id="html_6cc222f329cd84b98a66e3ebe521b45f" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>59089</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_cc49e63031b81eb33ff5a24e52e8b576.setContent(html_6cc222f329cd84b98a66e3ebe521b45f);
+            
+        
+
+        poly_line_4815d06f6496a046ee4d8f8b8fe5ee8a.bindPopup(popup_cc49e63031b81eb33ff5a24e52e8b576)
+        ;
+
+        
+    
+    
+            poly_line_4815d06f6496a046ee4d8f8b8fe5ee8a.bindTooltip(
+                `<div>
+                     FID 59089 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_baa03fe06adfcc9142c1e10cecfad739 = L.polyline(
+                [[26.366573700000004, -80.1462713], [26.3661924, -80.1464525], [26.365832299999997, -80.1466548], [26.36558279999999, -80.1468177], [26.365261599999997, -80.147051]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_d8b9a743f9df0c608c48c6eb6fa30bee = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_9cb6ee4da95d919e68b28f3ddd44fdac = $(`<div id="html_9cb6ee4da95d919e68b28f3ddd44fdac" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>59094</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_d8b9a743f9df0c608c48c6eb6fa30bee.setContent(html_9cb6ee4da95d919e68b28f3ddd44fdac);
+            
+        
+
+        poly_line_baa03fe06adfcc9142c1e10cecfad739.bindPopup(popup_d8b9a743f9df0c608c48c6eb6fa30bee)
+        ;
+
+        
+    
+    
+            poly_line_baa03fe06adfcc9142c1e10cecfad739.bindTooltip(
+                `<div>
+                     FID 59094 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_88bb90eedf1f19b8977279388ac84211 = L.polyline(
+                [[26.3463559, -80.1539147], [26.3444508, -80.1538885]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_7f734449c4cabcd34c4b9c3a84d869d1 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_cf269d979ce28a636eded734d2d70d1c = $(`<div id="html_cf269d979ce28a636eded734d2d70d1c" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>64988</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_7f734449c4cabcd34c4b9c3a84d869d1.setContent(html_cf269d979ce28a636eded734d2d70d1c);
+            
+        
+
+        poly_line_88bb90eedf1f19b8977279388ac84211.bindPopup(popup_7f734449c4cabcd34c4b9c3a84d869d1)
+        ;
+
+        
+    
+    
+            poly_line_88bb90eedf1f19b8977279388ac84211.bindTooltip(
+                `<div>
+                     FID 64988 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_14d3df27bb78bb7b5e52d39c447f1082 = L.polyline(
+                [[26.365261599999997, -80.147051], [26.3649685, -80.1472879], [26.364733199999996, -80.1475111], [26.364401300000004, -80.1478553], [26.3640977, -80.148223], [26.363845799999996, -80.1485698], [26.3636105, -80.1489586], [26.3634057, -80.1493473], [26.3631868, -80.1498228], [26.363029100000002, -80.1501512], [26.362944500000005, -80.150308], [26.3628669, -80.1504518]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_beb872321aad44e08311f0ffdec19e30 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_0a7055c2d9c9010114ef7433067ebada = $(`<div id="html_0a7055c2d9c9010114ef7433067ebada" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>84607</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_beb872321aad44e08311f0ffdec19e30.setContent(html_0a7055c2d9c9010114ef7433067ebada);
+            
+        
+
+        poly_line_14d3df27bb78bb7b5e52d39c447f1082.bindPopup(popup_beb872321aad44e08311f0ffdec19e30)
+        ;
+
+        
+    
+    
+            poly_line_14d3df27bb78bb7b5e52d39c447f1082.bindTooltip(
+                `<div>
+                     FID 84607 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e6a71f9021ee31f7315250bd15043b67 = L.polyline(
+                [[26.368357099999997, -80.1288477], [26.3683612, -80.1289679]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_bfbdec14b5a1487468e2742d374b2756 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_710d91672cef912fac26947ec7913021 = $(`<div id="html_710d91672cef912fac26947ec7913021" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>85341</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_bfbdec14b5a1487468e2742d374b2756.setContent(html_710d91672cef912fac26947ec7913021);
+            
+        
+
+        poly_line_e6a71f9021ee31f7315250bd15043b67.bindPopup(popup_bfbdec14b5a1487468e2742d374b2756)
+        ;
+
+        
+    
+    
+            poly_line_e6a71f9021ee31f7315250bd15043b67.bindTooltip(
+                `<div>
+                     FID 85341 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c2e150a6f90af06e63c8c098320a0efb = L.polyline(
+                [[26.3683612, -80.1289679], [26.368366799999997, -80.1291423], [26.368367300000006, -80.1291666], [26.3683787, -80.1296138], [26.3683901, -80.1299493], [26.368408400000003, -80.1302623], [26.3684368, -80.13057870000002], [26.368469899999997, -80.1308768]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_23f2e9c538c74e7c572dbd5ee627cc15 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_01d8bed2ff3793d148858c5369737b57 = $(`<div id="html_01d8bed2ff3793d148858c5369737b57" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>85346</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_23f2e9c538c74e7c572dbd5ee627cc15.setContent(html_01d8bed2ff3793d148858c5369737b57);
+            
+        
+
+        poly_line_c2e150a6f90af06e63c8c098320a0efb.bindPopup(popup_23f2e9c538c74e7c572dbd5ee627cc15)
+        ;
+
+        
+    
+    
+            poly_line_c2e150a6f90af06e63c8c098320a0efb.bindTooltip(
+                `<div>
+                     FID 85346 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e0f8de39bbc4b98fa7bb6c8568f5fb46 = L.polyline(
+                [[26.360871799999998, -80.1526435], [26.360773099999992, -80.152706], [26.360397499999998, -80.1529439], [26.3600424, -80.1531222]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_fa41028fa96d728fe73b63117fac8932 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_b2f485fbcde72cc24e6cffe306525c4e = $(`<div id="html_b2f485fbcde72cc24e6cffe306525c4e" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>89314</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_fa41028fa96d728fe73b63117fac8932.setContent(html_b2f485fbcde72cc24e6cffe306525c4e);
+            
+        
+
+        poly_line_e0f8de39bbc4b98fa7bb6c8568f5fb46.bindPopup(popup_fa41028fa96d728fe73b63117fac8932)
+        ;
+
+        
+    
+    
+            poly_line_e0f8de39bbc4b98fa7bb6c8568f5fb46.bindTooltip(
+                `<div>
+                     FID 89314 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_7514f4fb5e0487afda2443d56d0753af = L.polyline(
+                [[26.368112699999998, -80.1179192], [26.368128999999996, -80.11809990000002], [26.3681437, -80.1182962], [26.368160099999997, -80.1185274], [26.368172799999996, -80.118758], [26.368183200000008, -80.1189773]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_a22edd74c08a487ab41b111460ac1cab = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_5b0a825fdef90ca933862285bc2a7538 = $(`<div id="html_5b0a825fdef90ca933862285bc2a7538" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>90105</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_a22edd74c08a487ab41b111460ac1cab.setContent(html_5b0a825fdef90ca933862285bc2a7538);
+            
+        
+
+        poly_line_7514f4fb5e0487afda2443d56d0753af.bindPopup(popup_a22edd74c08a487ab41b111460ac1cab)
+        ;
+
+        
+    
+    
+            poly_line_7514f4fb5e0487afda2443d56d0753af.bindTooltip(
+                `<div>
+                     FID 90105 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3484f078d16e8a498a07f004641c28f8 = L.polyline(
+                [[26.368098199999995, -80.1169175], [26.368086899999994, -80.1170566], [26.3680806, -80.1171627], [26.3680767, -80.117275], [26.368075599999997, -80.11738780000002], [26.368076199999997, -80.1174696], [26.368079699999996, -80.1175542], [26.368088399999998, -80.1176784], [26.3681003, -80.1178057], [26.368112699999998, -80.1179192]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_bfa2f54978fb50ad9fd5a9008c8e6245 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_fe78e1741ba78fe6eca6eeacc86c1a30 = $(`<div id="html_fe78e1741ba78fe6eca6eeacc86c1a30" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>90108</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_bfa2f54978fb50ad9fd5a9008c8e6245.setContent(html_fe78e1741ba78fe6eca6eeacc86c1a30);
+            
+        
+
+        poly_line_3484f078d16e8a498a07f004641c28f8.bindPopup(popup_bfa2f54978fb50ad9fd5a9008c8e6245)
+        ;
+
+        
+    
+    
+            poly_line_3484f078d16e8a498a07f004641c28f8.bindTooltip(
+                `<div>
+                     FID 90108 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f494c1862b6ed0bff8bbcf30b61afd34 = L.polyline(
+                [[26.3683918, -80.12050820000002], [26.3683958, -80.1205706], [26.3684054, -80.1207221], [26.3684069, -80.1208593], [26.368400500000003, -80.1210394], [26.368391199999998, -80.121189], [26.368375700000005, -80.121359], [26.3683492, -80.12163180000002], [26.368325999999993, -80.1218755], [26.368306599999997, -80.1221167], [26.3682885, -80.1223554], [26.368273699999992, -80.1226076], [26.368241300000005, -80.1232186], [26.368227599999994, -80.1235774], [26.3682196, -80.1239677], [26.3682211, -80.1241697], [26.3682258, -80.1244011], [26.3682336, -80.1248133], [26.3682342, -80.1248478], [26.368234399999995, -80.1250205]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_097cd272e829e991d6c0d48699caa720 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_5443e37fa65048ba5fa62a59cf140147 = $(`<div id="html_5443e37fa65048ba5fa62a59cf140147" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>90111</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_097cd272e829e991d6c0d48699caa720.setContent(html_5443e37fa65048ba5fa62a59cf140147);
+            
+        
+
+        poly_line_f494c1862b6ed0bff8bbcf30b61afd34.bindPopup(popup_097cd272e829e991d6c0d48699caa720)
+        ;
+
+        
+    
+    
+            poly_line_f494c1862b6ed0bff8bbcf30b61afd34.bindTooltip(
+                `<div>
+                     FID 90111 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9709278f9655ebf1611c2a26e674f1bc = L.polyline(
+                [[26.370794399999998, -80.0973455], [26.3702728, -80.0973779], [26.3700193, -80.0973852], [26.3696895, -80.0973902], [26.369584699999997, -80.0973871]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_30062f0732a0d52b57f71afdcb19f225 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_e9d626a054424f17222bbb0a25ef1bb4 = $(`<div id="html_e9d626a054424f17222bbb0a25ef1bb4" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92391</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_30062f0732a0d52b57f71afdcb19f225.setContent(html_e9d626a054424f17222bbb0a25ef1bb4);
+            
+        
+
+        poly_line_9709278f9655ebf1611c2a26e674f1bc.bindPopup(popup_30062f0732a0d52b57f71afdcb19f225)
+        ;
+
+        
+    
+    
+            poly_line_9709278f9655ebf1611c2a26e674f1bc.bindTooltip(
+                `<div>
+                     FID 92391 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_095f744928b0709ebe0d156a45ed6987 = L.polyline(
+                [[26.3670494, -80.0976659], [26.365886299999993, -80.0980285], [26.365750899999995, -80.0980717]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_d44a64f57bbe8efa90043b0633d8d4b6 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_771c94df75b510abe077c798fbbe96a2 = $(`<div id="html_771c94df75b510abe077c798fbbe96a2" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92401</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_d44a64f57bbe8efa90043b0633d8d4b6.setContent(html_771c94df75b510abe077c798fbbe96a2);
+            
+        
+
+        poly_line_095f744928b0709ebe0d156a45ed6987.bindPopup(popup_d44a64f57bbe8efa90043b0633d8d4b6)
+        ;
+
+        
+    
+    
+            poly_line_095f744928b0709ebe0d156a45ed6987.bindTooltip(
+                `<div>
+                     FID 92401 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_235d51b4f26bdf0e0d68244ed42e69c5 = L.polyline(
+                [[26.371985499999997, -80.0973377], [26.37172999999999, -80.0973359]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_f27c601a30a3a50452f9ab17dc1168a8 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f98bf0d7a30bef707d463fc3f4f33693 = $(`<div id="html_f98bf0d7a30bef707d463fc3f4f33693" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92413</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_f27c601a30a3a50452f9ab17dc1168a8.setContent(html_f98bf0d7a30bef707d463fc3f4f33693);
+            
+        
+
+        poly_line_235d51b4f26bdf0e0d68244ed42e69c5.bindPopup(popup_f27c601a30a3a50452f9ab17dc1168a8)
+        ;
+
+        
+    
+    
+            poly_line_235d51b4f26bdf0e0d68244ed42e69c5.bindTooltip(
+                `<div>
+                     FID 92413 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_493599e07c9f70350eeef3423974db06 = L.polyline(
+                [[26.37172999999999, -80.0973359], [26.3716452, -80.0973369], [26.370937700000002, -80.0973424], [26.370794399999998, -80.0973455]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_9683a234776549613042abfe2c41dd87 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f1fd8d4be550a94eadf54f1f9ba434e0 = $(`<div id="html_f1fd8d4be550a94eadf54f1f9ba434e0" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92427</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_9683a234776549613042abfe2c41dd87.setContent(html_f1fd8d4be550a94eadf54f1f9ba434e0);
+            
+        
+
+        poly_line_493599e07c9f70350eeef3423974db06.bindPopup(popup_9683a234776549613042abfe2c41dd87)
+        ;
+
+        
+    
+    
+            poly_line_493599e07c9f70350eeef3423974db06.bindTooltip(
+                `<div>
+                     FID 92427 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_708ae7d4553ec226abe9e7f76bd9e5db = L.polyline(
+                [[26.374624500000003, -80.1001942], [26.374624700000002, -80.100035], [26.374625899999998, -80.0990159], [26.374625500000004, -80.0988856], [26.37462, -80.0987886], [26.374600800000003, -80.09862760000001], [26.374557600000003, -80.0984399], [26.374466299999995, -80.0981877], [26.3743397, -80.0979729], [26.374257399999998, -80.0978609]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_30f98c7e51e5c3bf55ef4e0f7e41168c = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_36c003408daba96ece897ec024723f30 = $(`<div id="html_36c003408daba96ece897ec024723f30" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92439</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>North University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_30f98c7e51e5c3bf55ef4e0f7e41168c.setContent(html_36c003408daba96ece897ec024723f30);
+            
+        
+
+        poly_line_708ae7d4553ec226abe9e7f76bd9e5db.bindPopup(popup_30f98c7e51e5c3bf55ef4e0f7e41168c)
+        ;
+
+        
+    
+    
+            poly_line_708ae7d4553ec226abe9e7f76bd9e5db.bindTooltip(
+                `<div>
+                     FID 92439 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_b5c77276a3149ba9cc1fb788954dc41a = L.polyline(
+                [[26.374257399999998, -80.0978609], [26.374176699999996, -80.0977721]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_d8f9fe3bac2d93b870189fc7b9cb8453 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_ac225269d2dc45cbd539cb450441a0ec = $(`<div id="html_ac225269d2dc45cbd539cb450441a0ec" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92442</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>North University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_d8f9fe3bac2d93b870189fc7b9cb8453.setContent(html_ac225269d2dc45cbd539cb450441a0ec);
+            
+        
+
+        poly_line_b5c77276a3149ba9cc1fb788954dc41a.bindPopup(popup_d8f9fe3bac2d93b870189fc7b9cb8453)
+        ;
+
+        
+    
+    
+            poly_line_b5c77276a3149ba9cc1fb788954dc41a.bindTooltip(
+                `<div>
+                     FID 92442 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f1c384eb45877f609c448b05d7475395 = L.polyline(
+                [[26.3746183, -80.1013224], [26.374623700000004, -80.1004245], [26.374624899999997, -80.1002786]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_8a3697a5b2dbeca462a6ad7022a01d12 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_4628b30f098bdfc794b7fc011af9eb19 = $(`<div id="html_4628b30f098bdfc794b7fc011af9eb19" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92444</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>North University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_8a3697a5b2dbeca462a6ad7022a01d12.setContent(html_4628b30f098bdfc794b7fc011af9eb19);
+            
+        
+
+        poly_line_f1c384eb45877f609c448b05d7475395.bindPopup(popup_8a3697a5b2dbeca462a6ad7022a01d12)
+        ;
+
+        
+    
+    
+            poly_line_f1c384eb45877f609c448b05d7475395.bindTooltip(
+                `<div>
+                     FID 92444 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e6b5ab3dbf6851dbe94a678c4ad11b59 = L.polyline(
+                [[26.3744083, -80.101327], [26.374508599999995, -80.1013248], [26.374543499999998, -80.1013241], [26.3746183, -80.1013224]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_3a5a8de588cd6031cc453a7d2e4f98ec = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_0a3d34a023a45bf34837e5625b4baa1a = $(`<div id="html_0a3d34a023a45bf34837e5625b4baa1a" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92446</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>service</td></tr></table></div>`)[0];
+                popup_3a5a8de588cd6031cc453a7d2e4f98ec.setContent(html_0a3d34a023a45bf34837e5625b4baa1a);
+            
+        
+
+        poly_line_e6b5ab3dbf6851dbe94a678c4ad11b59.bindPopup(popup_3a5a8de588cd6031cc453a7d2e4f98ec)
+        ;
+
+        
+    
+    
+            poly_line_e6b5ab3dbf6851dbe94a678c4ad11b59.bindTooltip(
+                `<div>
+                     FID 92446 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_709b433fd45b08387dc92019abd44bdb = L.polyline(
+                [[26.374624899999997, -80.1002786], [26.374624500000003, -80.1001942]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_e456c4cf415e709c5ad8940f998ca7c9 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_283a04ee3acb5b7b6689597583e61e68 = $(`<div id="html_283a04ee3acb5b7b6689597583e61e68" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92448</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>North University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_e456c4cf415e709c5ad8940f998ca7c9.setContent(html_283a04ee3acb5b7b6689597583e61e68);
+            
+        
+
+        poly_line_709b433fd45b08387dc92019abd44bdb.bindPopup(popup_e456c4cf415e709c5ad8940f998ca7c9)
+        ;
+
+        
+    
+    
+            poly_line_709b433fd45b08387dc92019abd44bdb.bindTooltip(
+                `<div>
+                     FID 92448 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d71e9d492993730d069acf14346be103 = L.polyline(
+                [[26.374176699999996, -80.0977721], [26.3741339, -80.0977342], [26.3740722, -80.0976781], [26.3739216, -80.0975813], [26.373756099999998, -80.0974906], [26.3736148, -80.097438], [26.373576799999995, -80.0974273], [26.373496800000005, -80.0974047], [26.373387599999997, -80.0973856], [26.373278599999995, -80.0973746]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_1e4c926e8afc1bf150b3e3c9b3ffc784 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_d5fc9387b86a9e512f2a67771b49c4de = $(`<div id="html_d5fc9387b86a9e512f2a67771b49c4de" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92557</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_1e4c926e8afc1bf150b3e3c9b3ffc784.setContent(html_d5fc9387b86a9e512f2a67771b49c4de);
+            
+        
+
+        poly_line_d71e9d492993730d069acf14346be103.bindPopup(popup_1e4c926e8afc1bf150b3e3c9b3ffc784)
+        ;
+
+        
+    
+    
+            poly_line_d71e9d492993730d069acf14346be103.bindTooltip(
+                `<div>
+                     FID 92557 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_67ca0217a5734f42a4ac0933171b46d4 = L.polyline(
+                [[26.373278599999995, -80.0973746], [26.372913700000005, -80.0973659]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_e6ba3a460202f1feb6b9ef0d31812513 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_b68731177a224da57a083c953c3f56c4 = $(`<div id="html_b68731177a224da57a083c953c3f56c4" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92560</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_e6ba3a460202f1feb6b9ef0d31812513.setContent(html_b68731177a224da57a083c953c3f56c4);
+            
+        
+
+        poly_line_67ca0217a5734f42a4ac0933171b46d4.bindPopup(popup_e6ba3a460202f1feb6b9ef0d31812513)
+        ;
+
+        
+    
+    
+            poly_line_67ca0217a5734f42a4ac0933171b46d4.bindTooltip(
+                `<div>
+                     FID 92560 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c831066328757b7b47e43998ecb306cf = L.polyline(
+                [[26.372913700000005, -80.0973659], [26.3720513, -80.0973395], [26.371985499999997, -80.0973377]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_f5f571fe98b73158226ee80355042840 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_84829ce7cf14ffe430f1611591567457 = $(`<div id="html_84829ce7cf14ffe430f1611591567457" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92567</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_f5f571fe98b73158226ee80355042840.setContent(html_84829ce7cf14ffe430f1611591567457);
+            
+        
+
+        poly_line_c831066328757b7b47e43998ecb306cf.bindPopup(popup_f5f571fe98b73158226ee80355042840)
+        ;
+
+        
+    
+    
+            poly_line_c831066328757b7b47e43998ecb306cf.bindTooltip(
+                `<div>
+                     FID 92567 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ab3c1d6752aee5e43f933f27093c1115 = L.polyline(
+                [[26.369584699999997, -80.0973871], [26.369284400000005, -80.097378], [26.368737399999997, -80.097386], [26.368524, -80.0973893], [26.3683146, -80.0973979], [26.368079000000005, -80.097425], [26.367870099999998, -80.0974564], [26.367649500000002, -80.0974973], [26.3674899, -80.0975344], [26.367327399999997, -80.0975803], [26.3670494, -80.0976659]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_bfbf97b2d04627bd41783db9dec9d81d = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f1e2ed97ed9f2903ac056029b4f16aea = $(`<div id="html_f1e2ed97ed9f2903ac056029b4f16aea" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92580</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>East University Drive</td></tr><tr><th>Road type</th><td>tertiary</td></tr></table></div>`)[0];
+                popup_bfbf97b2d04627bd41783db9dec9d81d.setContent(html_f1e2ed97ed9f2903ac056029b4f16aea);
+            
+        
+
+        poly_line_ab3c1d6752aee5e43f933f27093c1115.bindPopup(popup_bfbf97b2d04627bd41783db9dec9d81d)
+        ;
+
+        
+    
+    
+            poly_line_ab3c1d6752aee5e43f933f27093c1115.bindTooltip(
+                `<div>
+                     FID 92580 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_06dbb8a8dba7d2137478acd0a99148f3 = L.polyline(
+                [[26.3633897, -80.0982283], [26.3633372, -80.0983259], [26.363321299999996, -80.0983659], [26.363308999999994, -80.0984007], [26.363303299999995, -80.0984344], [26.363301899999996, -80.0984715], [26.3633078, -80.0985227], [26.363318399999997, -80.09856730000001], [26.363332499999995, -80.098606], [26.363353599999996, -80.0986447], [26.36355349999999, -80.09909210000001]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_076e0faae9d1819afae75e71a3760e4a = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_76b0c0511157e9f27542b9a8ca8b527e = $(`<div id="html_76b0c0511157e9f27542b9a8ca8b527e" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92585</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>primary_link</td></tr></table></div>`)[0];
+                popup_076e0faae9d1819afae75e71a3760e4a.setContent(html_76b0c0511157e9f27542b9a8ca8b527e);
+            
+        
+
+        poly_line_06dbb8a8dba7d2137478acd0a99148f3.bindPopup(popup_076e0faae9d1819afae75e71a3760e4a)
+        ;
+
+        
+    
+    
+            poly_line_06dbb8a8dba7d2137478acd0a99148f3.bindTooltip(
+                `<div>
+                     FID 92585 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f01a7ba9aceda9a3d5a60ad459936b44 = L.polyline(
+                [[26.3680075, -80.11543960000002], [26.368036600000003, -80.1155672], [26.368057100000005, -80.1156676], [26.368077299999996, -80.1157731], [26.368095499999995, -80.1159031], [26.3681109, -80.1160397], [26.368121699999993, -80.1161736], [26.368127699999995, -80.1163005], [26.368129999999997, -80.1164122], [26.3681292, -80.1165305], [26.3681227, -80.1166599], [26.368110899999998, -80.1167948], [26.368098199999995, -80.1169175]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_f19b98be001c9867014901813b7cc54c = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_1c98cfb9f6f9afde5860864c6221ac52 = $(`<div id="html_1c98cfb9f6f9afde5860864c6221ac52" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92733</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_f19b98be001c9867014901813b7cc54c.setContent(html_1c98cfb9f6f9afde5860864c6221ac52);
+            
+        
+
+        poly_line_f01a7ba9aceda9a3d5a60ad459936b44.bindPopup(popup_f19b98be001c9867014901813b7cc54c)
+        ;
+
+        
+    
+    
+            poly_line_f01a7ba9aceda9a3d5a60ad459936b44.bindTooltip(
+                `<div>
+                     FID 92733 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4ac2d983c6fd8727065b3826b4346143 = L.polyline(
+                [[26.365918800000003, -80.1099114], [26.365951899999992, -80.1100427], [26.365983, -80.1101629], [26.366013800000008, -80.1102759], [26.366050100000002, -80.1104003], [26.3660863, -80.1105159], [26.366122999999998, -80.1106308], [26.3661567, -80.1107397], [26.366197899999996, -80.1108607], [26.366239199999995, -80.1109724], [26.3662916, -80.1111118], [26.366376000000002, -80.11132100000002]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_c9846a28dd0bac71385687d69f74f444 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_359c9a0493b35917c63d0b4a533cf3b0 = $(`<div id="html_359c9a0493b35917c63d0b4a533cf3b0" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92747</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_c9846a28dd0bac71385687d69f74f444.setContent(html_359c9a0493b35917c63d0b4a533cf3b0);
+            
+        
+
+        poly_line_4ac2d983c6fd8727065b3826b4346143.bindPopup(popup_c9846a28dd0bac71385687d69f74f444)
+        ;
+
+        
+    
+    
+            poly_line_4ac2d983c6fd8727065b3826b4346143.bindTooltip(
+                `<div>
+                     FID 92747 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2eb9a35032ec08a0a7fa52fa8737ff40 = L.polyline(
+                [[26.365629499999994, -80.1060277], [26.365631499999992, -80.1061764]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_4712d146d73f868e7d6d269676caa9d6 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_13be32b820ef625d87eebc4ef5c44671 = $(`<div id="html_13be32b820ef625d87eebc4ef5c44671" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92758</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_4712d146d73f868e7d6d269676caa9d6.setContent(html_13be32b820ef625d87eebc4ef5c44671);
+            
+        
+
+        poly_line_2eb9a35032ec08a0a7fa52fa8737ff40.bindPopup(popup_4712d146d73f868e7d6d269676caa9d6)
+        ;
+
+        
+    
+    
+            poly_line_2eb9a35032ec08a0a7fa52fa8737ff40.bindTooltip(
+                `<div>
+                     FID 92758 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_605ae58b68c6575461075304d6cd4014 = L.polyline(
+                [[26.365631499999992, -80.1061764], [26.3656246, -80.1062763], [26.3656419, -80.107222]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_c21ff1a39b03d82dbb0327053b1a2770 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_ef967a36d352feb7f4c6fc107dfa05bd = $(`<div id="html_ef967a36d352feb7f4c6fc107dfa05bd" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92765</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_c21ff1a39b03d82dbb0327053b1a2770.setContent(html_ef967a36d352feb7f4c6fc107dfa05bd);
+            
+        
+
+        poly_line_605ae58b68c6575461075304d6cd4014.bindPopup(popup_c21ff1a39b03d82dbb0327053b1a2770)
+        ;
+
+        
+    
+    
+            poly_line_605ae58b68c6575461075304d6cd4014.bindTooltip(
+                `<div>
+                     FID 92765 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c6f0d8548834d95854567d93e57ffaac = L.polyline(
+                [[26.3656419, -80.107222], [26.3656506, -80.1078412], [26.365652599999997, -80.107959], [26.365657499999998, -80.1080842], [26.365663899999998, -80.1082113], [26.3656703, -80.1083322], [26.365678700000004, -80.1084515], [26.365688399999993, -80.108569], [26.365703999999997, -80.1087087], [26.365777299999994, -80.1091941], [26.3657983, -80.109322], [26.365819799999997, -80.1094395], [26.365843799999997, -80.10956890000001], [26.3658685, -80.1096863], [26.3658948, -80.1098046], [26.365918800000003, -80.1099114]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_194df746afac5e42b556e1c1b13ee6dc = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_6ec938351c17e3093b288e09cdd5420f = $(`<div id="html_6ec938351c17e3093b288e09cdd5420f" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92766</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_194df746afac5e42b556e1c1b13ee6dc.setContent(html_6ec938351c17e3093b288e09cdd5420f);
+            
+        
+
+        poly_line_c6f0d8548834d95854567d93e57ffaac.bindPopup(popup_194df746afac5e42b556e1c1b13ee6dc)
+        ;
+
+        
+    
+    
+            poly_line_c6f0d8548834d95854567d93e57ffaac.bindTooltip(
+                `<div>
+                     FID 92766 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4431338275741502b6235c4a03bf311d = L.polyline(
+                [[26.3679536, -80.1152606], [26.367980599999996, -80.115348], [26.3680075, -80.11543960000002]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_d9ddb6cf39f35a3910f6a45c87550ce5 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_dcab844f124d163152274d06af684b58 = $(`<div id="html_dcab844f124d163152274d06af684b58" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92769</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_d9ddb6cf39f35a3910f6a45c87550ce5.setContent(html_dcab844f124d163152274d06af684b58);
+            
+        
+
+        poly_line_4431338275741502b6235c4a03bf311d.bindPopup(popup_d9ddb6cf39f35a3910f6a45c87550ce5)
+        ;
+
+        
+    
+    
+            poly_line_4431338275741502b6235c4a03bf311d.bindTooltip(
+                `<div>
+                     FID 92769 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e2fcf24da2d488c96271b41c350631d9 = L.polyline(
+                [[26.367768100000003, -80.1147749], [26.367875799999997, -80.1150486], [26.367913699999995, -80.1151463], [26.3679536, -80.1152606]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_f5c8b6dc34351694a0b8761b6f43a82e = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f28e1de130b58fc18062c270c6284d07 = $(`<div id="html_f28e1de130b58fc18062c270c6284d07" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92771</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_f5c8b6dc34351694a0b8761b6f43a82e.setContent(html_f28e1de130b58fc18062c270c6284d07);
+            
+        
+
+        poly_line_e2fcf24da2d488c96271b41c350631d9.bindPopup(popup_f5c8b6dc34351694a0b8761b6f43a82e)
+        ;
+
+        
+    
+    
+            poly_line_e2fcf24da2d488c96271b41c350631d9.bindTooltip(
+                `<div>
+                     FID 92771 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_edb6043597ac11b5bd8f7c7b5b941d37 = L.polyline(
+                [[26.367720799999997, -80.1146517], [26.367768100000003, -80.1147749]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_a36c82e8281fee599b9b1f62fe125bdf = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_28ee942cead60061f596b564f7a3f028 = $(`<div id="html_28ee942cead60061f596b564f7a3f028" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92772</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_a36c82e8281fee599b9b1f62fe125bdf.setContent(html_28ee942cead60061f596b564f7a3f028);
+            
+        
+
+        poly_line_edb6043597ac11b5bd8f7c7b5b941d37.bindPopup(popup_a36c82e8281fee599b9b1f62fe125bdf)
+        ;
+
+        
+    
+    
+            poly_line_edb6043597ac11b5bd8f7c7b5b941d37.bindTooltip(
+                `<div>
+                     FID 92772 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e85750db9493d10a5330f38cfe2dc946 = L.polyline(
+                [[26.366376000000002, -80.11132100000002], [26.367283799999996, -80.1135735], [26.367464600000005, -80.1140134], [26.3676192, -80.1143982], [26.367633299999998, -80.1144333], [26.367720799999997, -80.1146517]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_ff8f9117d6498cd115f04fae51813cbc = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_244626d1afd68a872746c301cbcb5c10 = $(`<div id="html_244626d1afd68a872746c301cbcb5c10" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92804</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_ff8f9117d6498cd115f04fae51813cbc.setContent(html_244626d1afd68a872746c301cbcb5c10);
+            
+        
+
+        poly_line_e85750db9493d10a5330f38cfe2dc946.bindPopup(popup_ff8f9117d6498cd115f04fae51813cbc)
+        ;
+
+        
+    
+    
+            poly_line_e85750db9493d10a5330f38cfe2dc946.bindTooltip(
+                `<div>
+                     FID 92804 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d77ee4cea5edbebb9afdf970fa2add7c = L.polyline(
+                [[26.368183200000008, -80.1189773], [26.368185400000005, -80.1191021], [26.3681876, -80.11918], [26.3681925, -80.1192559], [26.368201899999995, -80.1193465], [26.368206799999996, -80.1193869], [26.3682127, -80.1194348], [26.368224800000004, -80.1195356], [26.36824449999999, -80.1196493], [26.368269699999995, -80.1197709], [26.368305399999997, -80.1199293]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_5d794680380203a5f458ace48c977ea2 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_84700a6fc94f19bda37360fc4dbde047 = $(`<div id="html_84700a6fc94f19bda37360fc4dbde047" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92805</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_5d794680380203a5f458ace48c977ea2.setContent(html_84700a6fc94f19bda37360fc4dbde047);
+            
+        
+
+        poly_line_d77ee4cea5edbebb9afdf970fa2add7c.bindPopup(popup_5d794680380203a5f458ace48c977ea2)
+        ;
+
+        
+    
+    
+            poly_line_d77ee4cea5edbebb9afdf970fa2add7c.bindTooltip(
+                `<div>
+                     FID 92805 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_358809914bda24cd648da88647254fac = L.polyline(
+                [[26.368305399999997, -80.1199293], [26.368335999999996, -80.1200845], [26.368359899999994, -80.120227], [26.368377000000002, -80.1203481], [26.368388499999995, -80.1204558], [26.3683918, -80.12050820000002]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_ec0f5ae4a6043995d5f394114fe35877 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_ec8ff6594d34c78669b2b1f5a756da5f = $(`<div id="html_ec8ff6594d34c78669b2b1f5a756da5f" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>92808</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_ec0f5ae4a6043995d5f394114fe35877.setContent(html_ec8ff6594d34c78669b2b1f5a756da5f);
+            
+        
+
+        poly_line_358809914bda24cd648da88647254fac.bindPopup(popup_ec0f5ae4a6043995d5f394114fe35877)
+        ;
+
+        
+    
+    
+            poly_line_358809914bda24cd648da88647254fac.bindTooltip(
+                `<div>
+                     FID 92808 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f8d463bbdfd4ef8fe4f280229023c4fd = L.polyline(
+                [[26.3688762, -80.1456458], [26.3688727, -80.1458168]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_8ee86352e73f1bc0f034b91196522841 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_a3b825d8fe840bacff3a1fe04f75b128 = $(`<div id="html_a3b825d8fe840bacff3a1fe04f75b128" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93248</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_8ee86352e73f1bc0f034b91196522841.setContent(html_a3b825d8fe840bacff3a1fe04f75b128);
+            
+        
+
+        poly_line_f8d463bbdfd4ef8fe4f280229023c4fd.bindPopup(popup_8ee86352e73f1bc0f034b91196522841)
+        ;
+
+        
+    
+    
+            poly_line_f8d463bbdfd4ef8fe4f280229023c4fd.bindTooltip(
+                `<div>
+                     FID 93248 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_7d3f60bd5f19e4d42f3418cf1f52128f = L.polyline(
+                [[26.368234399999995, -80.1250205], [26.3682336, -80.1251682], [26.368231399999996, -80.1253732], [26.3682334, -80.12575120000001], [26.368266999999996, -80.1268271], [26.368286, -80.1272024], [26.3683071, -80.1275643]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_ebf627a9935b194bc5e7ba7016c784c8 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_8084a56ae9974bf7dbe7acd0e55bfcd9 = $(`<div id="html_8084a56ae9974bf7dbe7acd0e55bfcd9" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93259</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_ebf627a9935b194bc5e7ba7016c784c8.setContent(html_8084a56ae9974bf7dbe7acd0e55bfcd9);
+            
+        
+
+        poly_line_7d3f60bd5f19e4d42f3418cf1f52128f.bindPopup(popup_ebf627a9935b194bc5e7ba7016c784c8)
+        ;
+
+        
+    
+    
+            poly_line_7d3f60bd5f19e4d42f3418cf1f52128f.bindTooltip(
+                `<div>
+                     FID 93259 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_dcb08e9d7fb20be5db7642cc80db1efc = L.polyline(
+                [[26.3683071, -80.1275643], [26.368329199999998, -80.1280198], [26.368349499999997, -80.1286322], [26.368350799999998, -80.1286725], [26.368357099999997, -80.1288477]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_8552b0893b8b41082ab59f79227bd677 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_eaa982db7545df80e7543b1a4d5e4f3e = $(`<div id="html_eaa982db7545df80e7543b1a4d5e4f3e" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93263</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_8552b0893b8b41082ab59f79227bd677.setContent(html_eaa982db7545df80e7543b1a4d5e4f3e);
+            
+        
+
+        poly_line_dcb08e9d7fb20be5db7642cc80db1efc.bindPopup(popup_8552b0893b8b41082ab59f79227bd677)
+        ;
+
+        
+    
+    
+            poly_line_dcb08e9d7fb20be5db7642cc80db1efc.bindTooltip(
+                `<div>
+                     FID 93263 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_198be0256bc404c7935dd9cad8d61fd3 = L.polyline(
+                [[26.368469899999997, -80.1308768], [26.368500199999996, -80.1311693], [26.3685316, -80.13153], [26.3685594, -80.131899], [26.368577800000004, -80.1322811], [26.368610499999996, -80.1330598]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_7f27ffe52863b2660ed8ae365a81cc0f = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_9d65ef84d7b59c9a3e42f99705fe480f = $(`<div id="html_9d65ef84d7b59c9a3e42f99705fe480f" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93271</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_7f27ffe52863b2660ed8ae365a81cc0f.setContent(html_9d65ef84d7b59c9a3e42f99705fe480f);
+            
+        
+
+        poly_line_198be0256bc404c7935dd9cad8d61fd3.bindPopup(popup_7f27ffe52863b2660ed8ae365a81cc0f)
+        ;
+
+        
+    
+    
+            poly_line_198be0256bc404c7935dd9cad8d61fd3.bindTooltip(
+                `<div>
+                     FID 93271 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_051061e491800b3fc96bcd8edd0fdb45 = L.polyline(
+                [[26.368610499999996, -80.1330598], [26.3686129, -80.1331193], [26.3686155, -80.1331851]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_4e06df41e079f2a98328422d59a58085 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_d6c55ca27cd62dd89153be2b28529517 = $(`<div id="html_d6c55ca27cd62dd89153be2b28529517" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93277</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_4e06df41e079f2a98328422d59a58085.setContent(html_d6c55ca27cd62dd89153be2b28529517);
+            
+        
+
+        poly_line_051061e491800b3fc96bcd8edd0fdb45.bindPopup(popup_4e06df41e079f2a98328422d59a58085)
+        ;
+
+        
+    
+    
+            poly_line_051061e491800b3fc96bcd8edd0fdb45.bindTooltip(
+                `<div>
+                     FID 93277 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_05c39bf0b72b00364de04c05ee074947 = L.polyline(
+                [[26.368675499999995, -80.145816], [26.368518700000003, -80.1458221], [26.368484799999994, -80.1458247], [26.367969399999996, -80.1458694], [26.367258600000003, -80.146027], [26.3669055, -80.146132], [26.366573700000004, -80.1462713]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_50649ef24601511df6a512a0c1ad151a = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_14445eed69a74ad67eff55e616ee6252 = $(`<div id="html_14445eed69a74ad67eff55e616ee6252" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93287</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_50649ef24601511df6a512a0c1ad151a.setContent(html_14445eed69a74ad67eff55e616ee6252);
+            
+        
+
+        poly_line_05c39bf0b72b00364de04c05ee074947.bindPopup(popup_50649ef24601511df6a512a0c1ad151a)
+        ;
+
+        
+    
+    
+            poly_line_05c39bf0b72b00364de04c05ee074947.bindTooltip(
+                `<div>
+                     FID 93287 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_97902f32547e4be7bc93870ee2899d3b = L.polyline(
+                [[26.368670499999997, -80.1342678], [26.3687445, -80.1358722], [26.36876509999999, -80.13632]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_0d06658b63335d6197d02513f785edef = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_17e4ea1a4b4631ab8cddba7e8cfb2b80 = $(`<div id="html_17e4ea1a4b4631ab8cddba7e8cfb2b80" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93601</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_0d06658b63335d6197d02513f785edef.setContent(html_17e4ea1a4b4631ab8cddba7e8cfb2b80);
+            
+        
+
+        poly_line_97902f32547e4be7bc93870ee2899d3b.bindPopup(popup_0d06658b63335d6197d02513f785edef)
+        ;
+
+        
+    
+    
+            poly_line_97902f32547e4be7bc93870ee2899d3b.bindTooltip(
+                `<div>
+                     FID 93601 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e060035c3719476bfa5ab4b693b9ec3a = L.polyline(
+                [[26.36876509999999, -80.13632], [26.368803299999996, -80.137173], [26.3688066, -80.1372702]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_f7aeef642ccf1d3c6f53590c551f6cff = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f9b742405c7ee6ec0db146544ec9082b = $(`<div id="html_f9b742405c7ee6ec0db146544ec9082b" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93603</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_f7aeef642ccf1d3c6f53590c551f6cff.setContent(html_f9b742405c7ee6ec0db146544ec9082b);
+            
+        
+
+        poly_line_e060035c3719476bfa5ab4b693b9ec3a.bindPopup(popup_f7aeef642ccf1d3c6f53590c551f6cff)
+        ;
+
+        
+    
+    
+            poly_line_e060035c3719476bfa5ab4b693b9ec3a.bindTooltip(
+                `<div>
+                     FID 93603 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_682f8c00f244b9c02dec7fa4f350bf3f = L.polyline(
+                [[26.373798299999997, -80.1011823], [26.374409499999995, -80.101188]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_62b8639c9419ebd6bdf55a6e90a9e435 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_5faef66dc7bb088d1a2d7d4c159f357b = $(`<div id="html_5faef66dc7bb088d1a2d7d4c159f357b" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>93960</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>service</td></tr></table></div>`)[0];
+                popup_62b8639c9419ebd6bdf55a6e90a9e435.setContent(html_5faef66dc7bb088d1a2d7d4c159f357b);
+            
+        
+
+        poly_line_682f8c00f244b9c02dec7fa4f350bf3f.bindPopup(popup_62b8639c9419ebd6bdf55a6e90a9e435)
+        ;
+
+        
+    
+    
+            poly_line_682f8c00f244b9c02dec7fa4f350bf3f.bindTooltip(
+                `<div>
+                     FID 93960 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1ba9a5c8372b92480c9315b2549e08ab = L.polyline(
+                [[26.350254500000002, -80.1539776], [26.3501156, -80.1539754], [26.3483947, -80.1539487]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_7296ca418b488a9580eae3ca3ae54717 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_71879b33133984e3b040f1059347224e = $(`<div id="html_71879b33133984e3b040f1059347224e" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>97667</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_7296ca418b488a9580eae3ca3ae54717.setContent(html_71879b33133984e3b040f1059347224e);
+            
+        
+
+        poly_line_1ba9a5c8372b92480c9315b2549e08ab.bindPopup(popup_7296ca418b488a9580eae3ca3ae54717)
+        ;
+
+        
+    
+    
+            poly_line_1ba9a5c8372b92480c9315b2549e08ab.bindTooltip(
+                `<div>
+                     FID 97667 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3ee27995e2a9846fb9bd4b3b1289e0ff = L.polyline(
+                [[26.36355349999999, -80.09909210000001], [26.363904199999997, -80.0996245], [26.364176299999997, -80.1000454]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_14c11b862c8b13c9765cb4b78a728437 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_b797043184d4cc75405736027f4a2428 = $(`<div id="html_b797043184d4cc75405736027f4a2428" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>97796</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_14c11b862c8b13c9765cb4b78a728437.setContent(html_b797043184d4cc75405736027f4a2428);
+            
+        
+
+        poly_line_3ee27995e2a9846fb9bd4b3b1289e0ff.bindPopup(popup_14c11b862c8b13c9765cb4b78a728437)
+        ;
+
+        
+    
+    
+            poly_line_3ee27995e2a9846fb9bd4b3b1289e0ff.bindTooltip(
+                `<div>
+                     FID 97796 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f953832676f4698b909c1f58ef32610a = L.polyline(
+                [[26.3655967, -80.1045052], [26.365608, -80.1048141], [26.365616199999998, -80.105275]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_7ea63d6edfd6853ca6c27395ada47523 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_761eceb7b133379dc587fb6d066561d8 = $(`<div id="html_761eceb7b133379dc587fb6d066561d8" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>97799</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_7ea63d6edfd6853ca6c27395ada47523.setContent(html_761eceb7b133379dc587fb6d066561d8);
+            
+        
+
+        poly_line_f953832676f4698b909c1f58ef32610a.bindPopup(popup_7ea63d6edfd6853ca6c27395ada47523)
+        ;
+
+        
+    
+    
+            poly_line_f953832676f4698b909c1f58ef32610a.bindTooltip(
+                `<div>
+                     FID 97799 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_daa534475287e292e9e6fc027451756a = L.polyline(
+                [[26.353235599999998, -80.154023], [26.35213459999999, -80.1540104]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_f159aa5c556dc42bba3df8469e9a996b = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_7241399fce55c4eba283b0f399980d35 = $(`<div id="html_7241399fce55c4eba283b0f399980d35" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>98307</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_f159aa5c556dc42bba3df8469e9a996b.setContent(html_7241399fce55c4eba283b0f399980d35);
+            
+        
+
+        poly_line_daa534475287e292e9e6fc027451756a.bindPopup(popup_f159aa5c556dc42bba3df8469e9a996b)
+        ;
+
+        
+    
+    
+            poly_line_daa534475287e292e9e6fc027451756a.bindTooltip(
+                `<div>
+                     FID 98307 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_79b66fa309c077b9d4240ec6b82fbc7f = L.polyline(
+                [[26.3564584, -80.1537699], [26.3562879, -80.1537898], [26.356085399999998, -80.1538213], [26.355539400000005, -80.1539526], [26.355268700000007, -80.1539894], [26.354960299999995, -80.1540262], [26.3547155, -80.1540341], [26.3539013, -80.1540297], [26.353735999999998, -80.1540288]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_10edd7e09676286109d8351efd68df7a = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_320753d4f938cc21c9888497be084469 = $(`<div id="html_320753d4f938cc21c9888497be084469" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>98319</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_10edd7e09676286109d8351efd68df7a.setContent(html_320753d4f938cc21c9888497be084469);
+            
+        
+
+        poly_line_79b66fa309c077b9d4240ec6b82fbc7f.bindPopup(popup_10edd7e09676286109d8351efd68df7a)
+        ;
+
+        
+    
+    
+            poly_line_79b66fa309c077b9d4240ec6b82fbc7f.bindTooltip(
+                `<div>
+                     FID 98319 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6503ed4813e6bc2dfbe68fe9374ef176 = L.polyline(
+                [[26.3577682, -80.1537411], [26.357600999999995, -80.1537441], [26.3573395, -80.1537454], [26.357131299999995, -80.1537426], [26.3569833, -80.1537406], [26.356928099999998, -80.1537398], [26.3567377, -80.1537441], [26.35656339999999, -80.1537577]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_abf3f11c73a45ead54c0e7b71d7f6f34 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_c3f9b344abca23377a162dffe107d107 = $(`<div id="html_c3f9b344abca23377a162dffe107d107" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>98320</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_abf3f11c73a45ead54c0e7b71d7f6f34.setContent(html_c3f9b344abca23377a162dffe107d107);
+            
+        
+
+        poly_line_6503ed4813e6bc2dfbe68fe9374ef176.bindPopup(popup_abf3f11c73a45ead54c0e7b71d7f6f34)
+        ;
+
+        
+    
+    
+            poly_line_6503ed4813e6bc2dfbe68fe9374ef176.bindTooltip(
+                `<div>
+                     FID 98320 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0751259886aa212f49f4b1190c092496 = L.polyline(
+                [[26.359409899999992, -80.1533907], [26.359295999999993, -80.1534325], [26.3588817, -80.1535638], [26.358495700000006, -80.1536663], [26.3582509, -80.1537136], [26.3579873, -80.1537372], [26.3577682, -80.1537411]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_b717342ab4b9bdf8b79afbb0ed05bbc4 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_bc92154fbbdaa28f0eba6bacc039290f = $(`<div id="html_bc92154fbbdaa28f0eba6bacc039290f" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>98338</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_b717342ab4b9bdf8b79afbb0ed05bbc4.setContent(html_bc92154fbbdaa28f0eba6bacc039290f);
+            
+        
+
+        poly_line_0751259886aa212f49f4b1190c092496.bindPopup(popup_b717342ab4b9bdf8b79afbb0ed05bbc4)
+        ;
+
+        
+    
+    
+            poly_line_0751259886aa212f49f4b1190c092496.bindTooltip(
+                `<div>
+                     FID 98338 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_db51eb67a986aa1317296226c1c7c5b8 = L.polyline(
+                [[26.3600424, -80.1531222], [26.359926800000004, -80.1531803], [26.359625499999996, -80.1533117], [26.359409899999992, -80.1533907]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_0a295fb1d5632519040b2def1c353f30 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_3ddb6fa9860a37268c211d4a18ca6518 = $(`<div id="html_3ddb6fa9860a37268c211d4a18ca6518" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>98347</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_0a295fb1d5632519040b2def1c353f30.setContent(html_3ddb6fa9860a37268c211d4a18ca6518);
+            
+        
+
+        poly_line_db51eb67a986aa1317296226c1c7c5b8.bindPopup(popup_0a295fb1d5632519040b2def1c353f30)
+        ;
+
+        
+    
+    
+            poly_line_db51eb67a986aa1317296226c1c7c5b8.bindTooltip(
+                `<div>
+                     FID 98347 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a11591a72a0cd1079a52bab4c5c60913 = L.polyline(
+                [[26.361441899999996, -80.1521972], [26.361313300000003, -80.1522973], [26.360871799999998, -80.1526435]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_c001d4f84c63494c3c3e257865be85b6 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_1e3d5689c7149f056e3c803ef8ae5ec8 = $(`<div id="html_1e3d5689c7149f056e3c803ef8ae5ec8" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>98370</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_c001d4f84c63494c3c3e257865be85b6.setContent(html_1e3d5689c7149f056e3c803ef8ae5ec8);
+            
+        
+
+        poly_line_a11591a72a0cd1079a52bab4c5c60913.bindPopup(popup_c001d4f84c63494c3c3e257865be85b6)
+        ;
+
+        
+    
+    
+            poly_line_a11591a72a0cd1079a52bab4c5c60913.bindTooltip(
+                `<div>
+                     FID 98370 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_36a7250f7d9edc0fdae9a0560aef02fc = L.polyline(
+                [[26.3318637, -80.1536541], [26.3318637, -80.1538043], [26.331863700000007, -80.1538656], [26.3318415, -80.1548658], [26.3318198, -80.1553634], [26.3317802, -80.1562767], [26.331774200000005, -80.1569124], [26.331760899999995, -80.1578346]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_cb51dce1956d04fd24fb82628df57271 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_acb81f4f0698d04e9e39cb0c10e972b1 = $(`<div id="html_acb81f4f0698d04e9e39cb0c10e972b1" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>108142</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Southwest 18th Street</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_cb51dce1956d04fd24fb82628df57271.setContent(html_acb81f4f0698d04e9e39cb0c10e972b1);
+            
+        
+
+        poly_line_36a7250f7d9edc0fdae9a0560aef02fc.bindPopup(popup_cb51dce1956d04fd24fb82628df57271)
+        ;
+
+        
+    
+    
+            poly_line_36a7250f7d9edc0fdae9a0560aef02fc.bindTooltip(
+                `<div>
+                     FID 108142 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1f93dbf5cb9e6ab2718c9d65529ecb6b = L.polyline(
+                [[26.343826300000003, -80.153879], [26.342661199999995, -80.1538545]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_a6c66018b170dcd1ff3006b04dba7b3e = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_2767958aab8ee948d93e8630a25a781a = $(`<div id="html_2767958aab8ee948d93e8630a25a781a" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>108145</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_a6c66018b170dcd1ff3006b04dba7b3e.setContent(html_2767958aab8ee948d93e8630a25a781a);
+            
+        
+
+        poly_line_1f93dbf5cb9e6ab2718c9d65529ecb6b.bindPopup(popup_a6c66018b170dcd1ff3006b04dba7b3e)
+        ;
+
+        
+    
+    
+            poly_line_1f93dbf5cb9e6ab2718c9d65529ecb6b.bindTooltip(
+                `<div>
+                     FID 108145 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d7840a1d9a6f2901fbfdfadfcb660e0a = L.polyline(
+                [[26.3444508, -80.1538885], [26.343955499999996, -80.1538817]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_ca5bdd60578cd9fbb5a75986927e10eb = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_895a78be2cae1c7d97a6de24165cf5bd = $(`<div id="html_895a78be2cae1c7d97a6de24165cf5bd" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>108149</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_ca5bdd60578cd9fbb5a75986927e10eb.setContent(html_895a78be2cae1c7d97a6de24165cf5bd);
+            
+        
+
+        poly_line_d7840a1d9a6f2901fbfdfadfcb660e0a.bindPopup(popup_ca5bdd60578cd9fbb5a75986927e10eb)
+        ;
+
+        
+    
+    
+            poly_line_d7840a1d9a6f2901fbfdfadfcb660e0a.bindTooltip(
+                `<div>
+                     FID 108149 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0d73c73b0344b22de1866e91edc31eb9 = L.polyline(
+                [[26.348157699999998, -80.1539278], [26.347109099999997, -80.1539211]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_dd86825e25c15442892b8c8be202ee1b = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_64b6052b9107974a9e1039e5f11b45b2 = $(`<div id="html_64b6052b9107974a9e1039e5f11b45b2" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>108152</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_dd86825e25c15442892b8c8be202ee1b.setContent(html_64b6052b9107974a9e1039e5f11b45b2);
+            
+        
+
+        poly_line_0d73c73b0344b22de1866e91edc31eb9.bindPopup(popup_dd86825e25c15442892b8c8be202ee1b)
+        ;
+
+        
+    
+    
+            poly_line_0d73c73b0344b22de1866e91edc31eb9.bindTooltip(
+                `<div>
+                     FID 108152 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6db839b4a0233ebdc3b8e435da589fb0 = L.polyline(
+                [[26.347109099999997, -80.1539211], [26.3465819, -80.1539178]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_6150310c0ebb2c275c9d51b0c8bbb0fb = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_d772257af87a6366207ec7d63c44f593 = $(`<div id="html_d772257af87a6366207ec7d63c44f593" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>108154</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_6150310c0ebb2c275c9d51b0c8bbb0fb.setContent(html_d772257af87a6366207ec7d63c44f593);
+            
+        
+
+        poly_line_6db839b4a0233ebdc3b8e435da589fb0.bindPopup(popup_6150310c0ebb2c275c9d51b0c8bbb0fb)
+        ;
+
+        
+    
+    
+            poly_line_6db839b4a0233ebdc3b8e435da589fb0.bindTooltip(
+                `<div>
+                     FID 108154 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_22ce53c2cfb18e5f888d53d7420fcf4e = L.polyline(
+                [[26.3483947, -80.1539487], [26.348157699999998, -80.1539278]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_3f869bb5eea9102c7b5b7bebaf6d9916 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_f14a14bc2dfc77ad933723be779b5c28 = $(`<div id="html_f14a14bc2dfc77ad933723be779b5c28" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>108155</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_3f869bb5eea9102c7b5b7bebaf6d9916.setContent(html_f14a14bc2dfc77ad933723be779b5c28);
+            
+        
+
+        poly_line_22ce53c2cfb18e5f888d53d7420fcf4e.bindPopup(popup_3f869bb5eea9102c7b5b7bebaf6d9916)
+        ;
+
+        
+    
+    
+            poly_line_22ce53c2cfb18e5f888d53d7420fcf4e.bindTooltip(
+                `<div>
+                     FID 108155 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_32f735bca7cf835331d5cecf455ea411 = L.polyline(
+                [[26.365616199999998, -80.105275], [26.365627899999996, -80.1059385], [26.365629499999994, -80.1060277]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_3b5bb1608f03854591af99a1010f9b08 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_3c345b0ab96adcc0f30b97663d8bfefe = $(`<div id="html_3c345b0ab96adcc0f30b97663d8bfefe" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>111367</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_3b5bb1608f03854591af99a1010f9b08.setContent(html_3c345b0ab96adcc0f30b97663d8bfefe);
+            
+        
+
+        poly_line_32f735bca7cf835331d5cecf455ea411.bindPopup(popup_3b5bb1608f03854591af99a1010f9b08)
+        ;
+
+        
+    
+    
+            poly_line_32f735bca7cf835331d5cecf455ea411.bindTooltip(
+                `<div>
+                     FID 111367 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_129c460074d3a2fd614791058054d88d = L.polyline(
+                [[26.364176299999997, -80.1000454], [26.3645488, -80.100619], [26.364801500000002, -80.10101780000001], [26.364952200000005, -80.1012886], [26.365082199999996, -80.1015478], [26.3651802, -80.1017388], [26.365276199999997, -80.1020008], [26.3653762, -80.1023368], [26.365441199999996, -80.1026108], [26.3654834, -80.1028159], [26.365525200000004, -80.1030507], [26.3655579, -80.1033024]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_3d8055c97b310fea264788bb2f899ec9 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_5ff60a96aafe0c87b27fc309c7cd6fb4 = $(`<div id="html_5ff60a96aafe0c87b27fc309c7cd6fb4" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>112961</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_3d8055c97b310fea264788bb2f899ec9.setContent(html_5ff60a96aafe0c87b27fc309c7cd6fb4);
+            
+        
+
+        poly_line_129c460074d3a2fd614791058054d88d.bindPopup(popup_3d8055c97b310fea264788bb2f899ec9)
+        ;
+
+        
+    
+    
+            poly_line_129c460074d3a2fd614791058054d88d.bindTooltip(
+                `<div>
+                     FID 112961 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_60ec73491d05f958e4d17d82d4cfe9bb = L.polyline(
+                [[26.374409499999995, -80.101188], [26.3744083, -80.101327]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_657faaaf8a950e182a48489a5b3bb6e8 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_b4affd263d4f8701c46ae498bc75b8ea = $(`<div id="html_b4affd263d4f8701c46ae498bc75b8ea" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>118393</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>unknown</td></tr><tr><th>Road type</th><td>service</td></tr></table></div>`)[0];
+                popup_657faaaf8a950e182a48489a5b3bb6e8.setContent(html_b4affd263d4f8701c46ae498bc75b8ea);
+            
+        
+
+        poly_line_60ec73491d05f958e4d17d82d4cfe9bb.bindPopup(popup_657faaaf8a950e182a48489a5b3bb6e8)
+        ;
+
+        
+    
+    
+            poly_line_60ec73491d05f958e4d17d82d4cfe9bb.bindTooltip(
+                `<div>
+                     FID 118393 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_68ff557f736046b0d4fb4d0b58aec3f6 = L.polyline(
+                [[26.342661199999995, -80.1538545], [26.3424544, -80.1538502], [26.3403139, -80.1538175]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_fd9441ab02ab9b19915e020e354bc5f8 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_943fba42d31663ead8e831847cca0dc1 = $(`<div id="html_943fba42d31663ead8e831847cca0dc1" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>118728</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_fd9441ab02ab9b19915e020e354bc5f8.setContent(html_943fba42d31663ead8e831847cca0dc1);
+            
+        
+
+        poly_line_68ff557f736046b0d4fb4d0b58aec3f6.bindPopup(popup_fd9441ab02ab9b19915e020e354bc5f8)
+        ;
+
+        
+    
+    
+            poly_line_68ff557f736046b0d4fb4d0b58aec3f6.bindTooltip(
+                `<div>
+                     FID 118728 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e3dde7db147dabe8ec325d8f3fcf4bb0 = L.polyline(
+                [[26.3465819, -80.1539178], [26.3463559, -80.1539147]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_f1915eb52f91b1176cadabe1003d3d8e = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_d0dc1030432348fa5a679687893a714d = $(`<div id="html_d0dc1030432348fa5a679687893a714d" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>120023</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Powerline Road</td></tr><tr><th>Road type</th><td>secondary</td></tr></table></div>`)[0];
+                popup_f1915eb52f91b1176cadabe1003d3d8e.setContent(html_d0dc1030432348fa5a679687893a714d);
+            
+        
+
+        poly_line_e3dde7db147dabe8ec325d8f3fcf4bb0.bindPopup(popup_f1915eb52f91b1176cadabe1003d3d8e)
+        ;
+
+        
+    
+    
+            poly_line_e3dde7db147dabe8ec325d8f3fcf4bb0.bindTooltip(
+                `<div>
+                     FID 120023 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1958b5a63f0a4c4b6641decc880369e3 = L.polyline(
+                [[26.3686155, -80.1331851], [26.368621099999995, -80.1332919], [26.368670499999997, -80.1342678]],
+                {"bubblingMouseEvents": true, "color": "#16a34a", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#16a34a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.78, "smoothFactor": 1.0, "stroke": true, "weight": 8.0}
+            ).addTo(feature_group_59948c1fdbe42baccd7c2cdfc12c341a);
+        
+    
+        var popup_5319c62849a43302b60d1eccf25348d4 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_2ba778143aadbf4ee91f8606d51643ac = $(`<div id="html_2ba778143aadbf4ee91f8606d51643ac" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><th>FID</th><td>189750</td></tr><tr><th>Status</th><td>added</td></tr><tr><th>2022-04 trips</th><td>0</td></tr><tr><th>2022-05 trips</th><td>1</td></tr><tr><th>Count delta</th><td>+1</td></tr><tr><th>Road</th><td>Glades Road</td></tr><tr><th>Road type</th><td>primary</td></tr></table></div>`)[0];
+                popup_5319c62849a43302b60d1eccf25348d4.setContent(html_2ba778143aadbf4ee91f8606d51643ac);
+            
+        
+
+        poly_line_1958b5a63f0a4c4b6641decc880369e3.bindPopup(popup_5319c62849a43302b60d1eccf25348d4)
+        ;
+
+        
+    
+    
+            poly_line_1958b5a63f0a4c4b6641decc880369e3.bindTooltip(
+                `<div>
+                     FID 189750 · added
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_59948c1fdbe42baccd7c2cdfc12c341a.addTo(map_dc20399e93454de2e7ae4215b18c26f6);
+        
+    
+            var feature_group_236ed4806b83e5dbe879f5cd089f01a1 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_236ed4806b83e5dbe879f5cd089f01a1.addTo(map_dc20399e93454de2e7ae4215b18c26f6);
+        
+    
+            map_dc20399e93454de2e7ae4215b18c26f6.fitBounds(
+                [[26.331760899999995, -80.1578346], [26.374625899999998, -80.0973359]],
+                {}
+            );
+        
+    
+            var layer_control_6fd488b528955ddc3c879c7d1e4c8076_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_c4cba7df1aa4e9d28f3ea2edf0015043,
+                },
+                overlays :  {
+                    "Shared FIDs" : feature_group_22b32109fd9e614e42d18969968c3782,
+                    "Added in 2022-05" : feature_group_59948c1fdbe42baccd7c2cdfc12c341a,
+                    "Removed after 2022-04" : feature_group_236ed4806b83e5dbe879f5cd089f01a1,
+                },
+            };
+            let layer_control_6fd488b528955ddc3c879c7d1e4c8076 = L.control.layers(
+                layer_control_6fd488b528955ddc3c879c7d1e4c8076_layers.base_layers,
+                layer_control_6fd488b528955ddc3c879c7d1e4c8076_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_dc20399e93454de2e7ae4215b18c26f6);
+
+        
+</script>
+</html>

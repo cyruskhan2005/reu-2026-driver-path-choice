@@ -1,18 +1,21 @@
-# Phase 2A: Driver/Session route timelines
+# Phase 2A: Driver 1003 route timeline
 
 ## Purpose
 
-Phase 2A converts cached Phase 1 trip-level map-matching outputs into reusable
-longitudinal tables for one or many inferred Driver/Session groupings. It does
-not calculate the final path-choice change metric or compare monthly graphs.
+Phase 2A converts cached Phase 1 trip-level map-matching outputs into a
+longitudinal route-activity timeline for **Driver 1003**. Phase 1 produced the
+FMM map matching, enriched road network, matched trip outputs, and individual
+trip visualizations used as inputs here.
+
+This phase does not calculate the final Driver Path Choice Change Metric or
+compare monthly graphs. It prepares the Driver 1003 observation timeline used by
+the monthly attributed graph and graph-comparison stages.
 
 The immediate products are:
 
-- one trip timeline per selected grouping;
+- one Driver 1003 trip timeline;
 - complete calendar-month summaries, including zero-observation months;
-- deterministic presentation aliases such as `Driver 1`;
-- a population ranking/index suitable for selecting the top 50–100 groupings;
-- readable individual HTML timelines and a population overview.
+- a presentation-ready HTML timeline.
 
 Each timeline row is one county-specific matched portion of a source GPS trip.
 A source trip crossing county boundaries can produce more than one row because
@@ -55,38 +58,27 @@ metadata does not distinguish these possibilities.
 Unless confirmed by project metadata, the inferred ID should be treated as a
 pseudonymous driver/session identifier rather than guaranteed human driver identity.
 
-Presentation text therefore uses **Driver/Session**. Technical outputs use
-`internal_driver_id` with `driver_id_source=session_dir_parent`. See:
+For the current project scope, Dr. Jang directed us to work with **Driver 1003**
+as the longitudinal case study. Technical outputs still preserve
+`internal_driver_id` with
+`driver_id_source=session_dir_parent`. See:
 
 ```text
 sflorida_outputs/phase2/driver_identity_audit.md
 ```
 
-## Internal IDs and presentation aliases
+## Internal ID and presentation label
 
-Long pseudonymous IDs are preserved for traceability in timeline CSVs,
-technical HTML details, and:
+Long pseudonymous IDs are preserved for traceability in timeline CSVs and
+technical HTML details. Older intermediate outputs may still include alias-map
+files such as:
 
 ```text
 sflorida_outputs/phase2/driver_alias_map.csv
 ```
 
-Presentation-facing titles, tables, links, and filenames use aliases:
-
-```text
-Driver 1
-Driver 2
-Driver 3
-```
-
-Aliases are deterministic. The population is ranked by:
-
-1. usable trip count;
-2. observed month count;
-3. inclusive calendar coverage span;
-4. internal ID as a stable final tiebreaker.
-
-The same input population therefore produces the same aliases.
+Presentation-facing Phase 2 deliverables now label the subject as
+**Driver 1003**.
 
 ## Complete calendar months
 
@@ -101,7 +93,7 @@ observed_month = false
 `calendar_month_span` counts the full inclusive date span. Keeping these values
 separate avoids misleading visual jumps over missing months.
 
-## Build one Driver/Session timeline
+## Build the Driver 1003 timeline
 
 From the repository root:
 
@@ -109,8 +101,8 @@ From the repository root:
 python scripts/build_driver_timeline.py --driver auto
 ```
 
-This selects the highest-ranked grouping and normally presents it as
-`Driver 1`.
+This selects the Driver 1003 working subject used by the rest of Phase 2 in the
+current cached dataset.
 
 Select a specific internal ID or unique prefix:
 
@@ -118,43 +110,19 @@ Select a specific internal ID or unique prefix:
 python scripts/build_driver_timeline.py --driver ca351c04
 ```
 
-## Build the top N groupings
-
-```bash
-python scripts/build_driver_timeline.py --top-n 5
-python scripts/build_driver_timeline.py --top-n 50
-python scripts/build_driver_timeline.py --top-n 100
-```
-
-The mounted dataset currently determines how many groupings are available. If
-N exceeds the population size, all available groupings are built and the
-overview records the requested and available counts.
-
 The expensive Phase 1 work is not repeated. County GPS/matched tables are
-loaded once, the population is ranked once, and only selected per-grouping CSV
-and HTML outputs are then written. This structure is intended to scale to
-50–100 groupings when a larger source population is mounted.
-
-If `gps_root` is not configured and `/Volumes/KINGSTON` is unavailable:
-
-```bash
-python scripts/build_driver_timeline.py \
-  --top-n 50 \
-  --gps-root /path/to/session/root
-```
+loaded from existing cached outputs.
 
 ## Outputs
 
-Population outputs:
+Local audit and traceability outputs:
 
 ```text
 sflorida_outputs/phase2/driver_identity_audit.md
 sflorida_outputs/phase2/driver_alias_map.csv
-sflorida_outputs/phase2/driver_population_index.csv
-sflorida_outputs/phase2/visuals/driver_population_overview.html
 ```
 
-Per-alias outputs:
+Driver 1003 timeline outputs:
 
 ```text
 sflorida_outputs/phase2/driver_timelines/driver_1_timeline.csv
@@ -167,9 +135,15 @@ SVG charts with axis titles, an interpretation note, and collapsed technical
 details containing the internal ID and cache sources. The raw hash is not used
 in the page title.
 
+The committed advisor-review HTML copy is:
+
+```text
+deliverables/driver_1003/timeline/driver_1003_timeline.html
+```
+
 ## Connection to monthly attributed graphs
 
-For every selected Driver/Session and month, the outputs provide:
+For Driver 1003 and each month, the outputs provide:
 
 - ordered road-segment traversal sequences;
 - route signatures;
@@ -179,10 +153,9 @@ For every selected Driver/Session and month, the outputs provide:
 - county and enriched-network references;
 - stable internal IDs plus deterministic presentation aliases.
 
-The next phase can group by `internal_driver_id`, `trip_month`, and `county`,
-load matching FIDs from `enriched_network.parquet`, and construct directed
-monthly attributed graphs without revisiting map matching. The population index
-provides the selection layer for running that process over 50–100 groupings.
+The next phase groups by `internal_driver_id`, `trip_month`, and `county`,
+loads matching FIDs from `enriched_network.parquet`, and constructs directed
+monthly attributed graphs without revisiting map matching.
 
 ## Current limitations and mentor questions
 
@@ -191,7 +164,8 @@ provides the selection layer for running that process over 50–100 groupings.
   vehicle/logger ID.
 - Collection labels such as `1003 1004` are not documented in this repository.
 - County-specific FID namespaces are not reconciled across county boundaries.
-- The visual summarizes activity but does not overlay routes or compare graphs.
+- The timeline visual summarizes monthly activity; route-network structure is
+  represented in Phase 2B monthly attributed graph maps.
 - The final path-choice change metric remains intentionally out of scope.
 
 Questions for project mentors:

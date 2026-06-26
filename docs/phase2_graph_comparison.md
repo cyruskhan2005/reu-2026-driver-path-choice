@@ -6,6 +6,11 @@ This phase compares consecutive monthly attributed graphs for Driver 1003.
 It quantifies changes in monthly route-network structure without defining the
 project's final driver-choice change metric.
 
+Phase 1 produced FMM map matching and the enriched road network. Phase 2A
+created the Driver 1003 timeline. Phase 2B built monthly attributed graphs with
+FIDs as nodes and directed FID transitions as edges. Phase 2C compares those
+monthly graphs.
+
 The comparison does not rerun FMM, enrichment, or monthly graph construction.
 It consumes the cached Phase 2B node and edge tables.
 
@@ -138,6 +143,8 @@ python scripts/compare_driver_1003_monthly_graphs.py \
 
 ## Outputs
 
+Raw tabular comparison outputs are generated locally under:
+
 ```text
 deliverables/google_drive_phase2/driver_1003_graph_comparisons/
   data/
@@ -160,6 +167,19 @@ deliverables/google_drive_phase2/driver_1003_graph_comparisons/
   driver_1003_graph_comparison_validation.md
 ```
 
+Presentation-ready HTML deliverables are committed under:
+
+```text
+deliverables/driver_1003/graph_comparisons/
+  driver_1003_graph_comparison_overview.html
+  driver_1003_broward_2023-08_to_2023-09_comparison.html
+  county_comparisons/**/*.html
+```
+
+Only the HTML review pages are committed. Raw CSV, Parquet, JSONL, cache,
+temporary debug reports, and intermediate output folders are not committed as
+Phase 2 HTML deliverables.
+
 The overview groups links by month pair, then lists each county-specific
 comparison underneath. Within each month pair, counties with meaningful shared
 overlap are listed first, higher-activity counties next, and zero-baseline
@@ -179,5 +199,5 @@ This phase does not establish cognitive decline, dementia, impairment, or
 causation. Edge Jaccard is used only to order descriptive overview cards; it is
 not the final driver-choice change metric.
 
-The next research step is to use these validated component metrics and quality
-flags to design and evaluate a defensible driver path-choice change metric.
+The next research phase is to use these validated component metrics and quality
+flags to design and evaluate a defensible **Driver Path Choice Change Metric**.

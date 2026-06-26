@@ -1,41 +1,51 @@
-# Professor Jang Deliverables
+# Driver 1003 HTML research deliverables
 
-This folder contains the GitHub-safe deliverables for the June 2026 FMM run.
+This folder contains presentation-ready HTML deliverables for the REU driver
+path-choice project. The current research scope is the longitudinal analysis of
+**Driver 1003**.
 
-## 1. Shapefiles: edges and nodes
+Raw CSV, Parquet, JSONL, cache, and intermediate outputs are intentionally not
+committed here. The HTML pages are committed because they are the review format
+for Dr. Jang and Mojtaba.
 
-The edge/node shapefile bundles were generated locally from:
+## Recommended viewing order
 
-- `sflorida_outputs/*_County/enriched_network.parquet`
-- `sflorida_outputs/*_County/osm_nodes.parquet`
+1. `driver_1003/timeline/driver_1003_timeline.html`
+   - Shows Driver 1003 monthly route activity over time.
+   - Use this first to understand the observation period and month-to-month
+     trip coverage.
 
-The actual shapefile bundles are not committed to Git because the `.dbf`
-components are hundreds of MB to multiple GB and exceed normal GitHub file
-limits. See `shapefiles/MANIFEST.md` for exact local paths, sizes, and the
-regeneration command.
+2. `driver_1003/monthly_graphs/driver_1003_monthly_graph_overview.html`
+   - Index of monthly attributed graph maps.
+   - Each monthly graph uses matched road-segment FIDs as nodes and directed
+     consecutive-FID transitions as edges.
 
-## 2. HTML map visualizations
+3. `driver_1003/monthly_graphs/maps/*.html`
+   - Individual monthly attributed graph pages.
+   - Road/FID styling reflects monthly `trip_use_count`.
+   - Popups include enriched road attributes and observed Driver 1003 speed
+     attributes where available.
 
-Representative clickable HTML maps are committed in `html_maps/`:
+4. `driver_1003/graph_comparisons/driver_1003_graph_comparison_overview.html`
+   - Index of month-to-month county-specific graph comparison pages.
+   - Shows shared, added, and removed FIDs for each county/month pair.
 
-- `html_maps/miami_dade_trip_6_enriched.html`
-- `html_maps/broward_trip_3967_enriched.html`
-- `html_maps/palm_beach_trip_120_enriched.html`
+5. `driver_1003/graph_comparisons/county_comparisons/**/*.html`
+   - County-specific comparison maps.
+   - Gray = shared FIDs, green = added FIDs, red = removed FIDs.
+   - County-specific pages avoid FID namespace collisions across counties.
 
-Each map includes raw GPS, matched road segments, START/END markers, and
-clickable enriched road attributes.
+## Research interpretation
 
-## 3. UBODT regeneration/performance check
+These deliverables demonstrate the Phase 2 foundation:
 
-The UBODT performance summary and pre-run manifest are committed in
-`ubodt_performance/`.
+- Phase 2A: Driver 1003 longitudinal timeline.
+- Phase 2B: monthly attributed graphs with FIDs as nodes and transitions as
+  directed edges.
+- Phase 2C: consecutive monthly graph comparison using shared/added/removed
+  nodes and edges, Jaccard similarities, weighted overlaps, and data-quality
+  flags.
 
-The full UBODT files are not committed because they are generated FMM cache
-files between roughly 1 GB and 2 GB per county.
-
-## 4. Matched CSV files
-
-Matched CSV files for all three counties are committed in `matched_csv/`.
-These define the trip-to-road-segment `opath` mapping used for monthly
-attributed graph work.
-
+The next research phase is to develop a Driver Path Choice Change Metric using
+these graph comparison outputs. These pages do not yet claim or implement that
+final metric.
