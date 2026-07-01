@@ -141,6 +141,11 @@ The committed advisor-review HTML copy is:
 deliverables/driver_1003/timeline/driver_1003_timeline.html
 ```
 
+Generated HTML reports are standalone portable deliverables. Local image assets
+are embedded directly into the HTML as Base64 data URIs during report
+generation, so copied or downloaded reports do not require sibling `figures/`
+or asset folders.
+
 ## Connection to monthly attributed graphs
 
 For Driver 1003 and each month, the outputs provide:

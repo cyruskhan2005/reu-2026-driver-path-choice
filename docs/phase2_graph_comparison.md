@@ -180,6 +180,11 @@ Only the HTML review pages are committed. Raw CSV, Parquet, JSONL, cache,
 temporary debug reports, and intermediate output folders are not committed as
 Phase 2 HTML deliverables.
 
+Generated HTML reports are standalone portable deliverables. Local image assets
+are embedded as Base64 data URIs, and the detailed comparison report embeds its
+FID membership map inside the page rather than referencing a sibling HTML file.
+Interactive Leaflet maps intentionally retain external CDN and map-tile URLs.
+
 The overview groups links by month pair, then lists each county-specific
 comparison underneath. Within each month pair, counties with meaningful shared
 overlap are listed first, higher-activity counties next, and zero-baseline

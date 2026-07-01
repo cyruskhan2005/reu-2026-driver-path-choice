@@ -21,6 +21,7 @@ from roadnet.graph_comparisons import (
     validate_graph_comparisons,
     weighted_overlap_min,
     write_comparison_map,
+    write_detailed_comparison_html,
     write_overview_html,
 )
 
@@ -305,6 +306,38 @@ def test_overview_lists_generated_comparison_graph_maps() -> None:
     assert "Open comparison" in document
     assert "2023-01 → 2023-02" in document
     assert "Alpha County" in document
+
+
+def test_detailed_comparison_embeds_map_srcdoc_for_portability() -> None:
+    node_detail, edge_detail, summary = build_graph_comparisons(
+        _nodes(),
+        _edges(),
+        _manifest(),
+        driver_id=DRIVER_ID,
+    )
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        map_path = root / "comparison_map.html"
+        map_path.write_text(
+            "<!doctype html><html><body><p>embedded map</p></body></html>",
+            encoding="utf-8",
+        )
+        detail_path = root / "detail.html"
+        write_detailed_comparison_html(
+            node_detail,
+            edge_detail,
+            summary,
+            detail_path,
+            month_a="2023-01",
+            month_b="2023-02",
+            county="Alpha County",
+            map_path=map_path,
+        )
+        document = detail_path.read_text(encoding="utf-8")
+    assert "srcdoc=" in document
+    assert "embedded map" in document
+    assert "src='comparison_map.html'" not in document
+    assert 'src="comparison_map.html"' not in document
 
 
 def test_county_comparison_page_selection_skips_both_empty_rows() -> None:

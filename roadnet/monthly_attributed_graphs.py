@@ -31,6 +31,7 @@ from branca.colormap import linear
 from shapely.geometry import Point
 
 from .driver_timeline import DriverTimelineError, parse_fid_sequence
+from .html_assets import embed_local_html_assets
 
 
 SUBJECT_LABEL = "Driver 1003"
@@ -1269,6 +1270,10 @@ def write_month_map(
         map_object.get_root().html.add_child(folium.Element(summary_cards))
     folium.LayerControl(collapsed=False).add_to(map_object)
     map_object.save(output)
+    output.write_text(
+        embed_local_html_assets(output.read_text(encoding="utf-8"), output.parent),
+        encoding="utf-8",
+    )
     return output
 
 
@@ -1406,12 +1411,7 @@ def write_graph_overview(
                 map_dir
                 / f"driver_1003_{county_slug}_{month}.html"
             )
-            graph_path = (
-                data_dir
-                / f"driver_1003_{county_slug}_{month}_edges.csv"
-            )
             map_link = os.path.relpath(map_path, output.parent)
-            graph_link = os.path.relpath(graph_path, output.parent)
             month_rows.append(
                 "<tr>"
                 f"<td>{html.escape(month)}</td>"
@@ -1421,7 +1421,7 @@ def write_graph_overview(
                 f"<td>{directed_edge_count:,}</td>"
                 f"<td>{int(top_fid.fid)} ({int(top_fid.trip_use_count):,} trips)</td>"
                 f"<td>{html.escape(top_transition)}</td>"
-                f"<td><a href='{html.escape(graph_link)}'>Edge file</a></td>"
+                "<td>Generated separately</td>"
                 f"<td><a href='{html.escape(map_link)}'>Open map</a></td>"
                 "</tr>"
             )
@@ -1482,7 +1482,10 @@ def write_graph_overview(
   </table></div>
 </main></body></html>
 """
-    output.write_text(document, encoding="utf-8")
+    output.write_text(
+        embed_local_html_assets(document, output.parent),
+        encoding="utf-8",
+    )
     return output
 
 

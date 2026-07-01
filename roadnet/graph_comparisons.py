@@ -21,6 +21,7 @@ import numpy as np
 import pandas as pd
 
 from .driver_timeline import DriverTimelineError
+from .html_assets import embed_local_html_assets, iframe_srcdoc_from_file
 
 
 ALL_COUNTIES = "ALL_COUNTIES"
@@ -1036,6 +1037,10 @@ def write_comparison_map(
     map_object.get_root().html.add_child(folium.Element(legend))
     folium.LayerControl(collapsed=False).add_to(map_object)
     map_object.save(output)
+    output.write_text(
+        embed_local_html_assets(output.read_text(encoding="utf-8"), output.parent),
+        encoding="utf-8",
+    )
     return output
 
 
@@ -1126,11 +1131,11 @@ def write_detailed_comparison_html(
     )
     iframe = ""
     if map_path:
-        relative = os.path.relpath(map_path, output.parent)
+        embedded_map = iframe_srcdoc_from_file(map_path)
         iframe = (
             "<section><h2>FID membership map</h2>"
             "<p>Line width reflects the larger monthly trip-use count.</p>"
-            f"<iframe src='{html.escape(relative)}' title='FID comparison map'></iframe>"
+            f"<iframe srcdoc='{embedded_map}' title='FID comparison map'></iframe>"
             "</section>"
         )
     sections = [
@@ -1146,8 +1151,7 @@ def write_detailed_comparison_html(
         f"{_html_table(frame, columns, limit=20)}</div></section>"
         for title, frame, columns in sections
     )
-    output.write_text(
-        f"""<!doctype html>
+    document = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Driver 1003 {month_a} to {month_b} Graph Comparison</title>
@@ -1168,7 +1172,9 @@ th{{background:#eaf1f8;font-size:12px}} iframe{{width:100%;height:690px;border:1
 directed consecutive-FID transitions as edges. It does not constitute a final
 driver-choice change metric or a clinical interpretation.</p>
 <div class="cards">{card_html}</div>{iframe}{table_html}
-</main></body></html>""",
+</main></body></html>"""
+    output.write_text(
+        embed_local_html_assets(document, output.parent),
         encoding="utf-8",
     )
     return output
@@ -1398,8 +1404,7 @@ def write_overview_html(
             f"{_format_number(row['edge_jaccard_similarity'])}</small>"
         )
 
-    output.write_text(
-        f"""<!doctype html>
+    document = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Driver 1003 Month-to-Month Attributed Graph Comparison</title>
@@ -1444,7 +1449,9 @@ higher activity, with zero-baseline counties last. Counties with zero nodes in
 both months are omitted.</p>
 </section>
 {''.join(month_pair_sections)}
-</main></body></html>""",
+</main></body></html>"""
+    output.write_text(
+        embed_local_html_assets(document, output.parent),
         encoding="utf-8",
     )
     return output

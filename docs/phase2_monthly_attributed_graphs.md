@@ -181,6 +181,11 @@ The committed HTML files are intended for advisor review on GitHub. Raw CSV,
 Parquet, JSONL, cache, and intermediate output folders are not committed as
 Phase 2 deliverables.
 
+Generated HTML reports are standalone portable deliverables. Any local image
+assets referenced by report generators are embedded as Base64 data URIs in the
+HTML file itself. Interactive Leaflet maps intentionally retain external CDN
+and map-tile URLs, but they do not require local image folders.
+
 ## Maps
 
 Monthly maps retain the road/FID usage layer colored and weighted by

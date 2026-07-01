@@ -8,6 +8,13 @@ Raw CSV, Parquet, JSONL, cache, and intermediate outputs are intentionally not
 committed here. The HTML pages are committed because they are the review format
 for Dr. Jang and Mojtaba.
 
+The committed reports are standalone portable HTML deliverables. Local figures,
+screenshots, and other image assets are embedded directly into the HTML as
+Base64 data URIs when reports are generated, so a report can be copied,
+downloaded, emailed, or uploaded to Google Drive without sibling asset folders.
+Interactive Leaflet maps intentionally continue to use external CDN libraries
+and map-tile URLs.
+
 ## Recommended viewing order
 
 1. `driver_1003/timeline/driver_1003_timeline.html`

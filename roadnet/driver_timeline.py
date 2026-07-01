@@ -28,6 +28,8 @@ from typing import Iterable, Sequence
 
 import numpy as np
 import pandas as pd
+
+from .html_assets import embed_local_html_assets
 import yaml
 
 
@@ -998,7 +1000,10 @@ def write_timeline_visual(
 </body>
 </html>
 """
-    output.write_text(document, encoding="utf-8")
+    output.write_text(
+        embed_local_html_assets(document, output.parent),
+        encoding="utf-8",
+    )
     return output
 
 
@@ -1086,7 +1091,10 @@ def write_population_overview(
 </body>
 </html>
 """
-    output.write_text(document, encoding="utf-8")
+    output.write_text(
+        embed_local_html_assets(document, output.parent),
+        encoding="utf-8",
+    )
     return output
 
 
