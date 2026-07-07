@@ -54,6 +54,95 @@ edge_weight = 0.5
 
 The command-line script accepts custom weights. If the supplied weights do not sum to 1, they are normalized automatically and the normalized weights are written to the output table.
 
+## How weighted overlap works
+
+Each month is represented as a graph:
+
+- nodes are road segments/FIDs;
+- edges are directed transitions from one FID to the next.
+
+RCCI compares two consecutive monthly graphs and measures how much road-segment usage and transition usage changed.
+
+Weighted overlap means frequently used roads and transitions count more than rarely used roads and transitions. If a road segment was used in 40 trips, a change involving that road should matter more than a road segment used once. RCCI therefore uses trip-use counts and transition counts rather than treating every FID equally.
+
+The exact formula is a weighted Jaccard / min-max overlap:
+
+```text
+weighted overlap =
+  Σ min(weight in Month A, weight in Month B)
+  /
+  Σ max(weight in Month A, weight in Month B)
+```
+
+For nodes:
+
+```text
+node weight = road-segment trip-use count
+weighted_node_overlap_min =
+  Σ over FIDs min(trip_use_count_month_a, trip_use_count_month_b)
+  /
+  Σ over FIDs max(trip_use_count_month_a, trip_use_count_month_b)
+```
+
+For edges:
+
+```text
+edge weight = directed transition count
+weighted_edge_overlap_min =
+  Σ over directed transitions min(transition_count_month_a, transition_count_month_b)
+  /
+  Σ over directed transitions max(transition_count_month_a, transition_count_month_b)
+```
+
+RCCI uses these weighted overlaps, not raw FID counts, as the primary formula inputs. Raw shared/added/removed counts and Jaccard similarities are still reported as supporting diagnostics.
+
+Node example:
+
+| FID | Month A usage | Month B usage | min | max |
+|---:|---:|---:|---:|---:|
+| 100 | 40 | 38 | 38 | 40 |
+| 200 | 10 | 11 | 10 | 11 |
+| 300 | 2 | 0 | 0 | 2 |
+| 400 | 0 | 3 | 0 | 3 |
+
+```text
+weighted overlap = (38 + 10 + 0 + 0) / (40 + 11 + 2 + 3)
+                 = 48 / 56
+                 = 0.857
+
+node change = 1 - 0.857
+            = 0.143
+```
+
+Although two roads changed, most high-use driving remained stable, so the node change is relatively small. If FID 100 disappeared instead, the RCCI contribution would be much larger.
+
+Plain-language example:
+
+```text
+Month A:
+  FID 100 used 40 times
+  FID 200 used 1 time
+
+Month B:
+  FID 100 still used 38 times
+  FID 200 disappears
+```
+
+In this case, the route network changed slightly, but not dramatically, because the heavily used road remained mostly stable. If FID 100 disappeared instead, the RCCI contribution would be much larger.
+
+Higher-impact changes include:
+
+- frequently used roads;
+- frequently used transitions;
+- roads or transitions that disappear after heavy use;
+- new roads or transitions that appear repeatedly.
+
+Lower-impact changes include:
+
+- one-time roads;
+- rare transitions;
+- sparse months, which are flagged by confidence labels.
+
 ## Node component
 
 The node component measures change in monthly FID road-segment usage:
@@ -74,9 +163,13 @@ edge_change_component = 1 - weighted_edge_overlap_min
 
 Edges represent directed consecutive-FID transitions within matched trips. A low edge overlap means the movement pattern through road segments changed substantially.
 
+Two months may use many of the same roads but connect them differently. That is why edge changes are included in addition to node changes.
+
 ## Confidence labels
 
 Confidence is kept separate from the RCCI value. RCCI is not penalized or altered by confidence.
+
+RCCI measures route change. Confidence measures whether there are enough trips to trust the comparison. These concepts are intentionally reported separately and are not mixed into a single adjusted score.
 
 | Confidence | Rule |
 |---|---|
@@ -138,6 +231,18 @@ deliverables/google_drive_phase2/driver_1003_route_choice_change_index/
   driver_1003_rcci_validation.md
 ```
 
+The clean advisor-facing share folder is:
+
+```text
+deliverables/driver_1003/
+```
+
+The RCCI share-folder copy is:
+
+```text
+deliverables/driver_1003/route_choice_change_index/
+```
+
 The main summary table includes:
 
 - driver ID;
@@ -194,6 +299,87 @@ python scripts/build_driver_1003_route_choice_change_index.py \
 python scripts/build_driver_1003_route_choice_change_index.py \
   --driver 1003 \
   --county "Broward County"
+```
+
+## Deliverable folder structure
+
+The clean Google Drive share folder is organized as:
+
+```text
+deliverables/driver_1003/
+  README.md
+  timeline/
+  monthly_graphs/
+  graph_comparisons/
+  route_choice_change_index/
+    data/
+    visuals/
+  route_evolution_animation/
+  assets/
+```
+
+Recommended viewing order:
+
+1. `timeline/driver_1003_timeline.html`
+2. `monthly_graphs/driver_1003_monthly_graph_overview.html`
+3. `graph_comparisons/driver_1003_graph_comparison_overview.html`
+4. `route_choice_change_index/visuals/driver_1003_route_choice_change_index_report.html`
+5. `route_evolution_animation/driver_1003_broward_county_route_evolution.gif`
+
+## Regenerating reports
+
+Run the report stages in order:
+
+```bash
+python scripts/build_driver_timeline.py --driver auto
+python scripts/build_driver_1003_monthly_graphs.py --driver 1003
+python scripts/compare_driver_1003_monthly_graphs.py --driver 1003 --all
+python scripts/build_driver_1003_route_choice_change_index.py --driver 1003 --all
+```
+
+The monthly graph and comparison stages use cached Phase 2 outputs and write the
+large Google Drive bundle under `deliverables/google_drive_phase2/`. The curated
+GitHub/share folder is `deliverables/driver_1003/`.
+
+## HTML validation
+
+Validate every generated HTML report in the share folder with:
+
+```bash
+python scripts/validate_html_deliverables.py deliverables/driver_1003
+```
+
+The validator checks local HTML, CSS, JavaScript, image, and iframe references,
+internal anchors, and map-like pages without a detectable map container. External
+Leaflet CDN and tile URLs are intentionally treated as external dependencies.
+
+## Route evolution animation
+
+Generate the reusable route evolution animation with:
+
+```bash
+python scripts/generate_route_evolution_animation.py \
+  --driver 1003 \
+  --county "Broward County" \
+  --output-dir deliverables/driver_1003/route_evolution_animation
+```
+
+The generator reads monthly FID geometry from
+`deliverables/google_drive_phase2/driver_1003_monthly_graphs/data/driver_1003_all_monthly_nodes.csv`
+by default. Each frame uses the same geographic extent, same map style, same
+zoom level, a month label, and only that month's routes. It always writes a GIF.
+It also writes an MP4 when `ffmpeg` is installed.
+
+Dependencies for the animation generator:
+
+```bash
+python -m pip install -e ".[deliverables]"
+```
+
+Optional MP4 dependency:
+
+```bash
+brew install ffmpeg
 ```
 
 ## Limitations

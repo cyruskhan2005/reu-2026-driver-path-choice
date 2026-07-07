@@ -1,0 +1,22 @@
+{
+  "driver": "1003",
+  "entry_points": [
+    "timeline/driver_1003_timeline.html",
+    "monthly_graphs/driver_1003_monthly_graph_overview.html",
+    "graph_comparisons/driver_1003_graph_comparison_overview.html",
+    "route_choice_change_index/visuals/driver_1003_route_choice_change_index_report.html",
+    "route_evolution_animation/driver_1003_broward_county_route_evolution.gif"
+  ],
+  "folders": {
+    "timeline": "Monthly driver activity timeline.",
+    "monthly_graphs": "Monthly attributed graph reports and maps.",
+    "graph_comparisons": "Consecutive month graph comparison reports.",
+    "route_choice_change_index": "Phase 3 RCCI report and JSON exports.",
+    "route_evolution_animation": "Month-by-month route evolution animation.",
+    "assets": "Package metadata and optional share-folder styling."
+  },
+  "json_exports": {
+    "rcci_summary": "route_choice_change_index/data/driver_1003_rcci_summary.json",
+    "rcci_sensitivity": "route_choice_change_index/data/driver_1003_rcci_sensitivity.json"
+  }
+}

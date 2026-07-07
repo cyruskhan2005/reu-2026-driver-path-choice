@@ -12,6 +12,12 @@ dependencies = [
     "pyarrow", "pyogrio", "folium", "pyyaml",
 ]
 
+[project.optional-dependencies]
+deliverables = [
+    "matplotlib",
+    "Pillow",
+]
+
 [project.scripts]
 roadnet-run         = "roadnet.cli.run:main"
 roadnet-consolidate = "roadnet.cli.consolidate:main"

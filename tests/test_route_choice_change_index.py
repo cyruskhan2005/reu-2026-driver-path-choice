@@ -12,6 +12,7 @@ from roadnet.route_choice_change_index import (
     compute_rcci,
     normalize_weights,
 )
+from roadnet.graph_comparisons import weighted_overlap_min
 
 
 def _summary_rows() -> pd.DataFrame:
@@ -104,6 +105,25 @@ def test_rcci_bounds_and_extremes() -> None:
 def test_custom_weight_score() -> None:
     score = compute_rcci(0.2, 0.8, node_weight=0.25, edge_weight=0.75)
     assert abs(score - 65) < 1e-9
+
+
+def test_weighted_node_overlap_uses_min_over_max_usage_weights() -> None:
+    # Union FIDs: A, B, C, D
+    # Month A weights: 40, 10, 2, 0
+    # Month B weights: 38, 11, 0, 3
+    overlap = weighted_overlap_min([40, 10, 2, 0], [38, 11, 0, 3])
+    assert abs(overlap - (48 / 56)) < 1e-12
+    node_change = 1 - overlap
+    assert abs(node_change - (8 / 56)) < 1e-12
+
+
+def test_weighted_edge_overlap_uses_transition_counts() -> None:
+    # Union directed transitions: A->B, B->C, C->D, D->E
+    # Month A transition counts: 20, 5, 1, 0
+    # Month B transition counts: 18, 8, 0, 2
+    overlap = weighted_overlap_min([20, 5, 1, 0], [18, 8, 0, 2])
+    expected = (18 + 5 + 0 + 0) / (20 + 8 + 1 + 2)
+    assert abs(overlap - expected) < 1e-12
 
 
 def test_confidence_rules() -> None:

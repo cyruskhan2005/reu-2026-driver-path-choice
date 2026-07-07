@@ -39,3 +39,5 @@ KINGSTON/
 /deliverables/driver_1003/**/*.jsonl
 /deliverables/driver_1003/**/debug/
 /deliverables/driver_1003/**/legacy_selected_maps/
+!/deliverables/driver_1003/route_choice_change_index/data/
+!/deliverables/driver_1003/route_choice_change_index/data/*.json

@@ -429,26 +429,159 @@ def _html_table(
     columns: Sequence[str],
     *,
     limit: int | None = None,
+    raw_html_columns: set[str] | None = None,
 ) -> str:
     data = frame.head(limit).copy() if limit else frame.copy()
+    raw_html_columns = raw_html_columns or set()
     if data.empty:
         return "<p class='empty'>No rows.</p>"
     headers = "".join(f"<th>{html.escape(column)}</th>" for column in columns)
     rows = []
-    for row in data.reindex(columns=columns).itertuples(index=False, name=None):
-        cells = "".join(f"<td>{_format_number(value)}</td>" for value in row)
+    for record in data.reindex(columns=columns).to_dict(orient="records"):
+        cells = ""
+        for column in columns:
+            value = record.get(column)
+            if column in raw_html_columns and isinstance(value, str):
+                cells += f"<td>{value}</td>"
+            else:
+                cells += f"<td>{_format_number(value)}</td>"
         rows.append(f"<tr>{cells}</tr>")
     return f"<div class='table-wrap'><table><thead><tr>{headers}</tr></thead><tbody>{''.join(rows)}</tbody></table></div>"
 
 
-def _timeline_svg(frame: pd.DataFrame, *, width: int = 980, height: int = 320) -> str:
+def _county_slug(value: object) -> str:
+    return (
+        str(value)
+        .lower()
+        .replace("&", "and")
+        .replace("-", "_")
+        .replace(" ", "_")
+        .replace("__", "_")
+    )
+
+
+def _comparison_relative_href(row: pd.Series, *, from_dir: Path) -> str | None:
+    pair_dir = f"{row['month_a']}_to_{row['month_b']}"
+    county_slug = _county_slug(row["county"])
+    filename = f"driver_1003_{county_slug}_comparison.html"
+    candidates = [
+        # Clean share folder:
+        # deliverables/driver_1003/route_choice_change_index/visuals -> graph_comparisons
+        from_dir
+        / ".."
+        / ".."
+        / "graph_comparisons"
+        / "county_comparisons"
+        / pair_dir
+        / filename,
+        # Large Google Drive bundle:
+        # deliverables/google_drive_phase2/driver_1003_route_choice_change_index/visuals
+        from_dir
+        / ".."
+        / ".."
+        / "driver_1003_graph_comparisons"
+        / "visuals"
+        / "county_comparisons"
+        / pair_dir
+        / filename,
+    ]
+    return _first_existing_relative(candidates, from_dir=from_dir)
+
+
+def _first_existing_relative(candidates: Sequence[Path], *, from_dir: Path) -> str | None:
+    for candidate in candidates:
+        resolved = candidate.resolve()
+        if resolved.exists():
+            return os.path.relpath(resolved, from_dir)
+    return None
+
+
+def _share_link(filename: str, *, from_dir: Path) -> str:
+    candidates = [
+        from_dir / ".." / ".." / filename,
+        from_dir / ".." / ".." / ".." / "driver_1003" / filename,
+    ]
+    href = _first_existing_relative(candidates, from_dir=from_dir)
+    if href:
+        return href
+    return os.path.relpath(candidates[0], from_dir)
+
+
+def _add_comparison_links(frame: pd.DataFrame, *, from_dir: Path) -> pd.DataFrame:
+    output = frame.copy()
+    links = []
+    for _, row in output.iterrows():
+        href = _comparison_relative_href(row, from_dir=from_dir)
+        if href:
+            links.append(f"<a href='{html.escape(href)}'>Open comparison</a>")
+        else:
+            links.append("<span class='muted'>Unavailable</span>")
+    output["Comparison HTML link"] = links
+    output["Node overlap %"] = (
+        pd.to_numeric(output["weighted_node_overlap_min"], errors="coerce") * 100
+    )
+    output["Edge overlap %"] = (
+        pd.to_numeric(output["weighted_edge_overlap_min"], errors="coerce") * 100
+    )
+    return output
+
+
+def _confidence_color(label: object) -> str:
+    return {
+        "HIGH": "#178a4c",
+        "MEDIUM": "#d99000",
+        "LOW": "#cf2e2e",
+    }.get(str(label), "#64748b")
+
+
+def _confidence_fill(label: object) -> str:
+    return {
+        "HIGH": "#e8f6ee",
+        "MEDIUM": "#fff4d6",
+        "LOW": "#fdeaea",
+    }.get(str(label), "#f1f5f9")
+
+
+def _timeline_tooltip(row: pd.Series) -> str:
+    node_overlap = row.get("weighted_node_overlap_min")
+    edge_overlap = row.get("weighted_edge_overlap_min")
+    return "\n".join(
+        [
+            f"{row['month_a']} → {row['month_b']}",
+            f"RCCI: {_format_score(row.get('rcci_v1'))}",
+            f"Confidence: {row.get('confidence_label')}",
+            f"Trips: {int(row.get('trips_a', 0)):,} → {int(row.get('trips_b', 0)):,}",
+            "",
+            "Node statistics",
+            f"Shared nodes: {int(row.get('shared_nodes', 0)):,}",
+            f"Added nodes: {int(row.get('added_nodes', 0)):,}",
+            f"Removed nodes: {int(row.get('removed_nodes', 0)):,}",
+            f"Node overlap: {_format_score(float(node_overlap) * 100 if pd.notna(node_overlap) else np.nan)}%",
+            "",
+            "Edge statistics",
+            f"Shared edges: {int(row.get('shared_edges', 0)):,}",
+            f"Added edges: {int(row.get('added_edges', 0)):,}",
+            f"Removed edges: {int(row.get('removed_edges', 0)):,}",
+            f"Edge overlap: {_format_score(float(edge_overlap) * 100 if pd.notna(edge_overlap) else np.nan)}%",
+        ]
+    )
+
+
+def _timeline_svg(
+    frame: pd.DataFrame,
+    *,
+    from_dir: Path,
+    width: int = 980,
+    height: int = 360,
+) -> str:
     data = frame.loc[pd.to_numeric(frame["rcci_v1"], errors="coerce").notna()].copy()
     if data.empty:
         return "<p class='empty'>No RCCI values available for the timeline.</p>"
     data = data.sort_values(["month_a", "month_b"])
     scores = data["rcci_v1"].astype(float).to_list()
     labels = (data["month_a"].astype(str) + "→" + data["month_b"].astype(str)).to_list()
-    left, right, top, bottom = 64, 24, 26, 70
+    mean_score = float(np.mean(scores))
+    left, right, top, bottom = 64, 34, 38, 84
     inner_w = width - left - right
     inner_h = height - top - bottom
     max_index = max(len(scores) - 1, 1)
@@ -462,13 +595,34 @@ def _timeline_svg(frame: pd.DataFrame, *, width: int = 980, height: int = 320) -
     points = " ".join(
         f"{x_at(index):.1f},{y_at(score):.1f}" for index, score in enumerate(scores)
     )
-    circles = []
-    for index, (score, label) in enumerate(zip(scores, labels, strict=False)):
-        circles.append(
-            "<circle "
-            f"cx='{x_at(index):.1f}' cy='{y_at(score):.1f}' r='4'>"
-            f"<title>{html.escape(label)}: {score:.1f}</title></circle>"
+    bands = []
+    band_width = inner_w / max(len(scores), 1)
+    for index, row in enumerate(data.itertuples(index=False)):
+        center = x_at(index)
+        x = max(left, center - band_width / 2)
+        width_rect = band_width
+        if index == 0:
+            width_rect = band_width / 2
+        if index == len(scores) - 1:
+            width_rect = min(width_rect, width - right - x)
+        bands.append(
+            f"<rect class='band' x='{x:.1f}' y='{top}' width='{width_rect:.1f}' "
+            f"height='{inner_h}' fill='{_confidence_fill(getattr(row, 'confidence_label'))}'></rect>"
         )
+    circles = []
+    for index, (_, row) in enumerate(data.iterrows()):
+        score = float(row["rcci_v1"])
+        tooltip = html.escape(_timeline_tooltip(row))
+        circle = (
+            "<circle class='point' "
+            f"cx='{x_at(index):.1f}' cy='{y_at(score):.1f}' r='6' "
+            f"fill='{_confidence_color(row.get('confidence_label'))}'>"
+            f"<title>{tooltip}</title></circle>"
+        )
+        href = _comparison_relative_href(row, from_dir=from_dir)
+        if href:
+            circle = f"<a href='{html.escape(href)}'>{circle}</a>"
+        circles.append(circle)
     y_ticks = []
     for tick in range(0, 101, 20):
         y = y_at(float(tick))
@@ -477,21 +631,41 @@ def _timeline_svg(frame: pd.DataFrame, *, width: int = 980, height: int = 320) -
             f"<text x='{left-10}' y='{y+4:.1f}' text-anchor='end'>{tick}</text>"
         )
     x_labels = []
-    step = max(1, math.ceil(len(labels) / 10))
+    step = max(2, math.ceil(len(labels) / 12))
     for index, label in enumerate(labels):
         if index % step == 0 or index == len(labels) - 1:
             x = x_at(index)
             x_labels.append(
                 f"<text x='{x:.1f}' y='{height-28}' transform='rotate(-45 {x:.1f},{height-28})'>{html.escape(label)}</text>"
             )
+    mean_y = y_at(mean_score)
+    high_idx = int(np.argmax(scores))
+    low_idx = int(np.argmin(scores))
+    annotations = []
+    for text, idx, anchor, y_offset in [
+        ("Highest change", high_idx, "start", -16),
+        ("Lowest change", low_idx, "end", 18),
+    ]:
+        x = x_at(idx)
+        y = y_at(scores[idx])
+        text_x = min(max(x + (10 if anchor == "start" else -10), left + 8), width - right - 8)
+        annotations.append(
+            f"<g class='callout'><line x1='{x:.1f}' y1='{y:.1f}' x2='{text_x:.1f}' y2='{y + y_offset:.1f}'></line>"
+            f"<text x='{text_x:.1f}' y='{y + y_offset:.1f}' text-anchor='{anchor}'>"
+            f"{html.escape(text)} · {html.escape(labels[idx])} · RCCI {scores[idx]:.1f}</text></g>"
+        )
     return f"""
 <svg class="timeline" viewBox="0 0 {width} {height}" role="img" aria-label="Broward RCCI timeline">
   <rect x="0" y="0" width="{width}" height="{height}" rx="14"></rect>
+  <g class="bands">{''.join(bands)}</g>
   <g class="grid">{''.join(y_ticks)}</g>
+  <line class="mean-line" x1="{left}" x2="{width-right}" y1="{mean_y:.1f}" y2="{mean_y:.1f}"></line>
+  <text class="mean-label" x="{width-right-4}" y="{mean_y-6:.1f}" text-anchor="end">Mean RCCI {mean_score:.1f}</text>
   <line class="axis" x1="{left}" x2="{width-right}" y1="{top+inner_h}" y2="{top+inner_h}"></line>
   <line class="axis" x1="{left}" x2="{left}" y1="{top}" y2="{top+inner_h}"></line>
   <polyline class="series" points="{points}"></polyline>
   <g class="points">{''.join(circles)}</g>
+  <g>{''.join(annotations)}</g>
   <g class="xlabels">{''.join(x_labels)}</g>
   <text class="ylabel" x="20" y="{top+inner_h/2}" transform="rotate(-90 20,{top+inner_h/2})">RCCI v1</text>
   <text class="xlabel" x="{left+inner_w/2}" y="{height-6}" text-anchor="middle">Month pair</text>
@@ -499,8 +673,116 @@ def _timeline_svg(frame: pd.DataFrame, *, width: int = 980, height: int = 320) -
 """
 
 
-def _relative_link(path: str, *, from_dir: Path) -> str:
-    return html.escape(os.path.relpath(Path(path), from_dir))
+def _confidence_counts(frame: pd.DataFrame) -> pd.Series:
+    return (
+        frame["confidence_label"]
+        .value_counts()
+        .reindex(["HIGH", "MEDIUM", "LOW"], fill_value=0)
+    )
+
+
+def _county_trip_coverage(frame: pd.DataFrame) -> str:
+    if frame.empty:
+        return "0 comparisons"
+    trips_a = pd.to_numeric(frame["trips_a"], errors="coerce").fillna(0)
+    trips_b = pd.to_numeric(frame["trips_b"], errors="coerce").fillna(0)
+    return (
+        f"{int(trips_a.sum()):,} month-A trips, "
+        f"{int(trips_b.sum()):,} month-B trips; "
+        f"median pair trips {_format_number(pd.concat([trips_a, trips_b]).median())}"
+    )
+
+
+def _county_summary(frame: pd.DataFrame) -> pd.DataFrame:
+    rows = []
+    for county_name, group in frame.groupby("county", sort=True):
+        months = set(group["month_a"].astype(str)) | set(group["month_b"].astype(str))
+        scores = pd.to_numeric(group["rcci_v1"], errors="coerce").dropna()
+        trip_values = pd.concat(
+            [
+                pd.to_numeric(group["trips_a"], errors="coerce"),
+                pd.to_numeric(group["trips_b"], errors="coerce"),
+            ],
+            ignore_index=True,
+        ).dropna()
+        counts = _confidence_counts(group)
+        rows.append(
+            {
+                "County": county_name,
+                "Observed months": len(months),
+                "Comparisons": len(group),
+                "Median trips": trip_values.median() if not trip_values.empty else np.nan,
+                "Median RCCI": scores.median() if not scores.empty else np.nan,
+                "HIGH confidence": int(counts["HIGH"]),
+                "MEDIUM confidence": int(counts["MEDIUM"]),
+                "LOW confidence": int(counts["LOW"]),
+                "Mean RCCI": scores.mean() if not scores.empty else np.nan,
+                "Maximum RCCI": scores.max() if not scores.empty else np.nan,
+                "Minimum RCCI": scores.min() if not scores.empty else np.nan,
+            }
+        )
+    order = {"Broward County": 0, "Miami-Dade County": 1, "Palm Beach County": 2}
+    return (
+        pd.DataFrame(rows)
+        .sort_values("County", key=lambda column: column.map(order).fillna(99))
+        .reset_index(drop=True)
+    )
+
+
+def _county_stat_cards(frame: pd.DataFrame) -> str:
+    counts = _confidence_counts(frame)
+    scores = pd.to_numeric(frame["rcci_v1"], errors="coerce").dropna()
+    node_retention = (
+        pd.to_numeric(frame["weighted_node_overlap_min"], errors="coerce").mean() * 100
+    )
+    edge_retention = (
+        pd.to_numeric(frame["weighted_edge_overlap_min"], errors="coerce").mean() * 100
+    )
+    cards = [
+        ("Comparisons", f"{len(frame):,}"),
+        ("Mean RCCI", _format_score(scores.mean() if not scores.empty else np.nan)),
+        ("Median RCCI", _format_score(scores.median() if not scores.empty else np.nan)),
+        ("Minimum RCCI", _format_score(scores.min() if not scores.empty else np.nan)),
+        ("Maximum RCCI", _format_score(scores.max() if not scores.empty else np.nan)),
+        ("Avg. node retention", f"{_format_score(node_retention)}%"),
+        ("Avg. edge retention", f"{_format_score(edge_retention)}%"),
+        ("HIGH confidence", f"{int(counts['HIGH']):,}"),
+        ("MEDIUM confidence", f"{int(counts['MEDIUM']):,}"),
+        ("LOW confidence", f"{int(counts['LOW']):,}"),
+    ]
+    return "".join(
+        f"<div class='card compact'><span>{html.escape(label)}</span><strong>{html.escape(value)}</strong></div>"
+        for label, value in cards
+    )
+
+
+def _county_section(
+    frame: pd.DataFrame,
+    county_name: str,
+    *,
+    table_columns: Sequence[str],
+) -> str:
+    group = frame.loc[frame["county"] == county_name].sort_values(
+        ["month_a", "month_b"]
+    )
+    counts = _confidence_counts(group)
+    low_share = (counts["LOW"] / len(group)) if len(group) else 0
+    sparse_note = ""
+    if low_share >= 0.8:
+        sparse_note = (
+            "<p class='note'>Most comparisons are low confidence because of "
+            "insufficient trip coverage.</p>"
+        )
+    return f"""
+<section>
+<h3>{html.escape(county_name)}</h3>
+<div class="cards">{_county_stat_cards(group)}</div>
+<p><strong>Trip coverage:</strong> {html.escape(_county_trip_coverage(group))}</p>
+{sparse_note}
+<h4>RCCI table</h4>
+{_html_table(group, table_columns, raw_html_columns={"Comparison HTML link"})}
+</section>
+"""
 
 
 def generate_rcci_report_html(
@@ -515,30 +797,54 @@ def generate_rcci_report_html(
     """Write the standalone RCCI report HTML."""
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    focus = rcci_summary.loc[rcci_summary["county"] == report_county].copy()
-    if focus.empty:
-        focus = rcci_summary.copy()
+    ordered = rcci_summary.sort_values(["month_a", "month_b", "county"]).copy()
+    ordered_links = _add_comparison_links(ordered, from_dir=output.parent)
+    broward = ordered_links.loc[ordered_links["county"] == report_county].copy()
+    if broward.empty:
+        broward = ordered_links.copy()
         report_county = "All county-specific rows"
-    high_medium = rcci_summary.loc[
-        rcci_summary["confidence_label"].isin(["HIGH", "MEDIUM"])
-        & rcci_summary["rcci_v1"].notna()
+    supplemental_counties = [
+        county
+        for county in ["Miami-Dade County", "Palm Beach County"]
+        if county in set(ordered_links["county"])
+    ]
+    county_counts = ordered_links["county"].value_counts()
+    broward_hm = broward.loc[
+        broward["confidence_label"].isin(["HIGH", "MEDIUM"])
+        & broward["rcci_v1"].notna()
     ].copy()
-    highest = high_medium.sort_values("rcci_v1", ascending=False).head(5)
-    lowest = high_medium.sort_values("rcci_v1", ascending=True).head(5)
-    low_conf = rcci_summary.loc[rcci_summary["confidence_label"] == "LOW"].copy()
-    confidence_counts = (
-        rcci_summary["confidence_label"]
-        .value_counts()
-        .reindex(["HIGH", "MEDIUM", "LOW"], fill_value=0)
+    broward_highest = broward_hm.sort_values("rcci_v1", ascending=False).head(5)
+    broward_lowest = broward_hm.sort_values("rcci_v1", ascending=True).head(5)
+    broward_counts = _confidence_counts(broward)
+    county_summary = _county_summary(ordered_links)
+    executive_scores = pd.to_numeric(broward["rcci_v1"], errors="coerce").dropna()
+    executive_node_retention = (
+        pd.to_numeric(broward["weighted_node_overlap_min"], errors="coerce").mean()
+        * 100
     )
-    score_values = pd.to_numeric(rcci_summary["rcci_v1"], errors="coerce").dropna()
+    executive_edge_retention = (
+        pd.to_numeric(broward["weighted_edge_overlap_min"], errors="coerce").mean()
+        * 100
+    )
     cards = [
-        ("County-specific rows", f"{len(rcci_summary):,}"),
-        ("Broward focus rows", f"{len(focus):,}"),
-        ("Median RCCI", _format_score(score_values.median() if not score_values.empty else np.nan)),
-        ("HIGH confidence", f"{int(confidence_counts['HIGH']):,}"),
-        ("MEDIUM confidence", f"{int(confidence_counts['MEDIUM']):,}"),
-        ("LOW confidence", f"{int(confidence_counts['LOW']):,}"),
+        ("Primary county", report_county),
+        ("Total comparisons", f"{len(ordered_links):,}"),
+        ("Broward comparisons", f"{int(county_counts.get('Broward County', 0)):,}"),
+        (
+            "Miami-Dade comparisons",
+            f"{int(county_counts.get('Miami-Dade County', 0)):,}",
+        ),
+        (
+            "Palm Beach comparisons",
+            f"{int(county_counts.get('Palm Beach County', 0)):,}",
+        ),
+        ("Mean RCCI", _format_score(executive_scores.mean())),
+        ("Median RCCI", _format_score(executive_scores.median())),
+        ("Highest RCCI", _format_score(executive_scores.max())),
+        ("Lowest RCCI", _format_score(executive_scores.min())),
+        ("Avg. node retention", f"{_format_score(executive_node_retention)}%"),
+        ("Avg. edge retention", f"{_format_score(executive_edge_retention)}%"),
+        ("HIGH/MEDIUM/LOW", f"{int(broward_counts['HIGH'])}/{int(broward_counts['MEDIUM'])}/{int(broward_counts['LOW'])}"),
     ]
     card_html = "".join(
         f"<div class='card'><span>{html.escape(label)}</span><strong>{html.escape(value)}</strong></div>"
@@ -566,12 +872,54 @@ def generate_rcci_report_html(
         "weighted_node_overlap_min",
         "weighted_edge_overlap_min",
         "interpretation_label",
+        "Comparison HTML link",
     ]
+    enhanced_change_columns = [
+        "month_a",
+        "month_b",
+        "county",
+        "confidence_label",
+        "trips_a",
+        "trips_b",
+        "rcci_v1",
+        "Node overlap %",
+        "Edge overlap %",
+        "Comparison HTML link",
+    ]
+    county_summary_columns = [
+        "County",
+        "Observed months",
+        "Comparisons",
+        "Median trips",
+        "Median RCCI",
+        "HIGH confidence",
+        "MEDIUM confidence",
+        "LOW confidence",
+        "Mean RCCI",
+        "Maximum RCCI",
+        "Minimum RCCI",
+    ]
+    supplemental_html = "".join(
+        _county_section(ordered_links, county, table_columns=table_columns)
+        for county in supplemental_counties
+    )
     links = {
-        "Driver timeline": "../../../driver_1003/timeline/driver_1003_timeline.html",
-        "Monthly graph overview": "../../../driver_1003/monthly_graphs/driver_1003_monthly_graph_overview.html",
-        "Graph comparison overview": "../../../driver_1003/graph_comparisons/driver_1003_graph_comparison_overview.html",
-        "Broward 2023-08 to 2023-09 comparison": "../../../driver_1003/graph_comparisons/driver_1003_broward_2023-08_to_2023-09_comparison.html",
+        "Driver timeline": _share_link(
+            "timeline/driver_1003_timeline.html",
+            from_dir=output.parent,
+        ),
+        "Monthly graph overview": _share_link(
+            "monthly_graphs/driver_1003_monthly_graph_overview.html",
+            from_dir=output.parent,
+        ),
+        "Graph comparison overview": _share_link(
+            "graph_comparisons/driver_1003_graph_comparison_overview.html",
+            from_dir=output.parent,
+        ),
+        "Broward 2023-08 to 2023-09 comparison": _share_link(
+            "graph_comparisons/driver_1003_broward_2023-08_to_2023-09_comparison.html",
+            from_dir=output.parent,
+        ),
     }
     link_html = "".join(
         f"<li><a href='{html.escape(href)}'>{html.escape(label)}</a></li>"
@@ -585,17 +933,21 @@ def generate_rcci_report_html(
 <title>Driver 1003 Route Choice Change Index (RCCI)</title>
 <style>
 :root{{--bg:#f6f8fb;--card:#ffffff;--text:#182230;--muted:#617085;--blue:#2f6fed;--line:#dbe3ef;--green:#0f8f61;--orange:#b65c00;--red:#b42318}}
-body{{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}}
+html{{scroll-behavior:smooth}} body{{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}}
 main{{max-width:1180px;margin:0 auto;padding:34px 22px 56px}}
 h1{{font-size:34px;margin:0 0 6px}} h2{{margin-top:34px}} p{{color:var(--muted)}}
+.nav{{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 24px}} .nav a{{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;text-decoration:none;font-size:13px}}
 .subtitle{{font-size:17px;margin-top:0}} .cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:24px 0}}
 .card,.box,section{{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(24,34,48,.06)}}
-.card{{padding:16px}} .card span{{display:block;color:var(--muted);font-size:13px}} .card strong{{font-size:25px}}
+.card{{padding:16px}} .card.compact strong{{font-size:21px}} .card span{{display:block;color:var(--muted);font-size:13px}} .card strong{{font-size:25px}}
 section{{padding:22px;margin:22px 0}} .formula{{font-size:20px;color:var(--text);background:#f0f5ff;border-left:5px solid var(--blue);padding:16px;border-radius:12px}}
 .note{{background:#fff8e6;border-left:5px solid var(--orange);padding:14px;border-radius:12px;color:#5b3b00}}
 .disclaimer{{background:#fff1f0;border-left:5px solid var(--red);padding:14px;border-radius:12px;color:#6b1d15}}
+.legend{{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:12px 0 8px;color:var(--muted);font-size:13px}} .dot{{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}} .high{{background:var(--green)}} .medium{{background:var(--orange)}} .low{{background:var(--red)}}
+.scale{{display:flex;align-items:center;gap:12px;margin:12px 0 18px;color:var(--muted);font-size:13px}} .scale-bar{{height:10px;flex:1;border-radius:999px;background:linear-gradient(90deg,#d7efe1,#fff0bd,#ffd6d6)}} .muted{{color:var(--muted)}}
+.two-col{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}} .mini-box{{background:#f8fbff;border:1px solid var(--line);border-radius:14px;padding:16px}} .mini-box h4{{margin:0 0 8px}} .mini-box ul{{margin:8px 0 0 20px;padding:0}} .example{{background:#f7fbf9;border-left:5px solid var(--green);border-radius:12px;padding:16px;margin-top:14px}} .formula-list{{display:grid;gap:8px;margin:12px 0 16px}}
 .table-wrap{{overflow-x:auto}} table{{width:100%;border-collapse:collapse;font-size:13px}} th,td{{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}} th{{background:#edf3fb;color:#324052;position:sticky;top:0}} tr:nth-child(even){{background:#fafcff}}
-.timeline{{width:100%;height:auto;background:#fff}} .timeline rect{{fill:#fff}} .grid line{{stroke:#edf1f7}} .grid text,.xlabels text{{fill:#617085;font-size:11px}} .axis{{stroke:#7b8aa0;stroke-width:1.2}} .series{{fill:none;stroke:var(--blue);stroke-width:3}} .points circle{{fill:var(--blue);stroke:#fff;stroke-width:2}} .xlabel,.ylabel{{fill:#334155;font-size:13px;font-weight:600}}
+.timeline{{width:100%;height:auto;background:#fff}} .timeline>rect{{fill:#fff}} .band{{opacity:.75}} .grid line{{stroke:#e2e8f0}} .grid text,.xlabels text{{fill:#617085;font-size:11px}} .axis{{stroke:#7b8aa0;stroke-width:1.2}} .series{{fill:none;stroke:#4b6b98;stroke-width:2.5}} .points circle{{stroke:#fff;stroke-width:2.2;cursor:pointer}} .points a:hover circle{{stroke:#111827;stroke-width:3}} .xlabel,.ylabel{{fill:#334155;font-size:13px;font-weight:600}} .mean-line{{stroke:#111827;stroke-dasharray:6 5;stroke-width:1.5;opacity:.65}} .mean-label,.callout text{{fill:#1f2937;font-size:12px;font-weight:700}} .callout line{{stroke:#334155;stroke-width:1;opacity:.7}}
 a{{color:var(--blue)}} .empty{{font-style:italic}}
 </style>
 </head>
@@ -603,7 +955,108 @@ a{{color:var(--blue)}} .empty{{font-style:italic}}
 <main>
 <h1>Driver 1003 Route Choice Change Index (RCCI)</h1>
 <p class="subtitle">A month-to-month route-network change index based on FID road-segment usage and directed transition patterns.</p>
+<nav class="nav">
+<a href="#executive-summary">Executive Summary</a>
+<a href="#how-calculated">How RCCI is calculated</a>
+<a href="#timeline">Timeline</a>
+<a href="#highest-rcci">Highest RCCI</a>
+<a href="#lowest-rcci">Lowest RCCI</a>
+<a href="#county-summary">County Summary</a>
+<a href="#supplemental-counties">Supplemental Counties</a>
+<a href="#full-comparison-table">Full Comparison Table</a>
+</nav>
+
+<section id="executive-summary">
+<h2>Executive summary</h2>
 <div class="cards">{card_html}</div>
+<p><strong>Primary longitudinal county:</strong> {html.escape(report_county)}.</p>
+<p>{html.escape(report_county)} is emphasized because it has the highest trip counts, strongest month coverage, highest-confidence comparisons, and the most complete longitudinal route history for Driver 1003. This is a data-quality decision, not a geographic preference.</p>
+</section>
+
+<section id="how-calculated">
+<h2>How RCCI is calculated</h2>
+<p>Each month is represented as a graph. Nodes are road segments/FIDs, and edges are directed transitions from one FID to the next. RCCI compares two consecutive monthly graphs and measures how much road usage and transition usage changed.</p>
+<div class="formula">RCCI = 100 × [0.5 × node change + 0.5 × edge change]</div>
+<div class="formula-list">
+<div><strong>node change</strong> = 1 − weighted node overlap</div>
+<div><strong>edge change</strong> = 1 − weighted edge overlap</div>
+</div>
+<p><strong>Weighted overlap</strong> means frequently used roads count more than rarely used roads. If a road segment was used in 40 trips, a change involving that road should matter more than a road segment used once. RCCI therefore uses trip-use counts and transition counts rather than treating every FID equally.</p>
+<h3>Exact weighted overlap formula</h3>
+<p>Weighted overlap is the shared weighted usage divided by the total weighted usage across the union of roads or transitions:</p>
+<div class="formula">weighted overlap = Σ min(weight in Month A, weight in Month B) ÷ Σ max(weight in Month A, weight in Month B)</div>
+<p>For nodes, the weight is road-segment trip-use count. For edges, the weight is directed transition count. This formula rewards roads and transitions that are used consistently across both months, reduces the impact of rare one-time roads or transitions, and decreases sharply when a heavily used road or transition disappears.</p>
+<div class="example">
+<h3>Worked node example</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>FID</th><th>Month A usage</th><th>Month B usage</th><th>min</th><th>max</th></tr></thead>
+<tbody>
+<tr><td>100</td><td>40</td><td>38</td><td>38</td><td>40</td></tr>
+<tr><td>200</td><td>10</td><td>11</td><td>10</td><td>11</td></tr>
+<tr><td>300</td><td>2</td><td>0</td><td>0</td><td>2</td></tr>
+<tr><td>400</td><td>0</td><td>3</td><td>0</td><td>3</td></tr>
+</tbody>
+</table></div>
+<p><strong>weighted overlap</strong> = (38 + 10 + 0 + 0) / (40 + 11 + 2 + 3) = 48 / 56 = 0.857</p>
+<p><strong>node change</strong> = 1 − 0.857 = 0.143</p>
+<p>Although two roads changed, most high-use driving remained stable, so the node change is relatively small. If FID 100 disappeared, the RCCI contribution would be much larger.</p>
+</div>
+<div class="two-col">
+<div class="mini-box">
+<h4>Node component</h4>
+<p>Captures changes in which road segments were used.</p>
+</div>
+<div class="mini-box">
+<h4>Edge component</h4>
+<p>Captures changes in how the driver moved between road segments. Two months may use many of the same roads but connect them differently. That is why edge changes are included.</p>
+</div>
+</div>
+<div class="two-col">
+<div class="mini-box">
+<h4>What counts more?</h4>
+<ul>
+<li>frequently used roads</li>
+<li>frequently used transitions</li>
+<li>roads/transitions that disappear after heavy use</li>
+<li>new roads/transitions that appear repeatedly</li>
+</ul>
+</div>
+<div class="mini-box">
+<h4>What counts less?</h4>
+<ul>
+<li>one-time roads</li>
+<li>rare transitions</li>
+<li>sparse months, which are flagged by confidence labels</li>
+</ul>
+</div>
+</div>
+<p class="note">RCCI measures route change. Confidence measures whether there are enough trips to trust the comparison. These are intentionally reported separately and are not mixed together.</p>
+</section>
+
+<section id="timeline">
+<h2>Primary Longitudinal Analysis<br>{html.escape(report_county)}</h2>
+<p>This primary longitudinal analysis focuses on {html.escape(report_county)} because it is the most suitable county for studying Driver 1003's route-choice behavior over time.</p>
+<p class="note">Broward is highlighted because it contains the highest longitudinal trip coverage and the largest number of HIGH-confidence comparisons. This is a data-quality decision, not a geographic preference.</p>
+<div class="cards">{_county_stat_cards(broward)}</div>
+<div class="legend"><span><i class="dot high"></i>HIGH confidence</span><span><i class="dot medium"></i>MEDIUM confidence</span><span><i class="dot low"></i>LOW confidence</span><span>Subtle vertical shading uses the same confidence colors.</span></div>
+<div class="scale"><span>0<br>Very stable</span><span class="scale-bar"></span><span>100<br>Major route change</span></div>
+<p class="muted">Higher RCCI indicates greater route-choice change between consecutive months. Click a timeline marker to open the corresponding county-specific comparison page when available.</p>
+{_timeline_svg(broward, from_dir=output.parent)}
+
+<h3 id="highest-rcci">Highest Broward RCCI periods</h3>
+<p>Top HIGH/MEDIUM confidence Broward rows by RCCI.</p>
+{_html_table(broward_highest, enhanced_change_columns, limit=5, raw_html_columns={"Comparison HTML link"})}
+
+<h3 id="lowest-rcci">Lowest Broward RCCI periods</h3>
+<p>Lowest HIGH/MEDIUM confidence Broward rows by RCCI.</p>
+{_html_table(broward_lowest, enhanced_change_columns, limit=5, raw_html_columns={"Comparison HTML link"})}
+
+<h3>Broward confidence summary</h3>
+<p>HIGH: {int(broward_counts['HIGH']):,}; MEDIUM: {int(broward_counts['MEDIUM']):,}; LOW: {int(broward_counts['LOW']):,}.</p>
+
+<h3 id="full-comparison-table">Broward metric table</h3>
+{_html_table(broward.sort_values(["month_a", "month_b"]), table_columns, raw_html_columns={"Comparison HTML link"})}
+</section>
 
 <section>
 <h2>What RCCI means</h2>
@@ -622,32 +1075,16 @@ a{{color:var(--blue)}} .empty{{font-style:italic}}
 <p class="note">Interpretation bands are calibrated to Driver 1003's high-coverage Broward County comparisons. They are not universal thresholds for other drivers or datasets.</p>
 </section>
 
-<section>
-<h2>RCCI timeline: {html.escape(report_county)}</h2>
-{_timeline_svg(focus)}
+<section id="county-summary">
+<h2>County summary</h2>
+<p>This table preserves all county-specific RCCI results while making the primary Broward coverage clear.</p>
+{_html_table(county_summary, county_summary_columns)}
 </section>
 
-<section>
-<h2>Highest RCCI periods</h2>
-<p>Top HIGH/MEDIUM confidence rows by RCCI.</p>
-{_html_table(highest, change_columns, limit=5)}
-</section>
-
-<section>
-<h2>Lowest RCCI periods</h2>
-<p>Lowest HIGH/MEDIUM confidence rows by RCCI.</p>
-{_html_table(lowest, change_columns, limit=5)}
-</section>
-
-<section>
-<h2>Low-confidence rows</h2>
-<p>Sparse rows are retained for transparency but should be interpreted with trip-count context.</p>
-{_html_table(low_conf.sort_values(["month_a", "month_b", "county"]), table_columns)}
-</section>
-
-<section>
-<h2>Full RCCI metric table</h2>
-{_html_table(rcci_summary.sort_values(["month_a", "month_b", "county"]), table_columns)}
+<section id="supplemental-counties">
+<h2>Supplemental County Results</h2>
+<p>Miami-Dade and Palm Beach are preserved for completeness. They are supplemental because trip coverage is sparse relative to Broward County.</p>
+{supplemental_html}
 </section>
 
 <section>
