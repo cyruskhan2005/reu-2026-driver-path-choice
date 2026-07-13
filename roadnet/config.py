@@ -161,7 +161,10 @@ class CountyConfig:
     custom_func_class_col: Optional[str] = None
     custom_min_vote: float = 0.5
 
-    fmm_bin: str = "fmm"
+    # ``None`` means inherit ``PipelineConfig.fmm_bin``.  PipelineConfig's
+    # post-init normalization replaces it with the effective command so code
+    # written against the previous string-valued attribute keeps working.
+    fmm_bin: Optional[str] = None
 
     # FDOT county filter — name as it appears in FDOT COUNTY column
     # and numeric COUNTYDOT code. If None, no FDOT county filter is applied.
@@ -212,6 +215,10 @@ class PipelineConfig:
         Re-use cached OSM parquets instead of re-downloading.
     skip_mly:
         Re-use cached Mapillary parquets.
+    mapillary_enabled:
+        Whether Mapillary API/cache enrichment is part of the run.  Set this
+        to ``False`` to bypass Mapillary entirely; this is distinct from
+        ``skip_mly``, which reuses an existing Mapillary response cache.
     skip_conflation:
         Re-use cached conflated network.
     skip_fmm:
@@ -234,9 +241,25 @@ class PipelineConfig:
     skip_mly:         bool = False
     skip_conflation:  bool = False
     skip_fmm:         bool = False
+    mapillary_enabled: bool = True
 
     gps_root: Optional[Path] = None
     fmm_bin:  str            = "fmm"
+
+    def __post_init__(self) -> None:
+        """Normalize shared/override executable configuration.
+
+        A county-specific value has highest precedence.  Counties without an
+        override inherit the top-level value, and an empty top-level value
+        falls back to the historical PATH-resolved ``fmm`` command.
+        """
+        self.fmm_bin = str(self.fmm_bin or "fmm")
+        for county in self.counties:
+            county.fmm_bin = str(county.fmm_bin or self.fmm_bin)
+
+    def fmm_bin_for(self, county: CountyConfig) -> str:
+        """Return the effective FMM CLI path for ``county``."""
+        return str(county.fmm_bin or self.fmm_bin or "fmm")
 
     def county_output(self, county: CountyConfig) -> Path:
         """Return (and create) the per-county output subdirectory."""

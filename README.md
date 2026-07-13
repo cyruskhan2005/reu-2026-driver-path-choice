@@ -1,322 +1,239 @@
-# roadnet
+# Driver Path Choice and Longitudinal Behavior Research
 
-A modular Python library for road-network enrichment, designed for South Florida
-but usable with any OSMnx-accessible region.
+## 1. What this project does
 
-## What it does
+This repository measures how a driver's destinations and road choices change over time. It enriches South Florida road networks, map-matches recorded GPS trips with Fast Map Matching (FMM), calculates the Route Choice Change Index (RCCI), groups similar trips into route families, and turns those results into privacy-aware behavioral findings.
 
-| Stage | Module | Output |
-|---|---|---|
-| Download OSM road network & land-use | `roadnet.osm` | `osm_nodes.parquet`, `osm_edges.parquet`, `osm_landuse.parquet` |
-| Fetch Mapillary traffic signs | `roadnet.mapillary` | `mly_signs_raw.parquet` |
-| Snap signs → edges | `roadnet.mapillary` | `osm_edges_with_mly.parquet` |
-| Extract + merge FDOT GDB | `roadnet.fdot` | `fdot_merged.parquet` |
-| Bearing-aware spatial conflation | `roadnet.conflation` | Joins FDOT + custom county GeoJSON onto OSM edges using 20m sub-segment local bearings |
-| Connector speed graph-walk | `roadnet.speed` | Fills ramp/link speed gaps via directed graph walk |
-| Land-use context | `roadnet.speed` | Tags each segment with modal land-use polygon |
-| Multi-source speed arbitration | `roadnet.speed` | `estimated_speed_limit`, `speed_source`, `speed_limit_confidence_score` |
-| Control node boolean features | `roadnet.pipeline` | `has_stop_sign_u/v`, `has_yield_u/v`, `has_traffic_signal_u/v` |
-| FMM map-matching + aggregation | `roadnet.fmm_pipeline` | Per-segment sensor aggregates (`sog`, accelerometer, OBD) |
+The primary research subject is Driver 1003. Activity roles are inferred from timing, reconstructed stays, repeated trip chains, and map context; they are not confirmed facts about residence, employment, school, healthcare, or relationships.
 
-## YAML config (recommended)
+## 2. Pipeline overview
 
-```yaml
-output_dir: "sflorida_outputs"
-mly_token: "MLY|YOUR_TOKEN_HERE"
-fdot_gdb: "DOTShapesFGDB.gdb"
-gps_root: "kingston_miami"
-
-skip_osm: true
-skip_mly: true
-skip_conflation: false
-skip_fmm: false
-
-counties:
-  - name: "Miami-Dade County"
-    place_query: "Miami-Dade County, Florida, USA"
-    fdot_county_name: "Miami-Dade"
-    fdot_county_code: "87"
-    custom_geojson: "miami.geojson"
-    custom_speed_col: "SPEEDLIMIT"
-    custom_name_col: "SNAME"
-    custom_min_vote: 0.6
-
-  - name: "Broward County"
-    place_query: "Broward County, Florida, USA"
-    fdot_county_name: "Broward"
-    fdot_county_code: "86"
-
-  - name: "Palm Beach County"
-    place_query: "Palm Beach County, Florida, USA"
-    fdot_county_name: "Palm Beach"
-    fdot_county_code: "93"
-    custom_geojson: "Road_Centerlines.geojson"
-    custom_speed_col: "SPEED_LIM"
-    custom_name_col: "NAME"
-    custom_lane_col: "LANES"
-    custom_owner_col: "RESP_AUTH"
-    custom_func_class_col: "FUNC_CLASS"
-    custom_min_vote: 0.6
+```text
+restricted GPS/sensor sessions + OSM + FDOT/county road data
+  -> roadnet enrichment and speed/context attributes
+  -> per-county enriched_network.parquet and FMM edges.shp
+  -> UBODT generation and FMM map matching
+  -> county *_gps.csv, *_matched.csv, and optional sensor aggregation
+  -> Driver 1003 timeline and monthly attributed graphs
+  -> month-to-month graph comparisons and RCCI
+  -> stays, recurring places, route families, longitudinal report, and map
 ```
 
-Run with:
+The current stage boundaries are implemented in `roadnet/pipeline.py`, `roadnet/fmm_pipeline.py`, the Phase 2 scripts under `scripts/`, and `roadnet/real_world_behavior.py`.
+
+## 3. Repository layout
+
+| Path | Purpose |
+|---|---|
+| `roadnet/` | Production enrichment, FMM, RCCI, activity, POI, and report code |
+| `scripts/` | Reproducible command-line entry points and validation tools |
+| `tests/` | Unit, privacy, route-family, FMM lifetime, and release tests |
+| `docs/` | Detailed methods, macOS setup, audit history, and troubleshooting |
+| `patches/fmm-macos-arm64.patch` | Verified patch for pinned FMM on Apple Silicon/Python 3.11 |
+| `environment-macos.yml` | Python environment definition (`pipeline`) |
+| `config.example.yaml` | Credential-free local configuration template |
+| `outputs/public/` | Curated public artifacts only; private/generated outputs stay outside Git |
+| `sflorida_outputs/` | Large local Phase 1/2 products; generated locally and ignored |
+| `deliverables/driver_1003/` | Research report tree; only a reviewed public copy is released |
+
+## 4. Fastest verified path
+
+This path reuses known-good OSM/enriched-network/FMM files. It still requires the restricted GPS session hierarchy named by `gps_root` and a writable output/session volume.
 
 ```bash
-roadnet-run config.yaml
-roadnet-consolidate --config config.yaml
+# Starting directory: repository root; active environment: pipeline
+conda activate pipeline
+cp config.example.yaml config.yaml       # safe once; config.yaml is ignored
+# Edit output_dir, gps_root, fdot_gdb, and county GIS paths in config.yaml.
+
+scripts/run_fmm_only_macos.sh \
+  --config config.yaml \
+  --overwrite-matched
+
+scripts/generate_driver_1003_report.sh \
+  --config config.yaml \
+  --google-mode offline
 ```
 
-## Per-county custom GeoJSON
+Success ends with `FMM-only run completed and validated` and `Driver 1003 report generation completed`. The FMM command explicitly allows replacement; omit it if no matched CSV exists. Report generation rebuilds Phase 2A/B/C by default, packages the reviewed public report/map/JSON, and is safe to rerun over its stable generated filenames. It makes no Google request in `offline` mode.
 
-Any county can supply its own road-centreline file. Map the column names once
-in `CountyConfig` and the library handles the conflation automatically:
+## 5. Full macOS setup from a fresh Terminal
 
-```python
-CountyConfig(
-    name                  = "Palm Beach County",
-    place_query           = "Palm Beach County, Florida, USA",
-    fdot_county_name      = "Palm Beach",
-    fdot_county_code      = "93",
-    custom_geojson        = Path("Road_Centerlines.geojson"),
-    custom_speed_col      = "SPEED_LIM",
-    custom_name_col       = "NAME",
-    custom_owner_col      = "RESP_AUTH",
-    custom_min_vote       = 0.6,
-)
-```
-
-## Enriched network columns
-
-Key columns in the output `enriched_network.parquet`:
-
-| Column | Description |
-|---|---|
-| `estimated_speed_limit` | Best available speed limit value in mph; graph/default estimates are rounded to the nearest 5 mph |
-| `speed_source` | Which data source the speed came from (`osm`, `custom_primary`, `fdot_primary`, `graph_acceleration`, `functional_class`, …) |
-| `speed_limit_is_estimated` | `True` when the value was inferred from graph context, road-name mode, or defaults rather than read from OSM/FDOT/county speed fields |
-| `speed_limit_label` | Display label for maps/reports: `Speed limit` or `Estimated speed limit` |
-| `speed_limit_confidence_score` | 0–1 confidence score incorporating source authority, name match, multi-source agreement, and land-use plausibility |
-| `FDOT_SPEED` | Raw FDOT speed limit where matched |
-| `FDOT_DESCR` | FDOT road description |
-| `FDOT_FUNCTIONAL_CLASS` | FDOT functional classification |
-| `FDOT_AADT` | Annual average daily traffic |
-| `FDOT_BRIDGES` | FDOT bridge structure ID (non-null if segment is a bridge) |
-| `CUSTOM_SPEED` | County GeoJSON speed limit |
-| `CUSTOM_NAME` | County GeoJSON road name |
-| `CUSTOM_OWNER` | Road authority / owner (e.g. `FDOT`, `COUNTY`, `MUN`, `PRIT`) |
-| `CUSTOM_FUNC_CLASS` | County functional class (e.g. `U-PA`, `U-MA`, `U-COLL`) |
-| `has_stop_sign_u` | Stop sign present at source node (Mapillary or OSM) |
-| `has_stop_sign_v` | Stop sign present at destination node |
-| `has_yield_u` | Yield sign at source node |
-| `has_yield_v` | Yield sign at destination node |
-| `has_traffic_signal_u` | Traffic signal at source node |
-| `has_traffic_signal_v` | Traffic signal at destination node |
-| `MAP_has_stop_u/v` | Raw Mapillary stop sign count at u/v |
-| `MAP_has_yield_u/v` | Raw Mapillary yield sign count at u/v |
-| `OSM_has_stop_u/v` | OSM stop node at u/v |
-| `OSM_has_signal_u/v` | OSM traffic signal node at u/v |
-| `landuse` | Modal land-use type for this segment |
-| `is_roundabout` | Boolean — segment is part of a roundabout |
-| `is_connector` | Boolean — segment is a ramp/link connector |
-
-## Conflation algorithm
-
-The FDOT and county conflation uses a **bearing-aware spatial voter system**:
-
-1. Each FDOT/county target geometry is split into **20m sub-segments**, each with its own local bearing (fixes false positives from long curved geometries whose start-to-end bearing is misleading).
-2. Each OSM source edge is also split into **20m sub-segments** for voter points, each with its own local bearing.
-3. A nearest-neighbour spatial join snaps each voter point to the nearest target sub-segment within `max_dist` metres.
-4. The **bearing filter** rejects matches where the local angle difference exceeds `angle_tol` degrees.
-5. A **vote tally** requires at least `min_vote_ratio` of voter points to agree on the same target feature.
-6. A **vertical separation filter** rejects matches where an OSM bridge/elevated edge (`bridge=yes` or `layer≥1`) doesn't correspond to a FDOT bridge structure (`FDOT_BRIDGES` notna).
-7. A **name-match tiebreaker** strips directional suffixes (NB/SB/EB/WB) and road-type words (St/Ave/Blvd/Rd etc.) from the OSM `name` and checks whether it appears in `FDOT_DESCR`. Among all surviving vote candidates, name-matched roads are preferred; closest by snap distance is used as fallback when no name match exists.
-
-| Parameter | FDOT | Custom county |
-|---|---|---|
-| `max_dist` | 30m | 30m |
-| `angle_tol` | 30° | 30° |
-| `source_offset` | 10m | 5m |
-| `target_offset` | 20m | 5m |
-| `min_vote_ratio` | 0.4 | 0.5–0.6 |
-
-## Mapillary sign snapping
-
-Signs are snapped to the correct approach edge using a two-strategy bearing-aware
-algorithm. Camera images that observed each sign are fetched from the Mapillary
-API and their GPS positions used as a trajectory to vote for the most likely road.
-
-### Camera trajectory voting
-
-For each sign, the GPS positions of all contributing cameras are projected to UTM
-and treated as a mini trajectory sampled every 5m. Each sample point votes for
-the nearest OSM edge within `snap_radius` (5m) whose local bearing agrees with
-the camera's travel direction within 40°. The tight snap radius prevents cameras
-on one road from casting votes for a perpendicular road at an intersection.
-
-Two tallies are maintained per edge:
-
-- **Sample votes** — total number of 5m interpolated sample points that voted
-- **Raw camera GPS points** — the set of distinct original camera GPS positions
-  that contributed at least one sample vote (used as the primary selection
-  criterion in Strategy A)
-
-Votes are grouped by road name for bearing lookup and Strategy B. Pipe-separated
-OSM names are normalised and sorted so `"A|B"` and `"B|A"` group together;
-unnamed edges group by sorted u/v node pair.
-
-### Strategy A — Most camera GPS points wins (primary)
-
-The road segment physically driven by the most Mapillary cameras near the sign
-wins, regardless of total sample vote count. This prevents a busy through-road
-with many cameras far away from stealing the snap from the correct road that
-fewer cameras actually drove on.
-
-1. Find all edges with **≥ `MIN_RAW_CAM_POINTS` (2) distinct original camera GPS
-   points** and a node within `NODE_SNAP_M` of the sign.
-2. Find the **maximum raw camera count** among eligible edges.
-3. Only consider edges that match the maximum raw count — the road with the most
-   cameras physically on it wins.
-4. Among tied edges, score by `sample_votes / min_camera_dist_to_sign` — more
-   votes and cameras closer to the sign score higher.
-5. The circular mean of compass angles from cameras on the winning edge must agree
-   with `aligned_direction` within 65° (mod 180°). If not — reject.
-6. **Service road check** — if any `highway=service` road is within 20m of the
-   sign AND the snapped edge has `osm_maxspeed > 30 mph`, reject. Signs on fast
-   roads near service roads likely control parking lot access, not the main road.
-   This check is skipped if the snapped edge is itself a service road or has
-   `osm_maxspeed ≤ 30 mph`.
-7. **Landuse zone check** — if the sign falls inside a non-residential landuse
-   polygon (commercial, retail, industrial, etc.), the snapped edge must also
-   intersect that same polygon. If the edge lies entirely outside the zone the
-   snap is rejected — the sign controls a road inside the zone, not the public
-   street running past it.
-
-### Strategy B — Weak consensus + bearing (no clear Strategy A winner)
-
-Used when no edge passes the raw camera count + node distance filter.
-
-1. All road names with **≥ 4 total sample votes** qualify.
-2. Exactly **one** OSM node must be within `NODE_SNAP_M` of the sign (ambiguous
-   intersections are skipped).
-3. That node must touch at least one qualified edge.
-4. Among qualifying edges, candidates are scored by `bearing_diff − votes × 10`.
-   The per-road circular mean camera bearing is used where available; geometric
-   edge bearing is the fallback. Candidates with bearing difference > 40° are
-   rejected.
-5. The same service road proximity check and landuse zone check as Strategy A are
-   applied to the winning candidate.
-
-### Reverse edge propagation
-
-After snapping, sign flags are propagated to the exact reverse edge on two-way
-streets. For edge A (u→v), the reverse edge B where B.u==A.v AND B.v==A.u
-receives the flipped flag (e.g. `MAP_has_stop_u` on A → `MAP_has_stop_v` on B).
-One-way edges are excluded. This ensures drivers approaching the same intersection
-from the opposite direction are correctly flagged even if no Mapillary camera drove
-that direction.
-
-### Key parameters
-
-| Parameter | Value |
-|---|---|
-| `NODE_SNAP_M` | 20m |
-| `MAX_EDGE_DIST_M` | 20m |
-| `MIN_RAW_CAM_POINTS` | 2 |
-| Camera trajectory step | 5m |
-| Camera snap radius | 5m |
-| Bearing tolerance (voting) | 40° |
-| Bearing gate — Strategy A | 65° mod 180° |
-| Bearing gate — Strategy B | 40° mod 180° |
-| Strategy B min votes | 4 |
-| Service road rejection radius | 20m |
-| Service road speed threshold | > 30 mph on snapped edge |
-| Speed filter | edges with `osm_maxspeed ≥ 50 mph` excluded |
-| Residential landuse excluded from zone check | `residential`, `house`, `houses`, `apartments`, `garages` |
-
-## FMM map-matching
-
-GPS traces are map-matched using the Fast Map-Matching (FMM) library:
-
-- **opath alignment** — FMM returns `opath` (one matched FID per GPS point), which is merged to sensor data by positional index (`point_idx`), not by timestamp. This correctly handles timestamp collisions where multiple GPS points share the same floored second.
-- **Sensor aggregation** — `sog`, `cog`, `nsat` are averaged directly from GPS points per FID. `acc`/`obd` sensors (high-frequency) are resampled to 1s bins and joined to each FID by its traversal time window (`ts_min` to `ts_max`).
-- **`seconds_total`** — actual elapsed seconds on each segment (`ts_max - ts_min + 1`), not a GPS point count.
-- **STMatch gap bridging** — time gaps in GPS traces are bridged using STMatch. Gaps are skipped if: (a) either endpoint is outside the current county's shapefile, or (b) the straight-line distance between endpoints exceeds 1km.
-- **Multiprocessing** — trip aggregation runs in parallel across all CPU cores using `multiprocessing.Pool`.
-- **Caching** — sensor data (acc/obd) is cached per session as parquet files. Master GPS parquet cache avoids re-reading all JSONL files on subsequent runs.
-
-## Confidence scoring
-
-`speed_limit_confidence_score` is built from:
-
-- **Base score** by speed source (OSM: 0.40, FDOT: 0.35–0.42, custom county: 0.35, graph connector estimate: 0.12–0.22, functional class default: 0.04)
-- **Authority bonus** — Miami-Dade `MAINTCODE=SR` +0.20, PBC `RESP_AUTH=FDOT` +0.20
-- **Functional class bonus** — FDOT interstate +0.12, arterial +0.08; PBC `U-PA` +0.10
-- **Name match bonus** — vectorized word-intersection between OSM name, county name, and FDOT description
-- **Multi-source agreement** — OSM + FDOT within 5 mph +0.12, all three sources agree +0.18 additional
-- **Land-use plausibility** — speed consistent with land-use type +0.08, residential >45 mph −0.10
-
-## Recent Stability Improvements (June 2026)
-
-FMM failed-trip recovery now has bounded split attempts, per-trip progress
-logging, and a parent watchdog that skips a pathological match instead of
-blocking a county indefinitely. Pre-flight checks also validate Mapillary
-authentication, output-directory permissions and formats, input cache freshness,
-and graph-dependent UBODT freshness before long validation runs.
-
-See [`docs/2026-06-18-fmm-investigation.md`](docs/2026-06-18-fmm-investigation.md)
-for the investigation details and remaining risks.
-
-## Tomorrow Full Validation Checklist
-
-- [ ] Run with host filesystem access so aggregation can write to `/Volumes/KINGSTON`.
-- [ ] Confirm `/Volumes/KINGSTON` is mounted, writable, and has free space.
-- [ ] Disable system sleep for the duration of the run.
-- [ ] Verify `load_config()` reads the valid Mapillary token before starting.
-- [ ] Monitor Broward split-match progress and watchdog messages.
-- [ ] Verify all expected `*_fid_aggregated.jsonl` outputs are nonempty and readable.
-
-## Caching flags
-
-| Flag | Skips |
-|---|---|
-| `skip_osm` | OSM download (also skips FDOT re-extraction) |
-| `skip_mly` | Mapillary fetch |
-| `skip_conflation` | Full conflation + speed stages (loads cached enriched network) |
-| `skip_fmm` | Map-matching (FMM) |
-
-## Sanity check tool
+Tested native-build host: macOS 26.5.1, Apple Silicon `arm64`, zsh 5.9, Miniconda/Conda 26.3.2, Python 3.11.15, Homebrew `/opt/homebrew`, CMake 4.3.3, Apple clang 21, SWIG 4.4.1, Boost 1.90.0, GDAL 3.13.1, and libomp 22.1.7. Intel macOS is not currently a verified target.
 
 ```bash
-python sanity_check.py \
-  --name "Glades Road" \
-  --county "Palm Beach County" \
-  --fdot_parquet "sflorida_outputs/fdot/fdot_merged.parquet" \
-  --county_geojson "Road_Centerlines.geojson"
+# Starting directory: a fresh Terminal in your home directory
+xcode-select -p || xcode-select --install
+command -v brew || open https://brew.sh
+command -v conda || printf '%s\n' 'Install Miniconda or Miniforge, then reopen Terminal.'
+
+git clone https://github.com/cyruskhan2005/reu-2026-driver-path-choice.git
+cd reu-2026-driver-path-choice
+git checkout feature/driver-1003-longitudinal-insights-and-reproducibility
+git submodule update --init --recursive
+
+# Creates/updates the pipeline environment and builds pinned FMM.
+scripts/bootstrap_macos.sh --env-name pipeline
+conda activate pipeline
+
+command -v fmm
+command -v ubodt_gen
+file "$(command -v fmm)"
+fmm --help
+ubodt_gen --help
+python scripts/verify_pipeline_outputs.py --config config.example.yaml --stage environment
 ```
 
-Outputs a `.log` file and an interactive `.html` map showing OSM edges (red/blue
-alternating with FID labels), FDOT geometry (green dashed), and county geometry
-(orange dashed).
+`bootstrap_macos.sh` installs missing Homebrew build formulae, creates the Conda environment, installs this package editable, builds FMM commit `19ef34e1f57ff2f2484231aa0d01dfffea986ec1`, and verifies loader-relative native linkage. It downloads Homebrew/Conda/FMM dependencies and is safe to rerun; `--skip-brew` and `--skip-fmm` are available for controlled reuse. See [the detailed macOS guide](docs/MACOS_PIPELINE_GUIDE.md) before configuring private data.
 
-## Installation
+## 6. Full clean rebuild
+
+Copy the template to ignored `config.yaml`. For a clean run, use a new `output_dir`; set `skip_osm`, `skip_mly`, `skip_conflation`, and `skip_fmm` to `false`. `mapillary_enabled: false` is the supported credential-free mode. The wrapper refuses existing enriched outputs unless `--resume` is explicit.
 
 ```bash
-pip install -e .
-# For map-matching support, also install fmm:
-# https://fmm-wiki.github.io/docs/installation/
+# Starting directory: repository root; active environment: pipeline
+conda activate pipeline
+scripts/run_full_pipeline_macos.sh --config config.yaml
+
+# Validate individual boundaries after the run.
+python scripts/verify_pipeline_outputs.py --config config.yaml --stage enrichment
+python scripts/verify_pipeline_outputs.py --config config.yaml --stage fmm-prep
+python scripts/verify_pipeline_outputs.py --config config.yaml --stage matched
 ```
 
-## Module overview
+This can download OSM data and take hours; actual duration depends on network, county GIS, GPS volume, and disk. The known local caches occupy roughly 95 MB for three enriched networks and 3.7 GB for three UBODTs, before GPS, maps, logs, and intermediate files. Resume only after reviewing the YAML skip flags.
 
+## 7. FMM-only run
+
+FMM-only mode requires, for every selected county:
+
+- `osm_nodes.parquet`, `osm_edges.parquet`, and `osm_landuse.parquet`;
+- nonempty `enriched_network.parquet`;
+- `fmm/edges.shp`, `.shx`, `.dbf`, `.prj`, and `.cpg`;
+- `ubodt.txt` or permission to create it;
+- the writable restricted `gps_root` session hierarchy;
+- `skip_fmm: false` and a working `fmm_bin` (normally `fmm`).
+
+```bash
+# Starting directory: repository root; active environment: pipeline
+conda activate pipeline
+scripts/run_fmm_only_macos.sh \
+  --config config.yaml \
+  --county "Miami-Dade County" \
+  --overwrite-matched
 ```
-roadnet/
-├── __init__.py         Public API (CountyConfig, PipelineConfig, Pipeline)
-├── config.py           Dataclasses + all tunable constants
-├── osm.py              OSM download, tag cleaning, control-node flags
-├── mapillary.py        Mapillary fetch + camera-trajectory sign snapping
-├── fdot.py             Generic FDOT GDB extraction + attribute merge
-├── conflation.py       Bearing-aware spatial conflation engine (20m sub-segments, name-match tiebreaker)
-├── speed.py            Connector graph-walk + speed arbitration + confidence scoring
-├── fmm_pipeline.py     FMM map-matching, sensor aggregation, split-matching, STMatch gap bridging
-└── pipeline.py         Top-level orchestrator
+
+Use `--reuse-matched` only to rerun aggregation intentionally from an existing matched CSV. The wrapper passes `--skip-osm --skip-mly --skip-conflation --disable-mapillary`, validates cached inputs first, writes a timestamped log, and fails rather than silently replacing a known-good matched file. The current Palm Beach matched artifact is known to contain duplicate IDs and must be regenerated before it can pass the strict verifier.
+
+## 8. Driver 1003 report generation
+
+The report wrapper rebuilds the Driver 1003 timeline, monthly graphs, consecutive-month comparisons, canonical RCCI report, place/stay analysis, route families, JSON, and verification map. Use `--reuse-phase2` only when the wrapper's Phase 2 prerequisites already exist.
+
+```bash
+# Starting directory: repository root; active environment: pipeline
+conda activate pipeline
+scripts/generate_driver_1003_report.sh \
+  --config config.yaml \
+  --google-mode offline
 ```
+
+Google modes are explicit:
+
+- `offline`: no Google request; use local OSM/GIS only.
+- `cache`: reuse sanitized ignored cache entries; no network request.
+- `network`: require `GOOGLE_MAPS_API_KEY` in the environment and enforce `prior + budget <= 99`.
+
+The research run documented here used 84 cumulative Google attempts/requests and the final cache-only rebuild used 51 cache hits. Never carry that count into a separate research run; start a new run's accounting at zero.
+
+## 9. Expected outputs
+
+| Output | Meaning |
+|---|---|
+| `<output_dir>/<County>/enriched_network.parquet` | Enriched directed road edges |
+| `<output_dir>/<County>/fmm/edges.shp` | FMM network input |
+| `<output_dir>/<County>/fmm/ubodt.txt` | FMM upper-bounded origin-destination table |
+| `<output_dir>/<County>/<County>_gps.csv` | Semicolon-delimited FMM GPS input |
+| `<output_dir>/<County>/<County>_matched.csv` | FMM matched path (`opath`) per trip |
+| `<output_dir>/phase2/driver_timelines/driver_1_timeline.csv` | Canonical Driver 1003 trip fragments |
+| `outputs/driver_1003_trip_summary.csv` | 3,284 reconciled source trips |
+| `outputs/driver_1003_poi_enriched_clusters.csv` | Private research cluster/POI audit |
+| `outputs/driver_1003_route_family_monthly_shares.csv` | Monthly family counts/shares and sufficiency |
+| `outputs/driver_1003_longitudinal_route_transitions.csv` | Supported full-period route changes |
+| `outputs/driver_1003_real_world_behavior_insights.json` | Privacy-safe structured findings |
+| `outputs/driver_1003_poi_route_insights_map.html` | Interactive verification map |
+| `deliverables/driver_1003/route_choice_change_index/visuals/driver_1003_route_choice_change_index_report.html` | Canonical technical + behavioral report |
+
+The canonical public copies and checksums are described in [outputs/README.md](outputs/README.md). Large/private outputs are generated locally and are not normal Git artifacts.
+
+## 10. Validation
+
+```bash
+# Starting directory: repository root; active environment: pipeline
+conda activate pipeline
+python -m unittest -v \
+  tests.test_pipeline_reproducibility \
+  tests.test_real_world_behavior \
+  tests.test_behavior_cluster_stability \
+  tests.test_behavior_quality \
+  tests.test_behavior_longitudinal \
+  tests.test_behavior_routes \
+  tests.test_public_release_tools
+python scripts/verify_pipeline_outputs.py --config config.yaml --stage driver
+python scripts/validate_public_release.py --public-dir outputs/public --require-manifest
+python scripts/generate_output_manifest.py \
+  --root outputs/public \
+  --output outputs/public/manifest.json \
+  --check
+```
+
+The stage verifier checks imports, native architecture/linkage, Parquet schemas/CRS/FID uniqueness, shapefile/UBODT freshness, matched IDs and paths, route-share reconciliation, and basic secret safety. The public-release validator adds curated-tree link, key-pattern, absolute-path, and privacy checks.
+
+## 11. Configuration and credentials
+
+- `config.yaml` is local and ignored; never commit it.
+- Mapillary is off by default. If enabled, keep `mly_token` only in ignored local configuration.
+- Google enrichment reads `GOOGLE_MAPS_API_KEY` only from the server-side environment. Never put it in YAML, notebooks, logs, HTML, JavaScript, shell scripts, caches, or documentation.
+- Google cache responses are sanitized and ignored under `cache/google_maps/`.
+- Raw GPS/sensor sessions, exact home data, large networks, UBODTs, and matched trajectories remain private/local.
+- The wrappers print paths and counts, not credential values.
+
+## 12. Troubleshooting
+
+Start with [docs/TROUBLESHOOTING_MACOS_FMM.md](docs/TROUBLESHOOTING_MACOS_FMM.md). It covers command discovery, `dyld`, the reproduced Python 3.9/3.11 segmentation fault, ARM/Intel mismatch, GDAL/Conda conflicts, missing caches, long runs, safe interruption, external volumes, and Gatekeeper.
+
+Monitor a long run from a second Terminal:
+
+```bash
+pgrep -af 'roadnet-run|fmm|ubodt_gen'
+ps -Ao pid,etime,%cpu,%mem,command | grep -E 'roadnet-run|fmm|ubodt_gen'
+tail -f logs/pipeline/full_pipeline_*.log
+du -sh sflorida_outputs
+ls -lhT sflorida_outputs/*_County/*_matched.csv
+```
+
+## 13. Research outputs and limitations
+
+The likely home is reported only at a generalized neighborhood scale. No defensible workplace or school/daycare was identified. POI proximity does not prove a visit; endpoints can fall in shared parking lots, campus access roads, or neighboring parcels. Censored stays are excluded from dwell medians. Route changes do not prove congestion, construction, toll avoidance, or preference as a cause.
+
+Legacy tracked route maps contain private geometry and are not part of the reviewed public package. The public report is separately sanitized; raw-GPS imagery, exact-home geometry, private caches, and unrestricted legacy HTML must not be published.
+
+## 14. Development and testing
+
+```bash
+# Starting directory: repository root; active environment: pipeline
+python -m unittest -v tests.test_pipeline_reproducibility
+python -m unittest -v tests.test_real_world_behavior
+python -m unittest -v tests.test_behavior_longitudinal
+python -m unittest -v tests.test_fmm_result_lifetime
+bash -n scripts/*.sh
+```
+
+Offline CI runs synthetic/release checks without Google credentials or private data. See `.github/workflows/offline-ci.yml`. New code should preserve explicit trip boundaries, county-scoped FIDs, secret-free caches, and public-home redaction.
+
+## 15. Citation, license, and data-source notes
+
+No repository-wide software license was present during this audit; do not assume redistribution rights beyond the repository owner's authorization. Cite the project repository, commit, and output manifest in research use.
+
+OpenStreetMap data are obtained through OSMnx and remain subject to OpenStreetMap attribution/licensing. FMM is pinned from `cyang-kth/fmm` and retains its upstream license. FDOT and county GIS files must be acquired from their official custodians or the approved research data store and used under their applicable terms. Mapillary and Google results are optional enrichment sources governed by their respective terms; their credentials and raw caches are not distributed.
+
+Detailed evidence is in [docs/PHASE1_MACOS_REPRODUCTION_AUDIT.md](docs/PHASE1_MACOS_REPRODUCTION_AUDIT.md), and output provenance is in [outputs/README.md](outputs/README.md).

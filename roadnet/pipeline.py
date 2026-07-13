@@ -112,24 +112,13 @@ class Pipeline:
         south = bounds_wgs.y.min()
         north = bounds_wgs.y.max()
 
-        signs_raw = fetch_signs(
-            token     = cfg.mly_token,
-            bounds    = (west, south, east, north),
-            out_path  = out_dir / "mly_signs_raw.parquet",
-            step      = cfg.mly_grid_step,
-            overlap   = cfg.mly_grid_overlap,
-            workers   = cfg.mly_workers,
-            skip_if_exists = cfg.skip_mly,
-        )
-
-        edges_with_mly = attach_signs_to_edges(
-            signs_raw     = signs_raw,
-            nodes         = nodes,
-            edges         = edges,
-            projected_crs = county.projected_crs,
-            out_path      = out_dir / "osm_edges_with_mly.parquet",
-            landuse       = landuse,
-            skip_if_exists= cfg.skip_conflation,
+        edges_with_mly = self._enrich_with_mapillary(
+            county=county,
+            nodes=nodes,
+            edges=edges,
+            landuse=landuse,
+            bounds=(west, south, east, north),
+            out_dir=out_dir,
         )
 
         if cfg.skip_conflation and (out_dir / "enriched_network.parquet").exists():
@@ -285,9 +274,52 @@ class Pipeline:
                 sessions      = sessions,
                 assigner      = assigner,
                 out_dir       = cfg.county_output(county),
-                fmm_bin       = county.fmm_bin,
+                fmm_bin       = cfg.fmm_bin_for(county),
                 master_gps_df = master_gps_df,
             )
+
+    def _enrich_with_mapillary(
+        self,
+        county: CountyConfig,
+        nodes: gpd.GeoDataFrame,
+        edges: gpd.GeoDataFrame,
+        landuse: gpd.GeoDataFrame,
+        bounds: tuple[float, float, float, float],
+        out_dir: Path,
+    ) -> gpd.GeoDataFrame:
+        """Return Mapillary-enriched edges or an untouched copy when disabled."""
+        cfg = self.cfg
+        if not cfg.mapillary_enabled:
+            log.info(
+                "[%s] Mapillary disabled — using the OSM network without Mapillary data",
+                county.name,
+            )
+            return edges.copy()
+
+        if not cfg.mly_token.strip():
+            raise ValueError(
+                "Mapillary is enabled but mly_token is empty; provide a token or "
+                "set mapillary_enabled: false"
+            )
+
+        signs_raw = fetch_signs(
+            token=cfg.mly_token,
+            bounds=bounds,
+            out_path=out_dir / "mly_signs_raw.parquet",
+            step=cfg.mly_grid_step,
+            overlap=cfg.mly_grid_overlap,
+            workers=cfg.mly_workers,
+            skip_if_exists=cfg.skip_mly,
+        )
+        return attach_signs_to_edges(
+            signs_raw=signs_raw,
+            nodes=nodes,
+            edges=edges,
+            projected_crs=county.projected_crs,
+            out_path=out_dir / "osm_edges_with_mly.parquet",
+            landuse=landuse,
+            skip_if_exists=cfg.skip_conflation,
+        )
 
     @staticmethod
     def _build_custom_col_map(county: CountyConfig) -> dict[str, str]:
