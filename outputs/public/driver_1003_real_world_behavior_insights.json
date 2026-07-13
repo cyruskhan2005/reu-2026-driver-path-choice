@@ -6918,7 +6918,7 @@
       "route_family_count": 2,
       "dominant_route_family_id": "C001__C002__F01",
       "dominant_route_family_share": 0.967741935483871,
-      "early_late_total_variation": 0.0563380281690141,
+      "early_late_total_variation": 0.05633802816901411,
       "assignment_agreement_similarity_0_65": 1.0,
       "assignment_agreement_similarity_0_75": 1.0
     },
@@ -7184,7 +7184,7 @@
       "route_family_count": 2,
       "dominant_route_family_id": "C001__C019__F01",
       "dominant_route_family_share": 0.6111111111111112,
-      "early_late_total_variation": 0.7857142857142857,
+      "early_late_total_variation": 0.7857142857142856,
       "assignment_agreement_similarity_0_65": 1.0,
       "assignment_agreement_similarity_0_75": 1.0
     },
@@ -7355,7 +7355,7 @@
       "route_family_count": 2,
       "dominant_route_family_id": "C019__C001__F01",
       "dominant_route_family_share": 0.6153846153846154,
-      "early_late_total_variation": 0.3666666666666666,
+      "early_late_total_variation": 0.36666666666666664,
       "assignment_agreement_similarity_0_65": 1.0,
       "assignment_agreement_similarity_0_75": 1.0
     },
@@ -7545,7 +7545,7 @@
       "route_family_count": 2,
       "dominant_route_family_id": "C004__C010__OTHER",
       "dominant_route_family_share": 0.4,
-      "early_late_total_variation": 0.6666666666666667,
+      "early_late_total_variation": 0.6666666666666666,
       "assignment_agreement_similarity_0_65": 1.0,
       "assignment_agreement_similarity_0_75": 1.0
     },
@@ -24334,24 +24334,24 @@
         "calendar_days": 31,
         "observation_day_share": 0.8064516129032258,
         "total_route_distance_m": 666410.1818484106,
-        "highway_distance_m": 126273.96604839645,
+        "highway_distance_m": 126273.96604839648,
         "surface_street_distance_m": 540136.2158000142,
         "arterial_distance_m": 427551.584217843,
         "local_road_distance_m": 112584.6315821712,
-        "distance_weighted_highway_share": 0.1894838486683269,
+        "distance_weighted_highway_share": 0.18948384866832696,
         "distance_weighted_surface_share": 0.8105161513316731,
         "distance_weighted_arterial_share": 0.6415742073927359,
         "distance_weighted_local_share": 0.1689419439389373,
         "highway_trip_count": 10,
         "highway_trip_share": 0.09259259259259259,
-        "mean_trip_highway_share": 0.04087522029867507,
+        "mean_trip_highway_share": 0.040875220298675075,
         "median_trip_highway_share": 0.0,
         "trend_month_sufficient": true,
         "rolling_3_observed_month_trips": 313.0,
         "rolling_3_observed_month_distance_m": 1685708.3583924538,
-        "rolling_3_observed_month_highway_m": 138545.20574728676,
+        "rolling_3_observed_month_highway_m": 138545.2057472868,
         "rolling_3_observed_month_surface_m": 1547163.152645167,
-        "rolling_3_observed_month_highway_share": 0.08218812290840627,
+        "rolling_3_observed_month_highway_share": 0.0821881229084063,
         "rolling_3_observed_month_surface_share": 0.9178118770915937,
         "rolling_window_calendar_contiguous": true
       },
@@ -24381,9 +24381,9 @@
         "trend_month_sufficient": true,
         "rolling_3_observed_month_trips": 328.0,
         "rolling_3_observed_month_distance_m": 1858379.5910109554,
-        "rolling_3_observed_month_highway_m": 198106.66247650835,
+        "rolling_3_observed_month_highway_m": 198106.6624765084,
         "rolling_3_observed_month_surface_m": 1660272.9285344472,
-        "rolling_3_observed_month_highway_share": 0.10660182851488305,
+        "rolling_3_observed_month_highway_share": 0.10660182851488308,
         "rolling_3_observed_month_surface_share": 0.893398171485117,
         "rolling_window_calendar_contiguous": true
       },
@@ -24413,9 +24413,9 @@
         "trend_month_sufficient": true,
         "rolling_3_observed_month_trips": 290.0,
         "rolling_3_observed_month_distance_m": 1540568.5574363251,
-        "rolling_3_observed_month_highway_m": 235285.86954425176,
+        "rolling_3_observed_month_highway_m": 235285.86954425182,
         "rolling_3_observed_month_surface_m": 1305282.6878920733,
-        "rolling_3_observed_month_highway_share": 0.15272664654132187,
+        "rolling_3_observed_month_highway_share": 0.15272664654132193,
         "rolling_3_observed_month_surface_share": 0.847273353458678,
         "rolling_window_calendar_contiguous": true
       },
@@ -24912,11 +24912,11 @@
         "total_route_distance_m": 720992.6473263833,
         "highway_distance_m": 205814.88739878862,
         "surface_street_distance_m": 515177.7599275947,
-        "arterial_distance_m": 383265.6802909379,
+        "arterial_distance_m": 383265.68029093783,
         "local_road_distance_m": 131912.07963665706,
         "distance_weighted_highway_share": 0.2854604525607861,
         "distance_weighted_surface_share": 0.7145395474392139,
-        "distance_weighted_arterial_share": 0.5315805670309962,
+        "distance_weighted_arterial_share": 0.5315805670309961,
         "distance_weighted_local_share": 0.1829589804082181,
         "highway_trip_count": 8,
         "highway_trip_share": 0.07079646017699115,
@@ -25359,16 +25359,16 @@
         "observation_day_share": 0.8064516129032258,
         "total_route_distance_m": 572195.8025411181,
         "highway_distance_m": 81268.54153315171,
-        "surface_street_distance_m": 490927.26100796653,
+        "surface_street_distance_m": 490927.2610079665,
         "arterial_distance_m": 395685.29876700504,
         "local_road_distance_m": 95241.96224096142,
         "distance_weighted_highway_share": 0.14202925147692208,
-        "distance_weighted_surface_share": 0.8579707485230782,
+        "distance_weighted_surface_share": 0.8579707485230781,
         "distance_weighted_arterial_share": 0.6915207993658272,
         "distance_weighted_local_share": 0.16644994915725078,
         "highway_trip_count": 8,
         "highway_trip_share": 0.09876543209876543,
-        "mean_trip_highway_share": 0.03948322599455887,
+        "mean_trip_highway_share": 0.039483225994558876,
         "median_trip_highway_share": 0.0,
         "trend_month_sufficient": true,
         "rolling_3_observed_month_trips": 224.0,
@@ -25470,9 +25470,9 @@
         "rolling_3_observed_month_trips": 164.0,
         "rolling_3_observed_month_distance_m": 833900.405926781,
         "rolling_3_observed_month_highway_m": 63665.056387505174,
-        "rolling_3_observed_month_surface_m": 770235.349539276,
+        "rolling_3_observed_month_surface_m": 770235.3495392759,
         "rolling_3_observed_month_highway_share": 0.07634611511760693,
-        "rolling_3_observed_month_surface_share": 0.9236538848823932,
+        "rolling_3_observed_month_surface_share": 0.9236538848823931,
         "rolling_window_calendar_contiguous": true
       },
       {
@@ -26094,24 +26094,24 @@
         "calendar_days": 29,
         "observation_day_share": 0.3448275862068966,
         "total_route_distance_m": 399988.711278761,
-        "highway_distance_m": 158112.9368138486,
+        "highway_distance_m": 158112.93681384862,
         "surface_street_distance_m": 241875.77446491242,
         "arterial_distance_m": 196411.51540307765,
         "local_road_distance_m": 45464.25906183482,
-        "distance_weighted_highway_share": 0.3952934979298858,
+        "distance_weighted_highway_share": 0.3952934979298859,
         "distance_weighted_surface_share": 0.6047065020701143,
         "distance_weighted_arterial_share": 0.4910426466165794,
         "distance_weighted_local_share": 0.11366385545353497,
         "highway_trip_count": 4,
         "highway_trip_share": 0.09302325581395349,
-        "mean_trip_highway_share": 0.07092554755431817,
+        "mean_trip_highway_share": 0.07092554755431815,
         "median_trip_highway_share": 0.0,
         "trend_month_sufficient": true,
         "rolling_3_observed_month_trips": 198.0,
         "rolling_3_observed_month_distance_m": 1250675.0965977202,
-        "rolling_3_observed_month_highway_m": 248732.195785514,
+        "rolling_3_observed_month_highway_m": 248732.19578551402,
         "rolling_3_observed_month_surface_m": 1001942.9008122063,
-        "rolling_3_observed_month_highway_share": 0.19887834695210113,
+        "rolling_3_observed_month_highway_share": 0.19887834695210116,
         "rolling_3_observed_month_surface_share": 0.801121653047899,
         "rolling_window_calendar_contiguous": true
       },
@@ -26173,9 +26173,9 @@
         "trend_month_sufficient": true,
         "rolling_3_observed_month_trips": 164.0,
         "rolling_3_observed_month_distance_m": 1106897.5054473742,
-        "rolling_3_observed_month_highway_m": 289986.8811734471,
+        "rolling_3_observed_month_highway_m": 289986.8811734472,
         "rolling_3_observed_month_surface_m": 816910.6242739272,
-        "rolling_3_observed_month_highway_share": 0.2619816918425914,
+        "rolling_3_observed_month_highway_share": 0.26198169184259146,
         "rolling_3_observed_month_surface_share": 0.7380183081574087,
         "rolling_window_calendar_contiguous": true
       },
@@ -27269,6 +27269,3026 @@
       }
     ]
   },
+  "road_class_longitudinal_summary": {
+    "method": "Distance shares are calculated from matched FID sequences after the direct-route eligibility screen. Link classes are grouped with their parent OSM class.",
+    "periods": [
+      {
+        "scope": "all_eligible_direct_trips",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 790,
+        "total_route_distance_m": 4653751.999957763,
+        "controlled_access_share": 0.11065168421736397,
+        "arterial_share": 0.6912985056181329,
+        "local_access_share": 0.19059650308378723,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "West Atlantic Boulevard"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Dr. Martin Luther King Boulevard"
+          }
+        ],
+        "motorway_share": 0.08850576467946107,
+        "trunk_share": 0.022145919537902903,
+        "primary_share": 0.27442633583493387,
+        "secondary_share": 0.35876916242169365,
+        "tertiary_share": 0.05810300736150537,
+        "residential_share": 0.14136130068761696,
+        "service_share": 0.04923520239617027,
+        "unclassified_share": 0.0074533070807156964,
+        "other_share": 0.0,
+        "origin_cluster_id": null,
+        "origin_label": null,
+        "destination_cluster_id": null,
+        "destination_label": null,
+        "pair_total_eligible_trips": null,
+        "pair_observed_months": null
+      },
+      {
+        "scope": "all_eligible_direct_trips",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 869,
+        "total_route_distance_m": 4763288.550596155,
+        "controlled_access_share": 0.11796972827106685,
+        "arterial_share": 0.66360837554136,
+        "local_access_share": 0.2114269245176722,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "West Atlantic Boulevard"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "West Copans Road"
+          }
+        ],
+        "motorway_share": 0.09855146801852696,
+        "trunk_share": 0.019418260252539902,
+        "primary_share": 0.295092812500595,
+        "secondary_share": 0.32110738061034816,
+        "tertiary_share": 0.04740818243041689,
+        "residential_share": 0.15937016523487038,
+        "service_share": 0.052056759282801804,
+        "unclassified_share": 0.006994971669900741,
+        "other_share": 0.0,
+        "origin_cluster_id": null,
+        "origin_label": null,
+        "destination_cluster_id": null,
+        "destination_label": null,
+        "pair_total_eligible_trips": null,
+        "pair_observed_months": null
+      },
+      {
+        "scope": "all_eligible_direct_trips",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 670,
+        "total_route_distance_m": 3977763.335566262,
+        "controlled_access_share": 0.18025923499680016,
+        "arterial_share": 0.6228401022520994,
+        "local_access_share": 0.191229290391228,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "West Atlantic Boulevard"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "trunk",
+            "road_name": "86060000.0"
+          }
+        ],
+        "motorway_share": 0.12070703810787262,
+        "trunk_share": 0.059552196888927544,
+        "primary_share": 0.31424989249126056,
+        "secondary_share": 0.2767891200450382,
+        "tertiary_share": 0.03180108971580063,
+        "residential_share": 0.14687775127966393,
+        "service_share": 0.044351539111564066,
+        "unclassified_share": 0.00567137235987234,
+        "other_share": 0.0,
+        "origin_cluster_id": null,
+        "origin_label": null,
+        "destination_cluster_id": null,
+        "destination_label": null,
+        "pair_total_eligible_trips": null,
+        "pair_observed_months": null
+      }
+    ],
+    "major_od_pairs": [
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 33,
+        "total_route_distance_m": 49103.949153844645,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9163059395376608,
+        "service_share": 0.08369406046233925,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C003",
+        "origin_label": "Wynmoor community destination near Cafe on the Green",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 131.0,
+        "pair_observed_months": 31.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 49,
+        "total_route_distance_m": 74934.60925388777,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9238808538824131,
+        "service_share": 0.07611914611758698,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C003",
+        "origin_label": "Wynmoor community destination near Cafe on the Green",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 131.0,
+        "pair_observed_months": 31.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 49,
+        "total_route_distance_m": 73606.81993693394,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Victoria Way"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9266238675387242,
+        "service_share": 0.07337613246127579,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C003",
+        "origin_label": "Wynmoor community destination near Cafe on the Green",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 131.0,
+        "pair_observed_months": 31.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 26,
+        "total_route_distance_m": 39284.85524524062,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Antigua Circle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.8831322771241921,
+        "service_share": 0.11686772287580789,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C003",
+        "destination_label": "Wynmoor community destination near Cafe on the Green",
+        "pair_total_eligible_trips": 129.0,
+        "pair_observed_months": 31.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 50,
+        "total_route_distance_m": 77436.39387437183,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Antigua Circle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9157703909117657,
+        "service_share": 0.08422960908823425,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C003",
+        "destination_label": "Wynmoor community destination near Cafe on the Green",
+        "pair_total_eligible_trips": 129.0,
+        "pair_observed_months": 31.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 53,
+        "total_route_distance_m": 83906.94028998118,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Antigua Circle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9106865395026704,
+        "service_share": 0.08931346049732962,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C003",
+        "destination_label": "Wynmoor community destination near Cafe on the Green",
+        "pair_total_eligible_trips": 129.0,
+        "pair_observed_months": 31.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 39,
+        "total_route_distance_m": 60298.32839425426,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.35610158220800275,
+        "local_access_share": 0.6438984177919972,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Antigua Circle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.35610158220800275,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.4175439733000632,
+        "service_share": 0.22635444449193398,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C002",
+        "destination_label": "Coconut Creek Plaza short-stop area",
+        "pair_total_eligible_trips": 124.0,
+        "pair_observed_months": 30.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 46,
+        "total_route_distance_m": 76208.44684204676,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.3386714813154933,
+        "local_access_share": 0.6613285186845068,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.33561024806122924,
+        "secondary_share": 0.0030612332542640426,
+        "tertiary_share": 0.0,
+        "residential_share": 0.4407169167689767,
+        "service_share": 0.22061160191553011,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C002",
+        "destination_label": "Coconut Creek Plaza short-stop area",
+        "pair_total_eligible_trips": 124.0,
+        "pair_observed_months": 30.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 39,
+        "total_route_distance_m": 63963.858460480136,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.34576326282655107,
+        "local_access_share": 0.654236737173449,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.3343745277735699,
+        "secondary_share": 0.011388735052981172,
+        "tertiary_share": 0.0,
+        "residential_share": 0.45192123582072474,
+        "service_share": 0.20231550135272428,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C002",
+        "destination_label": "Coconut Creek Plaza short-stop area",
+        "pair_total_eligible_trips": 124.0,
+        "pair_observed_months": 30.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 32,
+        "total_route_distance_m": 50427.08273765626,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.3695483086437699,
+        "local_access_share": 0.6304516913562301,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.3263340426333936,
+        "secondary_share": 0.043214266010376284,
+        "tertiary_share": 0.0,
+        "residential_share": 0.4024596914936745,
+        "service_share": 0.22799199986255558,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C002",
+        "origin_label": "Coconut Creek Plaza short-stop area",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 120.0,
+        "pair_observed_months": 29.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 51,
+        "total_route_distance_m": 81993.43571022496,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.32544520739164895,
+        "local_access_share": 0.6745547926083512,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.3060202866826929,
+        "secondary_share": 0.01942492070895605,
+        "tertiary_share": 0.0,
+        "residential_share": 0.43654384247613615,
+        "service_share": 0.23801095013221493,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C002",
+        "origin_label": "Coconut Creek Plaza short-stop area",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 120.0,
+        "pair_observed_months": 29.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 37,
+        "total_route_distance_m": 56568.86772845622,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.3185303329930089,
+        "local_access_share": 0.6814696670069911,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.30746704851624546,
+        "secondary_share": 0.011063284476763479,
+        "tertiary_share": 0.0,
+        "residential_share": 0.4373315328200936,
+        "service_share": 0.24413813418689748,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C002",
+        "origin_label": "Coconut Creek Plaza short-stop area",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 120.0,
+        "pair_observed_months": 29.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 40,
+        "total_route_distance_m": 302902.9998117446,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7625464522826872,
+        "local_access_share": 0.23745354771731264,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "North Powerline Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "South Pompano Parkway"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Dr. Martin Luther King Boulevard"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.7595278165295781,
+        "tertiary_share": 0.003018635753109053,
+        "residential_share": 0.20614277539706036,
+        "service_share": 0.0313107723202523,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C005",
+        "destination_label": "Multi-tenant commercial area near North Powerline Road / South Powerline Road / South Pompano Parkway",
+        "pair_total_eligible_trips": 86.0,
+        "pair_observed_months": 29.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 26,
+        "total_route_distance_m": 202337.57324121488,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7480969310365161,
+        "local_access_share": 0.25190306896348397,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "North Powerline Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "South Pompano Parkway"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Dr. Martin Luther King Boulevard"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.003476968846195312,
+        "secondary_share": 0.7446199621903207,
+        "tertiary_share": 0.0,
+        "residential_share": 0.22449406789253887,
+        "service_share": 0.02740900107094513,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C005",
+        "destination_label": "Multi-tenant commercial area near North Powerline Road / South Powerline Road / South Pompano Parkway",
+        "pair_total_eligible_trips": 86.0,
+        "pair_observed_months": 29.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 20,
+        "total_route_distance_m": 153045.75457504787,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7498868728880789,
+        "local_access_share": 0.25011312711192124,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "North Powerline Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "South Pompano Parkway"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Dr. Martin Luther King Boulevard"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.7498868728880789,
+        "tertiary_share": 0.0,
+        "residential_share": 0.22588833058419017,
+        "service_share": 0.024224796527731084,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C005",
+        "destination_label": "Multi-tenant commercial area near North Powerline Road / South Powerline Road / South Pompano Parkway",
+        "pair_total_eligible_trips": 86.0,
+        "pair_observed_months": 29.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 32,
+        "total_route_distance_m": 88508.61532092222,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6591550327204196,
+        "local_access_share": 0.3408449672795805,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.24272044441671728,
+        "secondary_share": 0.4164345883037023,
+        "tertiary_share": 0.0,
+        "residential_share": 0.25214798546936446,
+        "service_share": 0.08869698181021612,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C004",
+        "destination_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "pair_total_eligible_trips": 77.0,
+        "pair_observed_months": 25.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 33,
+        "total_route_distance_m": 92192.48581094823,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.663703789100082,
+        "local_access_share": 0.33629621089991796,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.23667565671177065,
+        "secondary_share": 0.4270281323883113,
+        "tertiary_share": 0.0,
+        "residential_share": 0.25061632492627733,
+        "service_share": 0.08567988597364065,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C004",
+        "destination_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "pair_total_eligible_trips": 77.0,
+        "pair_observed_months": 25.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 12,
+        "total_route_distance_m": 32847.17987815518,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6757839177279938,
+        "local_access_share": 0.3242160822720062,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.24961027596234817,
+        "secondary_share": 0.42617364176564565,
+        "tertiary_share": 0.0,
+        "residential_share": 0.24755637828139157,
+        "service_share": 0.07665970399061464,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C004",
+        "destination_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "pair_total_eligible_trips": 77.0,
+        "pair_observed_months": 25.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 23,
+        "total_route_distance_m": 66673.45533154978,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6579042212663938,
+        "local_access_share": 0.34209577873360614,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.2390475729542759,
+        "secondary_share": 0.4188566483121179,
+        "tertiary_share": 0.0,
+        "residential_share": 0.2452816724906257,
+        "service_share": 0.09681410624298038,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C004",
+        "origin_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 73.0,
+        "pair_observed_months": 28.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 30,
+        "total_route_distance_m": 85054.9740136912,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6674984546065656,
+        "local_access_share": 0.33250154539343435,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.24184986415662674,
+        "secondary_share": 0.4256485904499389,
+        "tertiary_share": 0.0,
+        "residential_share": 0.25631431032926294,
+        "service_share": 0.07618723506417138,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C004",
+        "origin_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 73.0,
+        "pair_observed_months": 28.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 20,
+        "total_route_distance_m": 57929.63544630026,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6816968962640427,
+        "local_access_share": 0.3183031037359573,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.2352055202465384,
+        "secondary_share": 0.44649137601750427,
+        "tertiary_share": 0.0,
+        "residential_share": 0.24210424061874286,
+        "service_share": 0.0761988631172145,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C004",
+        "origin_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 73.0,
+        "pair_observed_months": 28.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 22,
+        "total_route_distance_m": 125783.54129986113,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.8179232469463502,
+        "local_access_share": 0.18207675305364976,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "West Copans Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "State Road 7"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Northwest 54th Avenue"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.4748393292888084,
+        "secondary_share": 0.24441723696093995,
+        "tertiary_share": 0.09866668069660181,
+        "residential_share": 0.12485843661080313,
+        "service_share": 0.05721831644284663,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C007",
+        "origin_label": "Winn-Dixie",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 60.0,
+        "pair_observed_months": 26.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 23,
+        "total_route_distance_m": 133791.70730259732,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.8158145927363705,
+        "local_access_share": 0.18418540726362953,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "West Copans Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "State Road 7"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Northwest 54th Avenue"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.4343220997397915,
+        "secondary_share": 0.26487726453050886,
+        "tertiary_share": 0.11661522846607007,
+        "residential_share": 0.1243071897926261,
+        "service_share": 0.05987821747100342,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C007",
+        "origin_label": "Winn-Dixie",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 60.0,
+        "pair_observed_months": 26.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 15,
+        "total_route_distance_m": 86750.42181678739,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.8172321800193808,
+        "local_access_share": 0.18276781998061906,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "West Copans Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "State Road 7"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Northwest 54th Avenue"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.4797599374385561,
+        "secondary_share": 0.23312315145789972,
+        "tertiary_share": 0.10434909112292501,
+        "residential_share": 0.12117871973556835,
+        "service_share": 0.06158910024505074,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C007",
+        "origin_label": "Winn-Dixie",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 60.0,
+        "pair_observed_months": 26.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 35,
+        "total_route_distance_m": 231743.50067419893,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6712428156266691,
+        "local_access_share": 0.28121426725334253,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Dr. Martin Luther King Boulevard"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "North Powerline Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "South Pompano Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Northwest 31st Avenue"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.1474417151753858,
+        "secondary_share": 0.5227831477950783,
+        "tertiary_share": 0.00101795265620502,
+        "residential_share": 0.25375797868742245,
+        "service_share": 0.027456288565920098,
+        "unclassified_share": 0.0475429171199883,
+        "other_share": 0.0,
+        "origin_cluster_id": "C006",
+        "origin_label": "The Pomp area",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 57.0,
+        "pair_observed_months": 16.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 22,
+        "total_route_distance_m": 147333.9886583927,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6746451599168964,
+        "local_access_share": 0.2778343768445871,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Dr. Martin Luther King Boulevard"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Northwest 31st Avenue"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "North Powerline Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "South Pompano Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.1691394184628356,
+        "secondary_share": 0.4928965966206644,
+        "tertiary_share": 0.012609144833396545,
+        "residential_share": 0.25426797415816405,
+        "service_share": 0.023566402686423057,
+        "unclassified_share": 0.04752046323851623,
+        "other_share": 0.0,
+        "origin_cluster_id": "C006",
+        "origin_label": "The Pomp area",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 57.0,
+        "pair_observed_months": 16.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 0,
+        "total_route_distance_m": 0.0,
+        "controlled_access_share": null,
+        "arterial_share": null,
+        "local_access_share": null,
+        "major_corridor_roads": [],
+        "motorway_share": null,
+        "trunk_share": null,
+        "primary_share": null,
+        "secondary_share": null,
+        "tertiary_share": null,
+        "residential_share": null,
+        "service_share": null,
+        "unclassified_share": null,
+        "other_share": null,
+        "origin_cluster_id": "C006",
+        "origin_label": "The Pomp area",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 57.0,
+        "pair_observed_months": 16.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 21,
+        "total_route_distance_m": 147043.76576761866,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6805001373519788,
+        "local_access_share": 0.27009564122767327,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "North Powerline Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Dr. Martin Luther King Boulevard"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "South Pompano Parkway"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.029538045787150705,
+        "secondary_share": 0.6509620915648281,
+        "tertiary_share": 0.0,
+        "residential_share": 0.22819957711060188,
+        "service_share": 0.04189606411707138,
+        "unclassified_share": 0.0494042214203478,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C006",
+        "destination_label": "The Pomp area",
+        "pair_total_eligible_trips": 30.0,
+        "pair_observed_months": 14.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 9,
+        "total_route_distance_m": 65527.92456808906,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6947222665694687,
+        "local_access_share": 0.2586273265421463,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "North Powerline Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Dr. Martin Luther King Boulevard"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "South Pompano Parkway"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.08737560293428158,
+        "secondary_share": 0.6073466636351871,
+        "tertiary_share": 0.0,
+        "residential_share": 0.20761289409093148,
+        "service_share": 0.051014432451214856,
+        "unclassified_share": 0.046650406888385024,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C006",
+        "destination_label": "The Pomp area",
+        "pair_total_eligible_trips": 30.0,
+        "pair_observed_months": 14.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 0,
+        "total_route_distance_m": 0.0,
+        "controlled_access_share": null,
+        "arterial_share": null,
+        "local_access_share": null,
+        "major_corridor_roads": [],
+        "motorway_share": null,
+        "trunk_share": null,
+        "primary_share": null,
+        "secondary_share": null,
+        "tertiary_share": null,
+        "residential_share": null,
+        "service_share": null,
+        "unclassified_share": null,
+        "other_share": null,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C006",
+        "destination_label": "The Pomp area",
+        "pair_total_eligible_trips": 30.0,
+        "pair_observed_months": 14.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 10,
+        "total_route_distance_m": 17807.36957392413,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0030961704469513202,
+        "local_access_share": 0.9969038295530486,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Northwest 39th Avenue"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Antigua Circle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0030961704469513202,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9196370876752151,
+        "service_share": 0.07726674187783346,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C009",
+        "destination_label": "Medical Suites by LOFTUS medical-office area",
+        "pair_total_eligible_trips": 30.0,
+        "pair_observed_months": 22.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 12,
+        "total_route_distance_m": 22564.167802394157,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.014660762646927483,
+        "local_access_share": 0.9853392373530725,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Northwest 39th Avenue"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.014660762646927483,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9437060517720841,
+        "service_share": 0.041633185580988344,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C009",
+        "destination_label": "Medical Suites by LOFTUS medical-office area",
+        "pair_total_eligible_trips": 30.0,
+        "pair_observed_months": 22.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 8,
+        "total_route_distance_m": 13980.468750372447,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0236621471270433,
+        "local_access_share": 0.9763378528729566,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Northwest 39th Avenue"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0236621471270433,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9360948863886686,
+        "service_share": 0.040242966484288135,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C009",
+        "destination_label": "Medical Suites by LOFTUS medical-office area",
+        "pair_total_eligible_trips": 30.0,
+        "pair_observed_months": 22.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 4,
+        "total_route_distance_m": 13269.18067243823,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7695342086466017,
+        "local_access_share": 0.2304657913533984,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "West Copans Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.289459811881396,
+        "secondary_share": 0.4800743967652057,
+        "tertiary_share": 0.0,
+        "residential_share": 0.2173359278136302,
+        "service_share": 0.013129863539768177,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C010",
+        "origin_label": "Broward County",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 28.0,
+        "pair_observed_months": 14.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 10,
+        "total_route_distance_m": 32854.80087672043,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7431484248116498,
+        "local_access_share": 0.2568515751883501,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "West Copans Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.29249882214756084,
+        "secondary_share": 0.45064960266408893,
+        "tertiary_share": 0.0,
+        "residential_share": 0.23570833926938833,
+        "service_share": 0.02114323591896182,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C010",
+        "origin_label": "Broward County",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 28.0,
+        "pair_observed_months": 14.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 14,
+        "total_route_distance_m": 47112.74491268078,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7439760756323206,
+        "local_access_share": 0.2560239243676795,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "West Copans Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.29659423156468,
+        "secondary_share": 0.44738184406764053,
+        "tertiary_share": 0.0,
+        "residential_share": 0.2287116568385686,
+        "service_share": 0.02731226752911092,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C010",
+        "origin_label": "Broward County",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 28.0,
+        "pair_observed_months": 14.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 8,
+        "total_route_distance_m": 14660.698743578478,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.602746927833054,
+        "local_access_share": 0.397253072166946,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Northwest 39th Avenue"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.025557751329155404,
+        "secondary_share": 0.5771891765038987,
+        "tertiary_share": 0.0,
+        "residential_share": 0.17239566593409777,
+        "service_share": 0.22485740623284828,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C003",
+        "origin_label": "Wynmoor community destination near Cafe on the Green",
+        "destination_cluster_id": "C002",
+        "destination_label": "Coconut Creek Plaza short-stop area",
+        "pair_total_eligible_trips": 24.0,
+        "pair_observed_months": 17.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 9,
+        "total_route_distance_m": 14986.958291123125,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6572638873729568,
+        "local_access_share": 0.3427361126270432,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.022115933378312726,
+        "secondary_share": 0.6351479539946442,
+        "tertiary_share": 0.0,
+        "residential_share": 0.17571496418968652,
+        "service_share": 0.16702114843735663,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C003",
+        "origin_label": "Wynmoor community destination near Cafe on the Green",
+        "destination_cluster_id": "C002",
+        "destination_label": "Coconut Creek Plaza short-stop area",
+        "pair_total_eligible_trips": 24.0,
+        "pair_observed_months": 17.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 7,
+        "total_route_distance_m": 12226.844074204126,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6756175473819963,
+        "local_access_share": 0.3243824526180037,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.6756175473819963,
+        "tertiary_share": 0.0,
+        "residential_share": 0.14073460724480313,
+        "service_share": 0.18364784537320053,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C003",
+        "origin_label": "Wynmoor community destination near Cafe on the Green",
+        "destination_cluster_id": "C002",
+        "destination_label": "Coconut Creek Plaza short-stop area",
+        "pair_total_eligible_trips": 24.0,
+        "pair_observed_months": 17.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 8,
+        "total_route_distance_m": 10471.61954109535,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7266990893258748,
+        "local_access_share": 0.2733009106741253,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.7266990893258748,
+        "tertiary_share": 0.0,
+        "residential_share": 0.0,
+        "service_share": 0.2733009106741253,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C002",
+        "origin_label": "Coconut Creek Plaza short-stop area",
+        "destination_cluster_id": "C004",
+        "destination_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "pair_total_eligible_trips": 23.0,
+        "pair_observed_months": 16.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 4,
+        "total_route_distance_m": 5489.686691446235,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6645151566809359,
+        "local_access_share": 0.3354848433190641,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.6645151566809359,
+        "tertiary_share": 0.0,
+        "residential_share": 0.0,
+        "service_share": 0.3354848433190641,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C002",
+        "origin_label": "Coconut Creek Plaza short-stop area",
+        "destination_cluster_id": "C004",
+        "destination_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "pair_total_eligible_trips": 23.0,
+        "pair_observed_months": 16.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 11,
+        "total_route_distance_m": 13776.86080251552,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7628472096670583,
+        "local_access_share": 0.2371527903329417,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.7628472096670583,
+        "tertiary_share": 0.0,
+        "residential_share": 0.0,
+        "service_share": 0.2371527903329417,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C002",
+        "origin_label": "Coconut Creek Plaza short-stop area",
+        "destination_cluster_id": "C004",
+        "destination_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "pair_total_eligible_trips": 23.0,
+        "pair_observed_months": 16.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 5,
+        "total_route_distance_m": 12148.176473452484,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6063819316921856,
+        "local_access_share": 0.39361806830781443,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.26580728220572336,
+        "secondary_share": 0.3405746494864622,
+        "tertiary_share": 0.0,
+        "residential_share": 0.27299795326020876,
+        "service_share": 0.12062011504760572,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C008",
+        "origin_label": "Mobil",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 22.0,
+        "pair_observed_months": 16.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 12,
+        "total_route_distance_m": 26992.17572951884,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6560659862820873,
+        "local_access_share": 0.34393401371791255,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.30823365398421926,
+        "secondary_share": 0.3461261269007651,
+        "tertiary_share": 0.0017062053971030142,
+        "residential_share": 0.3130251196340861,
+        "service_share": 0.03090889408382649,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C008",
+        "origin_label": "Mobil",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 22.0,
+        "pair_observed_months": 16.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 5,
+        "total_route_distance_m": 12315.642477890095,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6007320554163689,
+        "local_access_share": 0.3992679445836311,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.26103178053181925,
+        "secondary_share": 0.3397002748845496,
+        "tertiary_share": 0.0,
+        "residential_share": 0.29004922819629403,
+        "service_share": 0.10921871638733702,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C008",
+        "origin_label": "Mobil",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 22.0,
+        "pair_observed_months": 16.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 10,
+        "total_route_distance_m": 7294.266388588467,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6432244413810169,
+        "local_access_share": 0.35677555861898325,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.6432244413810169,
+        "tertiary_share": 0.0,
+        "residential_share": 0.0,
+        "service_share": 0.35677555861898325,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C004",
+        "origin_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "destination_cluster_id": "C008",
+        "destination_label": "Mobil",
+        "pair_total_eligible_trips": 19.0,
+        "pair_observed_months": 14.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 3,
+        "total_route_distance_m": 2226.644476300812,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.593387282456012,
+        "local_access_share": 0.406612717543988,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Lakeside Drive"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.593387282456012,
+        "tertiary_share": 0.0,
+        "residential_share": 0.004787877510124571,
+        "service_share": 0.4018248400338634,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C004",
+        "origin_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "destination_cluster_id": "C008",
+        "destination_label": "Mobil",
+        "pair_total_eligible_trips": 19.0,
+        "pair_observed_months": 14.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 6,
+        "total_route_distance_m": 4742.666063701878,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.5910366907169552,
+        "local_access_share": 0.4089633092830448,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.5910366907169552,
+        "tertiary_share": 0.0,
+        "residential_share": 0.0,
+        "service_share": 0.4089633092830448,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C004",
+        "origin_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "destination_cluster_id": "C008",
+        "destination_label": "Mobil",
+        "pair_total_eligible_trips": 19.0,
+        "pair_observed_months": 14.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 5,
+        "total_route_distance_m": 40910.000011440585,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7305195670870919,
+        "local_access_share": 0.269480432912908,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "South Pompano Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Northwest 31st Avenue"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "West McNab Road"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.3516384335850155,
+        "secondary_share": 0.37888113350207636,
+        "tertiary_share": 0.0,
+        "residential_share": 0.2417220889491093,
+        "service_share": 0.027758343963798723,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C005",
+        "origin_label": "Multi-tenant commercial area near North Powerline Road / South Powerline Road / South Pompano Parkway",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 18.0,
+        "pair_observed_months": 11.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 7,
+        "total_route_distance_m": 65686.53769775706,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7674024282342545,
+        "local_access_share": 0.23259757176574547,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "South Lyons Road|Northwest 31st Avenue"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Northwest 31st Avenue"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "West McNab Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "West Cypress Creek Road"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.5906400365652893,
+        "secondary_share": 0.1767623916689653,
+        "tertiary_share": 0.0,
+        "residential_share": 0.20130596362322564,
+        "service_share": 0.03129160814251981,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C005",
+        "origin_label": "Multi-tenant commercial area near North Powerline Road / South Powerline Road / South Pompano Parkway",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 18.0,
+        "pair_observed_months": 11.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 6,
+        "total_route_distance_m": 50383.86658568718,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7532984195300915,
+        "local_access_share": 0.2467015804699086,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "West McNab Road"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "Northwest 31st Avenue"
+          },
+          {
+            "road_class": "primary",
+            "road_name": "South Lyons Road|Northwest 31st Avenue"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Gateway Drive"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.475139929563896,
+        "secondary_share": 0.27815848996619547,
+        "tertiary_share": 0.0,
+        "residential_share": 0.2290739682775788,
+        "service_share": 0.017627612192329792,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C005",
+        "origin_label": "Multi-tenant commercial area near North Powerline Road / South Powerline Road / South Pompano Parkway",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 18.0,
+        "pair_observed_months": 11.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 2,
+        "total_route_distance_m": 4714.379469061513,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Avenue of the Stars"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Antigua Circle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9574028788502751,
+        "service_share": 0.04259712114972488,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C019",
+        "destination_label": "Broward County",
+        "pair_total_eligible_trips": 18.0,
+        "pair_observed_months": 12.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 11,
+        "total_route_distance_m": 29041.29765560547,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Avenue of the Stars"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9475139569935912,
+        "service_share": 0.05248604300640886,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C019",
+        "destination_label": "Broward County",
+        "pair_total_eligible_trips": 18.0,
+        "pair_observed_months": 12.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 5,
+        "total_route_distance_m": 13175.893290790373,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Avenue of the Stars"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Antigua Circle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9303098269825734,
+        "service_share": 0.06969017301742668,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C019",
+        "destination_label": "Broward County",
+        "pair_total_eligible_trips": 18.0,
+        "pair_observed_months": 12.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 3,
+        "total_route_distance_m": 5646.582987969773,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6243958780818452,
+        "local_access_share": 0.37560412191815473,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "West Sample Road"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Turtle Creek Drive"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Northwest 62nd Avenue"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Terrapin Lane"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.3832602436820605,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.24113563439978472,
+        "residential_share": 0.0,
+        "service_share": 0.37560412191815473,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C013",
+        "origin_label": "Turtle Run Shoppes area",
+        "destination_cluster_id": "C007",
+        "destination_label": "Winn-Dixie",
+        "pair_total_eligible_trips": 18.0,
+        "pair_observed_months": 13.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 12,
+        "total_route_distance_m": 22819.27449915848,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6109517974273875,
+        "local_access_share": 0.38904820257261247,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "West Sample Road"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Turtle Creek Drive"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Terrapin Lane"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Northwest 62nd Avenue"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.37934786612432914,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.2316039313030584,
+        "residential_share": 0.0,
+        "service_share": 0.38904820257261247,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C013",
+        "origin_label": "Turtle Run Shoppes area",
+        "destination_cluster_id": "C007",
+        "destination_label": "Winn-Dixie",
+        "pair_total_eligible_trips": 18.0,
+        "pair_observed_months": 13.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 3,
+        "total_route_distance_m": 5349.466646539901,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6408615028227758,
+        "local_access_share": 0.3591384971772243,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "West Sample Road"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Turtle Creek Drive"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Terrapin Lane"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Northwest 62nd Avenue"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.40454701654043307,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.23631448628234264,
+        "residential_share": 0.0,
+        "service_share": 0.3591384971772243,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C013",
+        "origin_label": "Turtle Run Shoppes area",
+        "destination_cluster_id": "C007",
+        "destination_label": "Winn-Dixie",
+        "pair_total_eligible_trips": 18.0,
+        "pair_observed_months": 13.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 6,
+        "total_route_distance_m": 9195.648829564636,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7415768119591704,
+        "local_access_share": 0.2584231880408296,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Lakeside Drive"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.7415768119591704,
+        "tertiary_share": 0.0,
+        "residential_share": 0.001159341902753859,
+        "service_share": 0.25726384613807574,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C004",
+        "origin_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "destination_cluster_id": "C002",
+        "destination_label": "Coconut Creek Plaza short-stop area",
+        "pair_total_eligible_trips": 17.0,
+        "pair_observed_months": 12.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 7,
+        "total_route_distance_m": 10876.580587917497,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.6602198762358674,
+        "local_access_share": 0.3397801237641326,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Lakeside Drive"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.6602198762358674,
+        "tertiary_share": 0.0,
+        "residential_share": 0.000980170277317365,
+        "service_share": 0.33879995348681524,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C004",
+        "origin_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "destination_cluster_id": "C002",
+        "destination_label": "Coconut Creek Plaza short-stop area",
+        "pair_total_eligible_trips": 17.0,
+        "pair_observed_months": 12.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 4,
+        "total_route_distance_m": 6453.663002791689,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.7161698249984637,
+        "local_access_share": 0.28383017500153623,
+        "major_corridor_roads": [
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.7161698249984637,
+        "tertiary_share": 0.0,
+        "residential_share": 0.0,
+        "service_share": 0.28383017500153623,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C004",
+        "origin_label": "Multi-tenant commercial area near Coconut Creek Parkway",
+        "destination_cluster_id": "C002",
+        "destination_label": "Coconut Creek Plaza short-stop area",
+        "pair_total_eligible_trips": 17.0,
+        "pair_observed_months": 12.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 0,
+        "total_route_distance_m": 0.0,
+        "controlled_access_share": null,
+        "arterial_share": null,
+        "local_access_share": null,
+        "major_corridor_roads": [],
+        "motorway_share": null,
+        "trunk_share": null,
+        "primary_share": null,
+        "secondary_share": null,
+        "tertiary_share": null,
+        "residential_share": null,
+        "service_share": null,
+        "unclassified_share": null,
+        "other_share": null,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C014",
+        "destination_label": "Broward County",
+        "pair_total_eligible_trips": 16.0,
+        "pair_observed_months": 9.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 9,
+        "total_route_distance_m": 59043.10995440583,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.8458666196106248,
+        "local_access_share": 0.15413338038937519,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Winston Park Boulevard"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Northwest 53rd Court"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.759110860304888,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.08675575930573697,
+        "residential_share": 0.15305511914463435,
+        "service_share": 0.001078261244740826,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C014",
+        "destination_label": "Broward County",
+        "pair_total_eligible_trips": 16.0,
+        "pair_observed_months": 9.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 7,
+        "total_route_distance_m": 45925.48124812843,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.816367935498396,
+        "local_access_share": 0.1836320645016039,
+        "major_corridor_roads": [
+          {
+            "road_class": "primary",
+            "road_name": "Lyons Road"
+          },
+          {
+            "road_class": "tertiary",
+            "road_name": "Winston Park Boulevard"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Northwest 53rd Court"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Westgate Drive"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.747851564537258,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.06851637096113795,
+        "residential_share": 0.1823837829176238,
+        "service_share": 0.0012482815839801353,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C001",
+        "origin_label": "Wynmoor area, Coconut Creek",
+        "destination_cluster_id": "C014",
+        "destination_label": "Broward County",
+        "pair_total_eligible_trips": 16.0,
+        "pair_observed_months": 9.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "early",
+        "period_start": "2021-09",
+        "period_end": "2022-07",
+        "eligible_trip_count": 9,
+        "total_route_distance_m": 15568.574257269103,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.01978715891800193,
+        "local_access_share": 0.9802128410819981,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Northwest 39th Avenue"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.01978715891800193,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9095036637604769,
+        "service_share": 0.0707091773215213,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C009",
+        "origin_label": "Medical Suites by LOFTUS medical-office area",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 15.0,
+        "pair_observed_months": 12.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "middle",
+        "period_start": "2022-08",
+        "period_end": "2023-08",
+        "eligible_trip_count": 5,
+        "total_route_distance_m": 9006.689623503853,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.004886175337168909,
+        "local_access_share": 0.995113824662831,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Northwest 39th Avenue"
+          },
+          {
+            "road_class": "secondary",
+            "road_name": "Coconut Creek Parkway"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.004886175337168909,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9513076436998568,
+        "service_share": 0.04380618096297425,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C009",
+        "origin_label": "Medical Suites by LOFTUS medical-office area",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 15.0,
+        "pair_observed_months": 12.0
+      },
+      {
+        "scope": "major_direct_od_pair",
+        "period": "late",
+        "period_start": "2023-09",
+        "period_end": "2024-06",
+        "eligible_trip_count": 1,
+        "total_route_distance_m": 1781.1075385090655,
+        "controlled_access_share": 0.0,
+        "arterial_share": 0.0,
+        "local_access_share": 1.0,
+        "major_corridor_roads": [
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Circle"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Wynmoor Drive"
+          },
+          {
+            "road_class": "residential",
+            "road_name": "Portofino Isle"
+          }
+        ],
+        "motorway_share": 0.0,
+        "trunk_share": 0.0,
+        "primary_share": 0.0,
+        "secondary_share": 0.0,
+        "tertiary_share": 0.0,
+        "residential_share": 0.9571279757677341,
+        "service_share": 0.042872024232265916,
+        "unclassified_share": 0.0,
+        "other_share": 0.0,
+        "origin_cluster_id": "C009",
+        "origin_label": "Medical Suites by LOFTUS medical-office area",
+        "destination_cluster_id": "C001",
+        "destination_label": "Wynmoor area, Coconut Creek",
+        "pair_total_eligible_trips": 15.0,
+        "pair_observed_months": 12.0
+      }
+    ]
+  },
   "behavior_timeline": [
     {
       "period": "2021-09",
@@ -27327,7 +30347,7 @@
       "surface_street_share_b": 1.0,
       "distance_change": 49.1107750697779,
       "travel_time_change": -46.0,
-      "RCCI": 28.125587549571463,
+      "RCCI": 28.125587549571467,
       "plain_english_story": "Trips continued between the same clustered origin and destination (Broward County to Wynmoor area, Coconut Creek) in 2023-07 and 2023-08. The dominant named-road sequence remained Northwest 55th Avenue → West Copans Road → Lyons Road → Westgate Drive → Wynmoor Circle → Portofino Isle, although the overall matched-route mix changed. The OD-specific balanced RCCI was 28.1 out of 100; it measures route-pattern change, not its cause.",
       "confidence": "medium",
       "limitations": "Origin/destination equality means the same spatial clusters, not a verified activity or exact place. Road classes are OSM-based proxies; FMM and endpoint error can alter FIDs. Distance is deduplicated matched-segment length, and recorded duration may include stops. The data cannot establish whether any change was caused by traffic, construction, toll avoidance, or preference."
@@ -27403,6 +30423,59 @@
       "confidence": "medium"
     }
   ],
+  "key_research_insights": [
+    {
+      "title": "Stable residential anchor",
+      "finding": "The generalized Wynmoor area, Coconut Creek home area remained the strongest residential anchor across all 32 observed months.",
+      "confidence": "high"
+    },
+    {
+      "title": "Stable neighborhood movement",
+      "finding": "The repeated Wynmoor community destination near Cafe on the Green to Wynmoor area, Coconut Creek connection remained a local neighborhood movement: residential and service roads accounted for 100%, 100%, and 100% of matched distance in the early, middle, and late study periods.",
+      "confidence": "high"
+    },
+    {
+      "title": "Everyday errand corridor stayed local",
+      "finding": "The repeated Wynmoor area, Coconut Creek to Coconut Creek Plaza short-stop area corridor stayed entirely off controlled-access roads in all three periods. Its primary, residential, and service-road mix remained stable, supporting a persistent local errand routine.",
+      "confidence": "high"
+    },
+    {
+      "title": "A nearby destination was approached differently",
+      "finding": "For trips from Wynmoor area, Coconut Creek to Medical Suites by LOFTUS medical-office area, the Coconut Creek Parkway approach became more common after adequate evidence appeared in 2023-03. Both the earlier and later patterns were surface-street trips with no observed toll use; returns to the earlier approach show adaptation rather than a permanent replacement.",
+      "confidence": "medium"
+    },
+    {
+      "title": "Later travel included more controlled-access distance",
+      "finding": "Across all screened direct trips, motorway and trunk distance increased from 11% in the early period to 18% in the late period. Because the stable neighborhood and errand corridors did not make that shift, this is best read as a change in the broader mix of recorded trips—not evidence that the driver generally adopted highways.",
+      "confidence": "medium"
+    },
+    {
+      "title": "The destination portfolio changed at the margin",
+      "finding": "The Pomp area stopped appearing after 2023-01. This is a recorded destination change, not proof that the underlying activity ended.",
+      "confidence": "medium"
+    },
+    {
+      "title": "No workplace claim is warranted",
+      "finding": "No destination combined repeated multi-hour weekday stays with defensible workplace context, and the recordings contain little conventional morning travel.",
+      "confidence": "high"
+    }
+  ],
+  "three_year_change_summary": {
+    "headline": "Over nearly three years, the driver’s core residential and local-errand routines were more stable than changing. The meaningful changes were a mixed approach to one nearby recurring destination, a small shift in the overall mix of longer trips, and the appearance or disappearance of a few less-certain destinations.",
+    "stable": [
+      "The generalized home area remained stable.",
+      "The strongest neighborhood and short-errand connections retained their local-road character."
+    ],
+    "changed": [
+      "The medical-office-area trip developed a more frequent Coconut Creek Parkway approach, with reversions.",
+      "The broad direct-trip mix contained more motorway/trunk distance late in the study, without a matching change in core local routines.",
+      "A recurring long-stay area stopped appearing; whether another destination replaced it cannot be determined."
+    ],
+    "not_supported": [
+      "A permanent highway preference change.",
+      "A confirmed workplace, school/daycare, healthcare purpose, or substitution between destinations."
+    ]
+  },
   "limitations": [
     "Activity purposes are inferred and are not confirmed.",
     "POI proximity does not prove that the driver visited a place.",

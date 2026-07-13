@@ -12,29 +12,29 @@
       "classification": "public-reviewed",
       "media_type": "text/html",
       "path": "driver_1003_poi_route_insights_map.html",
-      "sha256": "4eae220d015d066a32360ab0cbb029154db298e84d44816a45d79b4ce7f14c47",
+      "sha256": "26854043a49a62e98150b7a9510a13916fea6c89c79488d9f843fd9d2be7dab2",
       "size_bytes": 1433381
     },
     {
       "classification": "public-reviewed",
       "media_type": "application/json",
       "path": "driver_1003_real_world_behavior_insights.json",
-      "sha256": "0675768b78cc20b460fd07f3c66d9d4190f55b1ac9309daf74d280d1a08c16ea",
-      "size_bytes": 1248079
+      "sha256": "109ff6a982ac6bc5d6f46fb5c6ada0d308ea7512cbc93aa4a8422dc2ef0cd7c1",
+      "size_bytes": 1352883
     },
     {
       "classification": "public-reviewed",
       "media_type": "text/html",
       "path": "driver_1003_route_choice_change_index_report.html",
-      "sha256": "f3ccb7424fd44f9cd5e0208ec9816b9cc3de918f99119595a8054613dae02640",
-      "size_bytes": 97022
+      "sha256": "b65c6e8f932ae54186b6f24d48b0f6d486d0da8209b86b81948b503537d61855",
+      "size_bytes": 102554
     }
   ],
   "generator": "scripts/generate_output_manifest.py",
   "schema_version": 1,
-  "source_revision": "d10cda5ff2955f7a6ad5aad83801a575fef1bd34",
+  "source_revision": "d5453ecc06994b8e307785c33bedcf6f993cc9b1",
   "summary": {
     "file_count": 4,
-    "total_bytes": 2779372
+    "total_bytes": 2889708
   }
 }
