@@ -1,0 +1,76 @@
+name: Test and release hygiene
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install lightweight validation dependency
+        run: python -m pip install --disable-pip-version-check PyYAML
+
+      - name: Compile maintained offline tools and tests
+        run: |
+          python -m py_compile \
+            scripts/generate_output_manifest.py \
+            scripts/package_driver_1003_public_release.py \
+            scripts/validate_public_release.py \
+            scripts/verify_pipeline_outputs.py \
+            tests/test_public_release_tools.py \
+            tests/test_pipeline_reproducibility.py
+
+      - name: Check shell entry points
+        run: bash -n scripts/*.sh
+
+      - name: Validate YAML examples and workflow configuration
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+          for path in (Path("config.example.yaml"), Path("environment-macos.yml"), Path(".github/workflows/test.yml")):
+              yaml.safe_load(path.read_text(encoding="utf-8"))
+          print("YAML validation passed")
+          PY
+
+      - name: Run offline unit tests
+        run: python -m unittest -v tests.test_public_release_tools tests.test_pipeline_reproducibility
+
+      - name: Validate curated public boundary
+        run: >-
+          python scripts/validate_public_release.py
+          --public-dir outputs/public
+          --require-manifest
+
+      - name: Verify deterministic public manifest
+        run: >-
+          python scripts/generate_output_manifest.py
+          --root outputs/public
+          --output outputs/public/manifest.json
+          --check
+
+      - name: Reject credential-shaped tracked text without echoing values
+        shell: bash
+        run: |
+          if git grep -q -I -E 'AIza[0-9A-Za-z_-]{20,}|GOOGLE_MAPS_API_KEY[[:space:]]*=[^[:space:]]+'; then
+            echo "Credential-shaped tracked text detected. Remove it before release." >&2
+            exit 1
+          fi
