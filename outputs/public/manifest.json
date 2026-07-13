@@ -3,7 +3,7 @@
   "files": [
     {
       "classification": "public-reviewed",
-      "media_type": "application/octet-stream",
+      "media_type": "text/markdown",
       "path": "README.md",
       "sha256": "593e19a457539a9e54cf489e6eefdb058bb7ade38c1d8340aebc32e78e76ac6b",
       "size_bytes": 2055
@@ -39,7 +39,7 @@
   ],
   "generator": "scripts/generate_output_manifest.py",
   "schema_version": 1,
-  "source_revision": "8afb4f18f53847253ae72bd9ed0ae6da48bc7e6d",
+  "source_revision": "9fdc0b65d7727701ceb47d6dbcc501d03e95b66d",
   "summary": {
     "file_count": 5,
     "total_bytes": 2927672

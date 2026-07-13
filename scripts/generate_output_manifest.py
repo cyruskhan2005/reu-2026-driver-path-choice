@@ -25,6 +25,13 @@ SCHEMA_VERSION = 1
 DEFAULT_PUBLIC_ROOT = Path("outputs/public")
 DEFAULT_MANIFEST_NAME = "manifest.json"
 DEFAULT_EXCLUDES = (".DS_Store", "Thumbs.db")
+_STABLE_MEDIA_TYPES = {
+    ".csv": "text/csv",
+    ".html": "text/html",
+    ".htm": "text/html",
+    ".json": "application/json",
+    ".md": "text/markdown",
+}
 
 
 class ManifestError(RuntimeError):
@@ -37,6 +44,15 @@ def _sha256(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def _media_type(path: Path) -> str:
+    """Return a platform-independent media type for release manifests."""
+
+    return _STABLE_MEDIA_TYPES.get(
+        path.suffix.casefold(),
+        mimetypes.guess_type(path.name)[0] or "application/octet-stream",
+    )
 
 
 def _source_revision(repository_root: Path) -> str:
@@ -125,7 +141,7 @@ def build_manifest(
     for path in files:
         relative = path.relative_to(root).as_posix()
         size = path.stat().st_size
-        media_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+        media_type = _media_type(path)
         entries.append(
             {
                 "path": relative,

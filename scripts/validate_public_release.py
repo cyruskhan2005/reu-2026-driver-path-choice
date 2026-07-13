@@ -132,6 +132,13 @@ SECRET_PATTERNS = (
         re.compile(r"(?:GOOGLE_MAPS_API_KEY|X-Goog-Api-Key)", re.IGNORECASE),
     ),
 )
+_STABLE_MEDIA_TYPES = {
+    ".csv": "text/csv",
+    ".html": "text/html",
+    ".htm": "text/html",
+    ".json": "application/json",
+    ".md": "text/markdown",
+}
 
 
 @dataclass(frozen=True)
@@ -211,6 +218,15 @@ def _sha256(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def _media_type(path: Path) -> str:
+    """Return a platform-independent media type for manifest comparison."""
+
+    return _STABLE_MEDIA_TYPES.get(
+        path.suffix.casefold(),
+        mimetypes.guess_type(path.name)[0] or "application/octet-stream",
+    )
 
 
 def _is_present(value: Any) -> bool:
@@ -584,7 +600,7 @@ def _verify_manifest(
                     "error", "manifest_hash_mismatch", relative, "Manifest SHA-256 does not match the artifact."
                 )
             )
-        expected_media = mimetypes.guess_type(target.name)[0] or "application/octet-stream"
+        expected_media = _media_type(target)
         if entry.get("media_type") != expected_media:
             issues.append(
                 ValidationIssue(
