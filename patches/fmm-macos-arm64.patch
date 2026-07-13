@@ -1,0 +1,92 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1e2aeb3..26967f8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -27,8 +27,8 @@ project(fmm)
+ 
+ set(CMAKE_BUILD_TYPE "Release")
+ set(CMAKE_CXX_FLAGS "-O3 -DSPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE")
+-set(CMAKE_CXX_STANDARD 11)
+-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build")
++set(CMAKE_CXX_STANDARD 17)
++set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+ 
+ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+ 
+@@ -69,6 +69,19 @@ find_package(OpenMP REQUIRED)
+ if(OPENMP_FOUND)
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
++  find_path(OpenMP_CXX_INCLUDE_DIR omp.h
++    HINTS ${OpenMP_CXX_INCLUDE_DIRS}
++          /opt/homebrew/opt/libomp/include
++          /usr/local/opt/libomp/include)
++  if(OpenMP_CXX_INCLUDE_DIR)
++    include_directories(${OpenMP_CXX_INCLUDE_DIR})
++  endif()
++  find_library(OpenMP_CXX_LIBRARY omp
++    HINTS /opt/homebrew/opt/libomp/lib
++          /usr/local/opt/libomp/lib)
++  if(OpenMP_CXX_LIBRARY)
++    set(OpenMP_CXX_LIBRARIES ${OpenMP_CXX_LIBRARY})
++  endif()
+   message(STATUS "OpenMP_HEADERS found at ${OpenMP_CXX_INCLUDE_DIRS}")
+   message(STATUS "OpenMP_CXX_LIBRARIES found at ${OpenMP_CXX_LIBRARIES}")
+ endif()
+diff --git a/python/CMakeLists.txt b/python/CMakeLists.txt
+index 7c042f2..11e6e6a 100644
+--- a/python/CMakeLists.txt
++++ b/python/CMakeLists.txt
+@@ -18,7 +18,7 @@ else()
+ endif()
+ 
+ execute_process(
+-  COMMAND python -c "from distutils.sysconfig import get_python_lib;print(get_python_lib())"
++  COMMAND ${PYTHON_EXECUTABLE} -c "import sysconfig;print(sysconfig.get_path('purelib'))"
+   OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
+ message(STATUS "Python packages ${PYTHON_SITE_PACKAGES}")
+ 
+@@ -28,7 +28,14 @@ ${PROJECT_SOURCE_DIR}/python/fmm.i PROPERTIES CPLUSPLUS ON)
+ if (${CMAKE_VERSION} VERSION_LESS 3.13.0)
+   message(STATUS "Using swig add module")
+   SWIG_ADD_MODULE(fmm python ${PROJECT_SOURCE_DIR}/python/fmm.i)
+-  swig_link_libraries(fmm FMMLIB ${PYTHON_LIBRARIES})
++  if(APPLE)
++    swig_link_libraries(fmm FMMLIB)
++    set_property(
++      TARGET ${SWIG_MODULE_fmm_REAL_NAME}
++      APPEND_STRING PROPERTY LINK_FLAGS " -undefined dynamic_lookup")
++  else()
++    swig_link_libraries(fmm FMMLIB ${PYTHON_LIBRARIES})
++  endif()
+   install(TARGETS ${SWIG_MODULE_fmm_REAL_NAME} DESTINATION ${PYTHON_SITE_PACKAGES})
+ else()
+   message(STATUS "Using swig add library")
+@@ -36,7 +43,12 @@ else()
+     LANGUAGE python
+     SOURCES ${PROJECT_SOURCE_DIR}/python/fmm.i)
+   set_property(TARGET pyfmm PROPERTY OUTPUT_NAME fmm)
+-  swig_link_libraries(pyfmm FMMLIB ${PYTHON_LIBRARIES})
++  if(APPLE)
++    swig_link_libraries(pyfmm FMMLIB)
++    target_link_options(pyfmm PRIVATE "LINKER:-undefined,dynamic_lookup")
++  else()
++    swig_link_libraries(pyfmm FMMLIB ${PYTHON_LIBRARIES})
++  endif()
+   install(TARGETS pyfmm DESTINATION ${PYTHON_SITE_PACKAGES})
+ endif()
+ 
+diff --git a/src/network/network.cpp b/src/network/network.cpp
+index 6dc21a0..fb4898b 100644
+--- a/src/network/network.cpp
++++ b/src/network/network.cpp
+@@ -110,7 +110,8 @@ void Network::read_ogr_file(const std::string &filename,
+     SPDLOG_DEBUG("Geometry type of network is {}",
+                  OGRGeometryTypeToName(ogrFDefn->GetGeomType()));
+   }
+-  OGRSpatialReference *ogrsr = ogrFDefn->GetGeomFieldDefn(0)->GetSpatialRef();
++  const OGRSpatialReference *ogrsr =
++    ogrFDefn->GetGeomFieldDefn(0)->GetSpatialRef();
+   if (ogrsr != nullptr) {
+     srid = ogrsr->GetEPSGGeogCS();
+     if (srid == -1) {

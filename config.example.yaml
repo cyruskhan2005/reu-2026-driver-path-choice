@@ -1,8 +1,16 @@
 output_dir: "/path/to/project/sflorida_outputs"
-mly_token: "YOUR_TOKEN_HERE"
+# Keep this copy local as config.yaml. Google credentials are never YAML values:
+# export GOOGLE_MAPS_API_KEY in the server environment only when network
+# enrichment is explicitly requested.
+# Mapillary can be disabled completely for credential-free/offline runs.
+# Set mapillary_enabled to true and supply a token to enable enrichment.
+mapillary_enabled: false
+mly_token: ""
 fdot_gdb: "/path/to/project/data/DOTShapesFGDB.gdb"
 gps_root: "/path/to/project/gps"
-fmm_bin: "/path/to/fmm/build/fmm"
+# Shared default; bootstrap_macos.sh installs this command in the active
+# Conda environment. A county may set its own executable path to override it.
+fmm_bin: "fmm"
 
 # Caching flags - set to true to skip stages already completed
 skip_osm: false

@@ -15,7 +15,9 @@ from roadnet import CountyConfig, PipelineConfig, Pipeline
 
 def load_config(yaml_path: str) -> PipelineConfig:
     with open(yaml_path) as f:
-        raw = yaml.safe_load(f)
+        raw = yaml.safe_load(f) or {}
+
+    shared_fmm_bin = str(raw.get("fmm_bin") or "fmm")
 
     counties = []
     for c in raw.get("counties", []):
@@ -29,13 +31,14 @@ def load_config(yaml_path: str) -> PipelineConfig:
             custom_owner_col     = c.get("custom_owner_col"),
             custom_func_class_col= c.get("custom_func_class_col"),
             custom_min_vote      = c.get("custom_min_vote", 0.5),
+            fmm_bin              = c.get("fmm_bin") or shared_fmm_bin,
             fdot_county_name     = c.get("fdot_county_name"),
             fdot_county_code     = c.get("fdot_county_code"),
         ))
 
     return PipelineConfig(
         output_dir       = Path(raw["output_dir"]),
-        mly_token        = raw["mly_token"],
+        mly_token        = str(raw.get("mly_token") or ""),
         fdot_gdb         = Path(raw["fdot_gdb"])   if raw.get("fdot_gdb")   else None,
         gps_root         = Path(raw["gps_root"])   if raw.get("gps_root")   else None,
         counties         = counties,
@@ -46,6 +49,8 @@ def load_config(yaml_path: str) -> PipelineConfig:
         skip_mly         = raw.get("skip_mly",         False),
         skip_conflation  = raw.get("skip_conflation",  False),
         skip_fmm         = raw.get("skip_fmm",         False),
+        mapillary_enabled= raw.get("mapillary_enabled", True),
+        fmm_bin           = shared_fmm_bin,
     )
 
 
@@ -88,6 +93,11 @@ def main():
     parser.add_argument("--counties", nargs="+", help="Only process these counties (by name)")
     parser.add_argument("--skip-osm",        action="store_true")
     parser.add_argument("--skip-mly",        action="store_true")
+    parser.add_argument(
+        "--disable-mapillary",
+        action="store_true",
+        help="Bypass Mapillary entirely (unlike --skip-mly, which reuses its cache)",
+    )
     parser.add_argument("--skip-conflation", action="store_true")
     parser.add_argument("--skip-fmm",        action="store_true")
     parser.add_argument("--log-level", default="INFO", choices=["DEBUG", "INFO", "WARNING"])
@@ -106,6 +116,7 @@ def main():
     # CLI flags override YAML
     if args.skip_osm:        cfg.skip_osm        = True
     if args.skip_mly:        cfg.skip_mly        = True
+    if args.disable_mapillary: cfg.mapillary_enabled = False
     if args.skip_conflation: cfg.skip_conflation = True
     if args.skip_fmm:        cfg.skip_fmm        = True
 

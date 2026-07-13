@@ -4,24 +4,78 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+junit*.xml
+.venv/
+venv/
 *.egg-info/
+pip-wheel-metadata/
 build/
 dist/
+site/
+
+# Local environment files may contain API credentials.
+.env
+.env.*
+!.env.example
+.envrc
+config.yaml
+config.local.yaml
+config.*.local.yaml
+.secrets/
+secrets/
+secrets.local/
+credentials/
+credentials.json
+api_keys.json
+token.json
+service-account*.json
+service_account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+.npmrc
+.pypirc
 
 # Generated pipeline outputs and caches
 data/
 *.gdb/
 sflorida_outputs/
 *_outputs/
-outputs/
 cache/
+
+# Analysis outputs are private by default. Only the policy README and files
+# deliberately copied into the reviewed public boundary may be committed.
+/outputs/*
+!/outputs/README.md
+!/outputs/public/
+!/outputs/public/**
 
 # Large data/export formats
 *.parquet
 *.jsonl
+*.ndjson
+*.inspect.*
 
 # Local run logs
 run_log*.txt
+*.log
+logs/
+
+# Generated research-process figures, animations, and frame sequences are
+# review inputs, not release artifacts. Curated copies belong in outputs/public.
+/visuals/research_process/
+/deliverables/driver_1003/**/research_process_figures/
 
 # External drive mounts or copied mount contents
 /Volumes/
@@ -39,5 +93,16 @@ KINGSTON/
 /deliverables/driver_1003/**/*.jsonl
 /deliverables/driver_1003/**/debug/
 /deliverables/driver_1003/**/legacy_selected_maps/
-!/deliverables/driver_1003/route_choice_change_index/data/
-!/deliverables/driver_1003/route_choice_change_index/data/*.json
+
+# Restricted historical Driver 1003 products retain detailed routes, timestamps,
+# or endpoint geometry. Keep local copies for approved research use only. The
+# reviewed, public-safe report and map live in outputs/public/ instead.
+/deliverables/driver_1003/graph_comparisons/
+/deliverables/driver_1003/monthly_graphs/
+/deliverables/driver_1003/timeline/
+/deliverables/driver_1003/route_evolution_animation/
+/deliverables/driver_1003/route_choice_change_index/data/
+/deliverables/driver_1003/route_choice_change_index/driver_1003_rcci_validation.md
+
+# Superseded delivery copies are local archival material, never release inputs.
+/deliverables/google_drive_phase2/
