@@ -4352,11 +4352,32 @@ def build_driver_1003_real_world_behavior(
         route_family_representatives = longitudinal[
             "route_family_map_representatives"
         ]
+        direct_route_evidence = longitudinal["trip_route_features"][
+            [
+                "trip_id",
+                "direct_route_eligible",
+                "direct_route_exclusion_reason",
+                "od_separation_m",
+                "circuity",
+                "robust_distance_threshold_m",
+            ]
+        ]
+        profile_trips = trips.merge(
+            direct_route_evidence,
+            on="trip_id",
+            how="left",
+            validate="one_to_one",
+        )
+        profile_trips["direct_route_eligible"] = profile_trips[
+            "direct_route_eligible"
+        ].fillna(False)
         profiles = compute_dominant_routes(
-            trips.loc[
-                trips["origin_cluster_id"].ne("UNCLUSTERED")
-                & trips["destination_cluster_id"].ne("UNCLUSTERED")
-                & trips["origin_cluster_id"].ne(trips["destination_cluster_id"])
+            profile_trips.loc[
+                profile_trips["origin_cluster_id"].ne("UNCLUSTERED")
+                & profile_trips["destination_cluster_id"].ne("UNCLUSTERED")
+                & profile_trips["origin_cluster_id"].ne(
+                    profile_trips["destination_cluster_id"]
+                )
             ],
             route_context,
             duration_col="trip_duration_seconds",

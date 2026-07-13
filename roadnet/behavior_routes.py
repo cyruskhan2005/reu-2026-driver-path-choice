@@ -653,6 +653,7 @@ _TRIP_COLUMN_CANDIDATES = {
     "county": ("county", "origin_county"),
     "duration": ("trip_duration", "duration_seconds", "travel_time_seconds"),
     "toll": ("toll_road_usage", "toll_used", "uses_toll_road"),
+    "eligibility": ("direct_route_eligible", "route_reporting_eligible"),
 }
 
 
@@ -715,6 +716,7 @@ def compute_dominant_routes(
     county_col: str | None = None,
     duration_col: str | None = None,
     toll_col: str | None = None,
+    eligibility_col: str | None = None,
 ) -> pd.DataFrame:
     """Compute a dominant named-route family for every OD pair and month.
 
@@ -738,12 +740,28 @@ def compute_dominant_routes(
     county = _resolve_frame_column(trips, county_col, "county", required=False)
     duration = _resolve_frame_column(trips, duration_col, "duration", required=False)
     toll = _resolve_frame_column(trips, toll_col, "toll", required=False)
+    eligibility = _resolve_frame_column(
+        trips, eligibility_col, "eligibility", required=False
+    )
 
     context = build_road_context_lookup(road_context)
+    input_counts: Counter[tuple[str, str, str]] = Counter()
+    for row in trips.to_dict(orient="records"):
+        month_value = _month_text(row.get(month))
+        if (
+            month_value is not None
+            and not _is_missing(row.get(origin))
+            and not _is_missing(row.get(destination))
+        ):
+            input_counts[
+                (str(row.get(origin)), str(row.get(destination)), month_value)
+            ] += 1
     summarized_rows: list[dict[str, object]] = []
     for row in trips.to_dict(orient="records"):
         month_value = _month_text(row.get(month))
         if month_value is None or _is_missing(row.get(origin)) or _is_missing(row.get(destination)):
+            continue
+        if eligibility and _boolean(row.get(eligibility)) is not True:
             continue
         route = summarize_trip_route(
             row.get(sequence),
@@ -778,6 +796,11 @@ def compute_dominant_routes(
         valid = group.loc[group["matched_fid_count"] > 0]
         family_counts = Counter(valid["route_family_signature"])
         if family_counts:
+            top_count = max(family_counts.values())
+            tied_top_families = sorted(
+                [family for family, count in family_counts.items() if count == top_count],
+                key=str,
+            )
             dominant_family = sorted(
                 family_counts, key=lambda value: (-family_counts[value], str(value))
             )[0]
@@ -789,12 +812,18 @@ def compute_dominant_routes(
             dominant_route = str(representative["matched_road_name_sequence"])
             dominant_names = list(representative["road_name_sequence"])
             dominant_fids = list(representative["county_fid_sequence"])
+            runner_up_count = max(
+                (count for family, count in family_counts.items() if family != dominant_family),
+                default=0,
+            )
         else:
             dominant_family = None
             dominant_count = 0
             dominant_route = "Route unavailable"
             dominant_names = []
             dominant_fids = []
+            tied_top_families = []
+            runner_up_count = 0
 
         fid_counts: Counter[CountyFID] = Counter()
         transition_counts: Counter[Transition] = Counter()
@@ -810,6 +839,23 @@ def compute_dominant_routes(
             for value in group["toll_road_usage"]
             if (parsed := _boolean(value)) is not None
         ]
+        dominant_share = dominant_count / len(valid) if len(valid) else float("nan")
+        dominant_tied = len(tied_top_families) > 1
+        dominance_sufficient = bool(
+            len(valid) > 0 and not dominant_tied and dominant_share >= 0.50
+        )
+        dominance_reason = (
+            "unique dominant route with at least 50% of eligible matched trips"
+            if dominance_sufficient
+            else "top route families are tied"
+            if dominant_tied
+            else "dominant route represents less than 50% of eligible matched trips"
+            if len(valid)
+            else "no eligible matched route"
+        )
+        input_trip_count = int(
+            input_counts[(str(origin_id), str(destination_id), str(month_value))]
+        )
         output.append(
             {
                 "origin_cluster_id": str(origin_id),
@@ -818,13 +864,25 @@ def compute_dominant_routes(
                 "destination_label": str(group["destination_label"].iloc[0]),
                 "month": str(month_value),
                 "trip_count": int(len(group)),
+                "input_trip_count": input_trip_count,
+                "excluded_ineligible_trip_count": input_trip_count - int(len(group)),
+                "eligibility_filter_applied": eligibility is not None,
                 "route_valid_trip_count": int(len(valid)),
                 "route_coverage_share": len(valid) / len(group),
                 "dominant_route": dominant_route,
                 "dominant_route_frequency": dominant_count,
                 "dominant_route_share": (
-                    dominant_count / len(valid) if len(valid) else float("nan")
+                    dominant_share
                 ),
+                "dominant_route_tied": dominant_tied,
+                "dominant_route_runner_up_frequency": runner_up_count,
+                "dominant_route_margin": (
+                    (dominant_count - runner_up_count) / len(valid)
+                    if len(valid)
+                    else float("nan")
+                ),
+                "dominance_sufficient": dominance_sufficient,
+                "dominance_sufficiency_reason": dominance_reason,
                 "dominant_route_family_signature": dominant_family,
                 "dominant_road_name_sequence": dominant_names,
                 "dominant_county_fid_sequence": dominant_fids,
@@ -1032,6 +1090,8 @@ def compare_consecutive_od_months(
     road_context: pd.DataFrame | Mapping[CountyFID, Mapping[str, object]] | None = None,
     *,
     min_trips_per_month: int = 1,
+    min_dominant_route_share: float = 0.50,
+    min_route_coverage_share: float = 0.75,
     **dominant_route_kwargs: object,
 ) -> pd.DataFrame:
     """Compare consecutive months for OD pairs whose cluster IDs are stable.
@@ -1043,6 +1103,10 @@ def compare_consecutive_od_months(
     """
     if min_trips_per_month < 1:
         raise ValueError("min_trips_per_month must be at least 1")
+    if not 0 <= min_dominant_route_share <= 1:
+        raise ValueError("min_dominant_route_share must be on the 0-1 scale")
+    if not 0 <= min_route_coverage_share <= 1:
+        raise ValueError("min_route_coverage_share must be on the 0-1 scale")
     if trips_or_profiles.empty:
         return pd.DataFrame(columns=OD_ROUTE_CHANGE_COLUMNS)
     internal = {"_fid_weights", "_transition_weights", "dominant_route", "month"}
@@ -1098,6 +1162,35 @@ def compare_consecutive_od_months(
             if b["_period"] != a["_period"] + 1:
                 continue
             if min(int(a["trip_count"]), int(b["trip_count"])) < min_trips_per_month:
+                continue
+            dominance_a = bool(
+                a.get(
+                    "dominance_sufficient",
+                    not bool(a.get("dominant_route_tied", False))
+                    and _number(a.get("dominant_route_share"))
+                    >= min_dominant_route_share,
+                )
+            )
+            dominance_b = bool(
+                b.get(
+                    "dominance_sufficient",
+                    not bool(b.get("dominant_route_tied", False))
+                    and _number(b.get("dominant_route_share"))
+                    >= min_dominant_route_share,
+                )
+            )
+            if (
+                not dominance_a
+                or not dominance_b
+                or _number(a.get("dominant_route_share"))
+                < min_dominant_route_share
+                or _number(b.get("dominant_route_share"))
+                < min_dominant_route_share
+                or _number(a.get("route_coverage_share"))
+                < min_route_coverage_share
+                or _number(b.get("route_coverage_share"))
+                < min_route_coverage_share
+            ):
                 continue
             fid_overlap = weighted_route_overlap(
                 a["_fid_weights"], b["_fid_weights"]

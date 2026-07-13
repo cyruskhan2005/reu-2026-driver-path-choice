@@ -259,9 +259,14 @@ def _canonical_name_part(value: str) -> str:
     if words and words[0].casefold().rstrip(".") in _DIRECTION_PREFIXES:
         words = words[1:]
     normalized: list[str] = []
-    for word in words:
+    for index, word in enumerate(words):
         key = word.casefold().rstrip(".")
-        normalized.append(_ROAD_WORDS.get(key, word.title()))
+        if key == "dr" and index == 0 and len(words) > 1:
+            normalized.append("Dr.")
+        elif key == "st" and index == 0 and len(words) > 1:
+            normalized.append("St.")
+        else:
+            normalized.append(_ROAD_WORDS.get(key, word.title()))
     return " ".join(normalized).strip()
 
 
@@ -277,6 +282,30 @@ def canonicalize_road_name(value: object) -> str | None:
     parts = [_canonical_name_part(part) for part in re.split(r"[|;/]+", text)]
     unique = sorted({part for part in parts if part}, key=str.casefold)
     return " / ".join(unique) if unique else None
+
+
+def _presentation_family_name(
+    backbone: Sequence[str],
+    *,
+    maximum_roads: int = 3,
+    maximum_characters: int = 120,
+) -> str:
+    """Return a concise route-family label while retaining full JSON evidence."""
+    names = [str(value).strip() for value in _collapse_adjacent(backbone) if str(value).strip()]
+    if not names:
+        return "Unnamed matched-route family"
+    visible = names[:maximum_roads]
+    suffix = f" + {len(names) - maximum_roads} more" if len(names) > maximum_roads else ""
+    label = " → ".join(visible) + suffix
+    if len(label) <= maximum_characters:
+        return label
+    first = visible[0]
+    if len(first) >= maximum_characters - 1:
+        return first[: maximum_characters - 1].rstrip() + "…"
+    compact = first + f" + {max(len(names) - 1, 1)} corridor"
+    if len(names) != 2:
+        compact += "s"
+    return compact[:maximum_characters].rstrip()
 
 
 def _parse_county_fids(value: object, county: object = None) -> list[CountyFID]:
@@ -943,7 +972,7 @@ def _family_analysis(
                     "destination_label": medoid["destination_label"],
                     "family_rank": rank,
                     "is_other": False,
-                    "family_name": " → ".join(medoid["_backbone"]),
+                    "family_name": _presentation_family_name(medoid["_backbone"]),
                     "backbone_roads_json": _json(list(medoid["_backbone"])),
                     "backbone_kind": medoid["backbone_kind"],
                     "trip_count": len(cluster.members),
@@ -1105,6 +1134,71 @@ def _od_summary(
         threshold_values = direct["robust_distance_threshold_m"].replace(
             [np.inf, -np.inf], np.nan
         )
+        group_months = sorted(group["month"].dropna().astype(str).unique())
+        observed_dates = group["event_date"].replace("", np.nan).dropna()
+        early_rate = (
+            float(group["month"].isin(early).sum() / max(len(early), 1))
+            if early
+            else 0.0
+        )
+        late_rate = (
+            float(group["month"].isin(late).sum() / max(len(late), 1))
+            if late
+            else 0.0
+        )
+        if late_rate >= early_rate + 0.5 and late_rate >= early_rate * 1.35:
+            frequency_trend = "increasing"
+        elif early_rate >= late_rate + 0.5 and early_rate >= late_rate * 1.35:
+            frequency_trend = "decreasing"
+        else:
+            frequency_trend = "broadly stable or intermittent"
+        local_starts = pd.to_datetime(
+            group["start_timestamp"], errors="coerce", utc=True
+        ).dt.tz_convert("America/New_York")
+        start_hours = local_starts.dt.hour + local_starts.dt.minute / 60.0
+        median_start_hour = float(start_hours.median()) if start_hours.notna().any() else float("nan")
+        if math.isnan(median_start_hour):
+            typical_start_time = "unknown"
+            dominant_time_of_day = "unknown"
+        else:
+            minutes = int(round((median_start_hour % 24) * 60)) % (24 * 60)
+            typical_start_time = (
+                pd.Timestamp("2000-01-01") + pd.Timedelta(minutes=minutes)
+            ).strftime("%-I:%M %p")
+            dominant_time_of_day = (
+                "morning"
+                if 5 <= median_start_hour < 12
+                else "afternoon"
+                if 12 <= median_start_hour < 17
+                else "evening"
+                if 17 <= median_start_hour < 22
+                else "nighttime"
+            )
+        eligible_days = int(
+            direct["event_date"].replace("", np.nan).nunique()
+        )
+        eligible_month_count = int(direct["month"].nunique())
+        direct_share = len(direct) / len(group)
+        if (
+            len(direct) >= 25
+            and eligible_days >= 15
+            and eligible_month_count >= 6
+            and direct_share >= 0.70
+        ):
+            data_sufficiency = "high"
+        elif (
+            len(direct) >= 10
+            and eligible_days >= 5
+            and eligible_month_count >= 3
+            and direct_share >= 0.50
+        ):
+            data_sufficiency = "medium"
+        else:
+            data_sufficiency = "low"
+        data_sufficiency_reason = (
+            f"{len(direct)} eligible direct trips across {eligible_days} days and "
+            f"{eligible_month_count} months ({direct_share:.0%} of recorded OD trips)."
+        )
         rows.append(
             {
                 "origin_cluster_id": origin,
@@ -1112,11 +1206,31 @@ def _od_summary(
                 "destination_cluster_id": destination,
                 "destination_label": str(group["destination_label"].iloc[0]),
                 "total_trip_count": len(group),
+                "observed_months": len(group_months),
+                "observed_months_json": _json(group_months),
+                "first_observed_date": str(observed_dates.min())
+                if not observed_dates.empty
+                else "",
+                "last_observed_date": str(observed_dates.max())
+                if not observed_dates.empty
+                else "",
                 "eligible_direct_trip_count": len(direct),
                 "excluded_trip_count": len(group) - len(direct),
-                "direct_trip_share": len(direct) / len(group),
-                "eligible_unique_days": direct["event_date"].replace("", np.nan).nunique(),
-                "eligible_months": direct["month"].nunique(),
+                "direct_trip_share": direct_share,
+                "eligible_unique_days": eligible_days,
+                "eligible_months": eligible_month_count,
+                "frequency_trend": frequency_trend,
+                "early_trip_rate_per_observed_month": early_rate,
+                "late_trip_rate_per_observed_month": late_rate,
+                "typical_start_time": typical_start_time,
+                "dominant_time_of_day": dominant_time_of_day,
+                "median_start_hour": median_start_hour,
+                "typical_duration_seconds": float(direct["duration_seconds"].median())
+                if len(direct)
+                else float("nan"),
+                "typical_duration_minutes": float(direct["duration_seconds"].median() / 60.0)
+                if len(direct)
+                else float("nan"),
                 "median_od_separation_m": float(group["od_separation_m"].median()),
                 "median_direct_route_distance_m": float(direct["route_distance_m"].median())
                 if len(direct)
@@ -1150,6 +1264,8 @@ def _od_summary(
                 "early_window_end": observed_months[half - 1] if early else "",
                 "late_window_start": observed_months[half] if late else "",
                 "late_window_end": observed_months[-1] if late else "",
+                "data_sufficiency": data_sufficiency,
+                "data_sufficiency_reason": data_sufficiency_reason,
             }
         )
     result = pd.DataFrame(rows)
@@ -1374,6 +1490,32 @@ def _monthly_family_shares(
     ).reset_index(drop=True)
 
 
+def _maximum_consecutive_presence(
+    frame: pd.DataFrame,
+) -> tuple[int, int]:
+    """Return maximum consecutive observed-index and calendar-month runs."""
+    if frame.empty:
+        return 0, 0
+    ordered = frame.sort_values("observed_month_index").drop_duplicates("month")
+    observed_run = observed_maximum = 1
+    calendar_run = calendar_maximum = 1
+    records = ordered[["observed_month_index", "month"]].to_dict(orient="records")
+    for left, right in zip(records, records[1:]):
+        if int(right["observed_month_index"]) == int(left["observed_month_index"]) + 1:
+            observed_run += 1
+        else:
+            observed_run = 1
+        observed_maximum = max(observed_maximum, observed_run)
+        if pd.Period(str(right["month"]), freq="M") == pd.Period(
+            str(left["month"]), freq="M"
+        ) + 1:
+            calendar_run += 1
+        else:
+            calendar_run = 1
+        calendar_maximum = max(calendar_maximum, calendar_run)
+    return observed_maximum, calendar_maximum
+
+
 def _longitudinal_transitions(
     assignments: pd.DataFrame,
     families: pd.DataFrame,
@@ -1473,19 +1615,33 @@ def _longitudinal_transitions(
             (candidate_present["family_trip_count"] >= 2)
             | candidate_present["month_trip_sufficient"]
         ]
-        first_appearance = (
-            adequate_appearance.iloc[0]["month"]
-            if not adequate_appearance.empty
-            else candidate_present.iloc[0]["month"]
+        first_recorded_appearance = (
+            str(candidate_present.iloc[0]["month"])
             if not candidate_present.empty
+            else ""
+        )
+        first_adequate_evidence = (
+            str(adequate_appearance.iloc[0]["month"])
+            if not adequate_appearance.empty
             else ""
         )
         late_candidate_months = candidate_monthly.loc[
             candidate_monthly["month"].isin(late_months)
             & candidate_monthly["family_trip_count"].gt(0)
         ]
-        persistence = int(late_candidate_months["month"].nunique())
-        if persistence < persistence_months:
+        presence_months = int(late_candidate_months["month"].nunique())
+        maximum_consecutive_observed, maximum_consecutive_calendar = (
+            _maximum_consecutive_presence(late_candidate_months)
+        )
+        equivalent_repeated_trip_support = (
+            presence_months >= persistence_months
+            and int(late_candidate_months["family_trip_count"].sum())
+            >= max(6, min_window_trips // 2)
+        )
+        if (
+            maximum_consecutive_observed < persistence_months
+            and not equivalent_repeated_trip_support
+        ):
             continue
         crossover_rows = candidate_monthly.loc[
             candidate_monthly["route_share"].ge(
@@ -1499,6 +1655,13 @@ def _longitudinal_transitions(
             & candidate_monthly["eligible_od_trip_count"].gt(0)
         ]
         dominance = dominance_rows.iloc[0]["month"] if not dominance_rows.empty else ""
+        late_dominance_rows = dominance_rows.loc[
+            dominance_rows["month"].isin(late_months)
+        ]
+        dominant_presence_months = int(late_dominance_rows["month"].nunique())
+        maximum_consecutive_dominant_observed, maximum_consecutive_dominant_calendar = (
+            _maximum_consecutive_presence(late_dominance_rows)
+        )
         late_adoption_rows = late_candidate_months.loc[
             late_candidate_months["route_share"].ge(
                 early_candidate_share + min(share_change_threshold / 2.0, 0.10)
@@ -1546,7 +1709,9 @@ def _longitudinal_transitions(
         later_metrics = route_metrics(late_candidate)
         confidence = (
             "high"
-            if len(early) >= 25 and len(late) >= 25 and persistence >= 5
+            if len(early) >= 25
+            and len(late) >= 25
+            and maximum_consecutive_observed >= 3
             else "medium"
         )
         transition_type = (
@@ -1568,7 +1733,9 @@ def _longitudinal_transitions(
                 "baseline_route_family": baseline["family_name"],
                 "baseline_major_roads_json": baseline["backbone_roads_json"],
                 "baseline_share": family_share(early, baseline_id),
-                "first_alternate_appearance": first_appearance,
+                "first_alternate_appearance": first_recorded_appearance,
+                "first_recorded_appearance": first_recorded_appearance,
+                "first_adequate_evidence_month": first_adequate_evidence,
                 "adoption_start": adoption,
                 "crossover_month": crossover,
                 "dominance_month": dominance,
@@ -1578,7 +1745,23 @@ def _longitudinal_transitions(
                 "later_route_family": candidate["family_name"],
                 "later_major_roads_json": candidate["backbone_roads_json"],
                 "later_share": late_candidate_share,
-                "persistence_months": persistence,
+                "persistence_months": maximum_consecutive_observed,
+                "presence_observed_months": presence_months,
+                "maximum_consecutive_observed_months": maximum_consecutive_observed,
+                "maximum_consecutive_calendar_months": maximum_consecutive_calendar,
+                "dominant_presence_observed_months": dominant_presence_months,
+                "maximum_consecutive_dominant_observed_months": maximum_consecutive_dominant_observed,
+                "maximum_consecutive_dominant_calendar_months": maximum_consecutive_dominant_calendar,
+                "equivalent_repeated_trip_support": equivalent_repeated_trip_support,
+                "persistence_basis": (
+                    f"{maximum_consecutive_observed} consecutive observed months"
+                    if maximum_consecutive_observed >= persistence_months
+                    else (
+                        f"{presence_months} presence months and "
+                        f"{int(late_candidate_months['family_trip_count'].sum())} later trips; "
+                        f"maximum consecutive run {maximum_consecutive_observed} months"
+                    )
+                ),
                 "reversion_month": reversion,
                 "reversion_months_json": _json(reversion_months),
                 "trips_before": len(early),
@@ -1629,7 +1812,7 @@ def _longitudinal_transitions(
                 "late_route_share": late_candidate_share,
                 "route_share_change": delta,
                 "route_share_change_percentage_points": 100.0 * delta,
-                "persistence_observed_months": persistence,
+                "persistence_observed_months": presence_months,
                 "confidence": confidence,
                 "plain_english_story": (
                     f"For {candidate['origin_label']} to {candidate['destination_label']}, "
@@ -1638,8 +1821,20 @@ def _longitudinal_transitions(
                     f"in {observed_months[0]}–{observed_months[half - 1]} to "
                     f"{late_candidate_share:.0%} of {len(late)} trips in "
                     f"{observed_months[half]}–{observed_months[-1]}. It appeared in "
-                    f"{persistence} late-period observed months; this supports a sustained "
+                    f"{presence_months} late-period observed months with a maximum "
+                    f"consecutive run of {maximum_consecutive_observed}; "
+                    "the repeated-trip and full-window share evidence supports a sustained "
                     "route-distribution change rather than a permanent replacement."
+                    + (
+                        f" Sparse use was recorded as early as {first_recorded_appearance}; "
+                        f"the first adequate evidence month was {first_adequate_evidence}."
+                        if first_recorded_appearance
+                        and first_adequate_evidence
+                        and first_recorded_appearance != first_adequate_evidence
+                        else f" The first adequate evidence month was {first_adequate_evidence}."
+                        if first_adequate_evidence
+                        else ""
+                    )
                     + (
                         f" The earlier family reappeared in {', '.join(reversion_months)}, "
                         "so the shift included intermittent reversions."
@@ -1651,8 +1846,9 @@ def _longitudinal_transitions(
                 "limitations": (
                     "Activity purpose and cause are unknown; observed-month coverage varies, "
                     "and route-family assignment depends on map matching and the declared "
-                    "directness/similarity thresholds. Persistence counts observed months "
-                    "with the later family, including sparse months."
+                    "directness/similarity thresholds. Presence-month counts are reported "
+                    "separately from true consecutive persistence; sparse months may rely "
+                    "on equivalent repeated-trip evidence."
                 ),
             }
         )
@@ -1978,7 +2174,8 @@ def analyze_longitudinal_routes(
 ) -> dict[str, pd.DataFrame]:
     """Run the complete longitudinal route analysis without reading or writing files.
 
-    Returned keys are ``od_summary``, ``route_families``,
+    Returned keys are ``trip_route_features``, ``route_family_assignments``,
+    ``od_summary``, ``route_families``,
     ``route_family_monthly_shares``, ``longitudinal_route_transitions``,
     ``temporary_route_deviations``, ``monthly_highway_surface_trends``, and
     ``route_family_map_representatives``.
@@ -2056,6 +2253,8 @@ def analyze_longitudinal_routes(
     if len(assignments) != eligible_trip_count:
         raise LongitudinalAnalysisError("Route-family assignments do not reconcile")
     return {
+        "trip_route_features": features,
+        "route_family_assignments": assignments,
         "od_summary": od_summary,
         "route_families": families.sort_values(
             ["origin_cluster_id", "destination_cluster_id", "family_rank"]
