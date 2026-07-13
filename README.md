@@ -1,5 +1,47 @@
 # Driver Path Choice and Longitudinal Behavior Research
 
+This NSF REU research repository studies how route choice and everyday travel
+patterns change over time using privacy-protected GPS trajectories from South
+Florida. It is designed to be readable by transportation researchers, GIS
+students, and future REU students who did not participate in the original
+project.
+
+## Research question
+
+How do a driver's destinations, road corridors, and use of highway versus
+surface-street networks change over a multi-year observation period—and which
+changes reflect a different route to the same place versus a meaningful change
+in destination or routine?
+
+## Why this matters
+
+Longitudinal GPS research often stops at map matching or aggregate trip counts.
+This project connects reproducible network analysis to cautious, human-readable
+interpretation: road choices are compared within origin–destination patterns,
+then summarized as routines, corridor changes, and uncertainty-aware findings.
+
+## Main accomplishments
+
+- Built a reproducible macOS workflow for road-network enrichment and FMM map
+  matching on Apple Silicon.
+- Developed RCCI, overlap, route-family, and road-class analyses for monthly
+  and multi-month route change.
+- Produced a privacy-aware Driver 1003 report, verification map, and structured
+  research findings.
+- Established a public-release boundary that excludes raw GPS, detailed route
+  geometry, API caches, and precise home information.
+
+## System architecture
+
+```text
+restricted GPS -> road preparation -> enriched network -> FMM map matching
+              -> trip/OD summaries -> RCCI and corridor analysis
+              -> cautious place/routine inference -> public-safe report
+```
+
+See [the architecture guide](docs/PROJECT_ARCHITECTURE.md) for module-level
+details and [the methods guide](docs/RESEARCH_METHODOLOGY.md) for definitions.
+
 ## 1. What this project does
 
 This repository measures how a driver's destinations and road choices change over time. It enriches South Florida road networks, map-matches recorded GPS trips with Fast Map Matching (FMM), calculates the Route Choice Change Index (RCCI), groups similar trips into route families, and turns those results into privacy-aware behavioral findings.
@@ -217,6 +259,25 @@ The likely home is reported only at a generalized neighborhood scale. No defensi
 
 Legacy tracked route maps contain private geometry and are not part of the reviewed public package. The public report is separately sanitized; raw-GPS imagery, exact-home geometry, private caches, and unrestricted legacy HTML must not be published.
 
+## 13a. Research findings summary
+
+The public report finds a stable generalized home area and a persistent local
+errand corridor. No workplace or school/daycare inference met the project’s
+evidence standard. The strongest observed route evolution was a change in the
+approach to a nearby medical-suite context, with later use of Coconut Creek
+Parkway but intermittent returns to the earlier local approach. This supports a
+route adaptation interpretation, not a claim about trip purpose or cause. Read
+the [results guide](docs/RESULTS_GUIDE.md) before citing or presenting findings.
+
+## 13b. Future work
+
+- Replicate the pipeline across more drivers after data-governance review.
+- Evaluate route changes against independently verified incidents or roadwork
+  data rather than attributing causes from GPS alone.
+- Improve uncertainty calibration with external parcel/land-use context where
+  sharing permission exists.
+- Compare route-choice stability across weekday, weekend, and seasonal periods.
+
 ## 14. Development and testing
 
 ```bash
@@ -237,3 +298,11 @@ No repository-wide software license was present during this audit; do not assume
 OpenStreetMap data are obtained through OSMnx and remain subject to OpenStreetMap attribution/licensing. FMM is pinned from `cyang-kth/fmm` and retains its upstream license. FDOT and county GIS files must be acquired from their official custodians or the approved research data store and used under their applicable terms. Mapillary and Google results are optional enrichment sources governed by their respective terms; their credentials and raw caches are not distributed.
 
 Detailed evidence is in [docs/PHASE1_MACOS_REPRODUCTION_AUDIT.md](docs/PHASE1_MACOS_REPRODUCTION_AUDIT.md), and output provenance is in [outputs/README.md](outputs/README.md).
+
+## Acknowledgements
+
+Developed as an NSF REU research project at Florida Atlantic University. The
+workflow builds on Fast Map Matching (FMM), OpenStreetMap/OSMnx, FDOT and county
+GIS context, and optional Google Maps Platform enrichment. See
+[data, privacy, attribution, and usage notes](docs/DATA_AND_PRIVACY.md) before
+reusing data or outputs.
