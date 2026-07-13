@@ -5,8 +5,8 @@
       "classification": "public-reviewed",
       "media_type": "application/octet-stream",
       "path": "README.md",
-      "sha256": "ad6eee1af865ad13f10923b1abcd61409559b123e5dc70969851602c2b3b6583",
-      "size_bytes": 890
+      "sha256": "593e19a457539a9e54cf489e6eefdb058bb7ade38c1d8340aebc32e78e76ac6b",
+      "size_bytes": 2055
     },
     {
       "classification": "public-reviewed",
@@ -24,6 +24,13 @@
     },
     {
       "classification": "public-reviewed",
+      "media_type": "text/csv",
+      "path": "driver_1003_road_class_longitudinal_summary.csv",
+      "sha256": "84275596118109273c0c5f85ef19c3db4bf8f27a99a3400b3c2af0be28519401",
+      "size_bytes": 36807
+    },
+    {
+      "classification": "public-reviewed",
       "media_type": "text/html",
       "path": "driver_1003_route_choice_change_index_report.html",
       "sha256": "10115ed1d0c5785806dbb99633be88fa51e0256e4033d772fc75b8f9e1eaccc0",
@@ -32,9 +39,9 @@
   ],
   "generator": "scripts/generate_output_manifest.py",
   "schema_version": 1,
-  "source_revision": "135da86d984082f6c3a58aa2a92b424352e0e5c9",
+  "source_revision": "8afb4f18f53847253ae72bd9ed0ae6da48bc7e6d",
   "summary": {
-    "file_count": 4,
-    "total_bytes": 2889700
+    "file_count": 5,
+    "total_bytes": 2927672
   }
 }
