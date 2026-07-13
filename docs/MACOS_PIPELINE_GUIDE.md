@@ -16,7 +16,13 @@ The native FMM build and a real Miami lifetime regression were verified on:
 - Boost 1.90.0, GDAL 3.13.1, and libomp 22.1.7;
 - FMM commit `19ef34e1f57ff2f2484231aa0d01dfffea986ec1`.
 
-The scripted build was exercised in `/private/tmp/roadnet-fmm-script-validation` using the existing Python 3.11 `roadnet` environment. The committed environment now uses the name `pipeline`; creating that environment from scratch and running all three counties end to end was not completed in this session. A real FMM Python regression used the 568,030-edge Miami network, its 42,484,944-row UBODT, and 261 GPS observations and passed in 11.58 seconds. Palm Beach's current matched CSV has duplicate IDs and is intentionally rejected until regenerated.
+The scripted build was exercised in a temporary workspace using the existing
+Python 3.11 `roadnet` environment. The committed environment now uses the name
+`pipeline`; creating that environment from scratch and running all three
+counties end to end was not completed in this session. A real FMM Python
+regression used the 568,030-edge Miami network, its 42,484,944-row UBODT, and
+261 GPS observations and passed in 11.58 seconds. Palm Beach's current matched
+CSV has duplicate IDs and is intentionally rejected until regenerated.
 
 ## 1. Fresh Terminal and system prerequisites
 

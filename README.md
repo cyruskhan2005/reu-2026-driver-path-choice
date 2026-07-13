@@ -289,7 +289,7 @@ python -m unittest -v tests.test_fmm_result_lifetime
 bash -n scripts/*.sh
 ```
 
-Offline CI runs synthetic/release checks without Google credentials or private data. See `.github/workflows/offline-ci.yml`. New code should preserve explicit trip boundaries, county-scoped FIDs, secret-free caches, and public-home redaction.
+Offline CI runs synthetic/release checks without Google credentials or private data. See `.github/workflows/test.yml`. New code should preserve explicit trip boundaries, county-scoped FIDs, secret-free caches, and public-home redaction.
 
 ## 15. Citation, license, and data-source notes
 

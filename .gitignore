@@ -30,8 +30,11 @@ config.yaml
 config.local.yaml
 config.*.local.yaml
 .secrets/
+secrets/
 secrets.local/
+credentials/
 credentials.json
+api_keys.json
 token.json
 service-account*.json
 service_account*.json
