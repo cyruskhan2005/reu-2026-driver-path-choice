@@ -1427,6 +1427,15 @@ def behavior_report_css() -> str:
 .behavior-insights .behavior-table td{{white-space:normal;vertical-align:top;min-width:110px}}
 .behavior-insights .map-panel{{background:#eef6ff;border:1px solid #cbdcf8;border-radius:14px;padding:16px}}
 .behavior-insights iframe{{width:100%;height:620px;border:1px solid var(--line);border-radius:12px;background:#fff}}
+.behavior-insights .three-year-summary{{background:#f7fbf9;border:1px solid #cde8d9;border-radius:14px;padding:16px;margin:14px 0}}
+.behavior-insights .three-year-summary>p{{color:#24523a;font-size:16px;margin-top:0}}
+.behavior-insights .three-year-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}}
+.behavior-insights .three-year-grid article{{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px}}
+.behavior-insights .three-year-grid h4{{margin:0 0 8px;color:#1f3d2d}}.behavior-insights .three-year-grid ul{{margin:0;padding-left:18px;color:#475569}}
+.behavior-insights .road-mix-figure{{background:#f8fbff;border:1px solid #d6e3ff;border-radius:14px;padding:16px;margin:14px 0}}.behavior-insights .road-mix-figure>p:first-child{{margin-top:0}}
+.behavior-insights .road-mix-row{{display:grid;grid-template-columns:70px minmax(180px,1fr);gap:8px 12px;align-items:center;margin:12px 0}}.behavior-insights .road-mix-row>span{{grid-column:2;color:#617085;font-size:12px}}
+.behavior-insights .road-mix-bar{{height:18px;display:flex;overflow:hidden;border-radius:999px;background:#e2e8f0}}.behavior-insights .road-segment{{height:100%;display:block}}.behavior-insights .controlled{{background:#334155}}.behavior-insights .primary{{background:#2f6fed}}.behavior-insights .secondary{{background:#56a3d9}}.behavior-insights .local{{background:#0f8f61}}.behavior-insights .other{{background:#c4a46b}}
+.behavior-insights .road-mix-legend{{font-size:12px;color:#617085}}.behavior-insights .road-mix-legend span{{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 10px;vertical-align:-1px}}
 """
 
 
@@ -1864,16 +1873,21 @@ def render_real_world_behavior_insights(
         "possible healthcare-context pattern": 5,
         "recurring fuel stop": 6,
     }
-    raw_findings = insights.get("key_findings") or []
+    research_findings = insights.get("key_research_insights")
+    raw_findings = research_findings or insights.get("key_findings") or []
     if isinstance(raw_findings, (str, Mapping)):
         raw_findings = [raw_findings]
-    findings = sorted(
-        list(raw_findings),
-        key=lambda item: priority.get(
-            _text(item.get("title") if isinstance(item, Mapping) else "").casefold(),
-            99,
-        ),
-    )[:5]
+    findings = (
+        list(raw_findings)[:7]
+        if research_findings
+        else sorted(
+            list(raw_findings),
+            key=lambda item: priority.get(
+                _text(item.get("title") if isinstance(item, Mapping) else "").casefold(),
+                99,
+            ),
+        )[:5]
+    )
     finding_cards: list[str] = []
     for finding in findings:
         if isinstance(finding, Mapping):
@@ -1894,6 +1908,94 @@ def render_real_world_behavior_insights(
             '<article class="finding-card"><strong>Evidence status</strong>'
             "<p>No long-term finding met the configured evidence threshold.</p></article>"
         )
+
+    three_year = insights.get("three_year_change_summary") or {}
+    if isinstance(three_year, Mapping) and any(
+        _text(three_year.get(key))
+        for key in ("headline", "stable", "changed", "not_supported")
+    ):
+        headline = _display(three_year.get("headline"))
+
+        def summary_list(key: str) -> str:
+            values = three_year.get(key) or []
+            if isinstance(values, str):
+                values = [values]
+            return "".join(
+                f"<li>{html.escape(_display(value))}</li>"
+                for value in values
+                if _text(value)
+            )
+
+        three_year_html = (
+            '<div class="three-year-summary">'
+            f"<p><strong>{html.escape(headline)}</strong></p>"
+            '<div class="three-year-grid">'
+            f'<article><h4>What stayed stable</h4><ul>{summary_list("stable")}</ul></article>'
+            f'<article><h4>What changed</h4><ul>{summary_list("changed")}</ul></article>'
+            f'<article><h4>What the data cannot show</h4><ul>{summary_list("not_supported")}</ul></article>'
+            "</div></div>"
+        )
+    else:
+        three_year_html = ""
+
+    road_class_summary = insights.get("road_class_longitudinal_summary") or {}
+    road_periods = (
+        road_class_summary.get("periods", [])
+        if isinstance(road_class_summary, Mapping)
+        else []
+    )
+    road_period_lookup = {
+        _text(record.get("period")): record
+        for record in road_periods
+        if isinstance(record, Mapping)
+    }
+    road_mix_rows: list[str] = []
+    for period in ("early", "middle", "late"):
+        record = road_period_lookup.get(period)
+        if not record:
+            continue
+        segments = [
+            ("Controlled access", _finite_float(record.get("controlled_access_share")) or 0.0, "controlled"),
+            ("Primary", _finite_float(record.get("primary_share")) or 0.0, "primary"),
+            ("Secondary", _finite_float(record.get("secondary_share")) or 0.0, "secondary"),
+            (
+                "Residential + service",
+                (_finite_float(record.get("residential_share")) or 0.0)
+                + (_finite_float(record.get("service_share")) or 0.0),
+                "local",
+            ),
+            (
+                "Other surface streets",
+                (_finite_float(record.get("tertiary_share")) or 0.0)
+                + (_finite_float(record.get("unclassified_share")) or 0.0)
+                + (_finite_float(record.get("other_share")) or 0.0),
+                "other",
+            ),
+        ]
+        bars = "".join(
+            f'<span class="road-segment {css}" style="width:{max(share, 0.0) * 100:.3f}%" '
+            f'title="{html.escape(label)}: {share:.0%}"></span>'
+            for label, share, css in segments
+            if share > 0
+        )
+        labels = " · ".join(
+            f"{label} {share:.0%}" for label, share, _ in segments if share >= 0.03
+        )
+        road_mix_rows.append(
+            '<div class="road-mix-row">'
+            f'<strong>{html.escape(period.title())}</strong><div class="road-mix-bar">{bars}</div>'
+            f'<span>{html.escape(labels)}</span></div>'
+        )
+    road_mix_html = (
+        '<div class="road-mix-figure"><p><strong>Road environment of all screened direct trips.</strong> '
+        "This describes the mix of recorded travel, not a preference estimate for every routine.</p>"
+        + "".join(road_mix_rows)
+        + '<p class="road-mix-legend"><span class="controlled"></span> motorway + trunk '
+        '<span class="primary"></span> primary <span class="secondary"></span> secondary '
+        '<span class="local"></span> residential + service <span class="other"></span> other surface streets</p></div>'
+        if road_mix_rows
+        else ""
+    )
 
     routine = insights.get("likely_routine") or {}
     routine_summary = _display(
@@ -1918,18 +2020,17 @@ def render_real_world_behavior_insights(
             [
                 (
                     f"Baseline · {_display(transition.get('baseline_start'))}–{_display(transition.get('baseline_end'))}",
-                    "The residential anchor and frequent destinations remained stable.",
+                    "Core places and local routines were already established.",
                     (
-                        f"For {_display(transition.get('origin_label'))} → "
-                        f"{_display(transition.get('destination_label'))}, "
-                        f"{_display(transition.get('baseline_route_family'))} was the leading "
-                        f"early pattern ({_percent(transition.get('baseline_share'))})."
+                        f"The recurring {_display(transition.get('origin_label'))} → "
+                        f"{_display(transition.get('destination_label'))} trip was usually approached "
+                        f"through {_display(transition.get('baseline_route_family'))}."
                     ),
                 ),
                 (
                     "Evidence threshold reached · "
                     f"{_display(_first_mapping_value(transition, 'first_adequate_evidence_month', 'adoption_start'))}",
-                    "A different corridor gained enough repeated evidence to interpret.",
+                    "A different nearby approach became repeated enough to interpret.",
                     (
                         (
                             f"Sparse use was recorded as early as {_display(transition.get('first_recorded_appearance'))}, "
@@ -1940,22 +2041,21 @@ def render_real_world_behavior_insights(
                         )
                         + f"but the first adequate evidence month was "
                         f"{_display(_first_mapping_value(transition, 'first_adequate_evidence_month', 'adoption_start'))}. "
-                        "The start and end areas did not change."
+                        "The start and end areas did not change, and this was not a highway or toll-road shift."
                     ),
                 ),
                 (
                     f"Later window · {_display(transition.get('later_start'))}–{_display(transition.get('later_end'))}",
-                    "The alternate corridor became more common, but did not replace the earlier route permanently.",
+                    "The alternate surface-street approach became more common, but remained mixed.",
                     (
-                        f"Its share reached {_percent(transition.get('later_share'))} across "
-                        f"{_display(transition.get('trips_after'))} late-window trips. It appeared "
-                        f"in {_display(_first_mapping_value(transition, 'presence_observed_months', 'persistence_observed_months'))} "
-                        "observed months, with a maximum consecutive run of "
-                        f"{_display(_first_mapping_value(transition, 'maximum_consecutive_observed_months', 'persistence_months'))}. "
+                        f"The {_display(transition.get('later_route_family'))} approach accounted for "
+                        f"{_percent(transition.get('later_share'))} of the { _display(transition.get('trips_after')) } "
+                        "late-window direct trips. "
                         + (
-                            f"The earlier family reappeared beginning in {_display(transition.get('reversion_month'))}."
+                            f"The earlier approach reappeared in {_display(transition.get('reversion_month'))}, "
+                            "so the evidence supports adaptation rather than replacement."
                             if _text(transition.get("reversion_month"))
-                            else "No later reversion met the threshold."
+                            else "No later return to the earlier approach met the threshold."
                         )
                     ),
                 ),
@@ -2198,11 +2298,11 @@ def render_real_world_behavior_insights(
         ("reason", "Why this interpretation"),
     ]
     transition_columns = [
-        ("trip", "Repeated trip"),
-        ("earlier", "Earlier pattern"),
-        ("transition", "Change period"),
-        ("later", "Later pattern"),
-        ("persistence", "How long / reversions"),
+        ("trip", "Repeated connection"),
+        ("earlier", "Earlier approach"),
+        ("transition", "When the alternate approach became credible"),
+        ("later", "Later approach"),
+        ("persistence", "Persistence and returns"),
         ("interpretation", "Interpretation"),
         ("confidence", "Confidence"),
     ]
@@ -2253,14 +2353,22 @@ def render_real_world_behavior_insights(
     return f"""{SECTION_BEGIN}
 <section id="{SECTION_ID}" class="behavior-insights">
 <h2>Real-World Driver Behavior Insights</h2>
-<p class="behavior-lead">Across 3,284 recorded trips from September 2021 through June 2024, the residential anchor and several recurring destinations stayed recognizable. The clearest long-term route finding is a shift in how one nearby recurring destination was reached—not proof of why the driver changed roads.</p>
+<p class="behavior-lead">The central result is stability: the driver’s generalized home area, neighborhood movements, and recurring local errands persisted across nearly three years. The meaningful changes were limited to a small number of destinations and one nearby approach corridor; the data do not support a wholesale change in travel style.</p>
 
-<h3>Key findings</h3>
+<h3>Key Research Insights</h3>
+<p class="evidence-note">Key findings are limited to patterns that remain interpretable after checking destination continuity, direct-route eligibility, road class, and simpler explanations.</p>
 <div class="finding-grid">{''.join(finding_cards)}</div>
 
-<h3>Long-term behavior timeline</h3>
-<p>The timeline separates a stable baseline, the first adequately supported alternate-route period, and the later mixed pattern. Sparse months are not treated as proof of a permanent preference.</p>
+<h3>What changed over three years?</h3>
+{three_year_html}
+
+<h3>Long-Term Driver Behavior Timeline</h3>
+<p>This timeline separates persistent routines from the one nearby approach change. Sparse months are not treated as proof of a permanent preference.</p>
 <div class="timeline-grid">{timeline_html}</div>
+
+<h3>Road environment of travel</h3>
+<p>Road classes show where the observed driving occurred. The broad trip mix became somewhat more controlled-access late in the study, while the strongest recurring local connections did not.</p>
+{road_mix_html}
 
 <h3>Likely home area</h3>
 <div class="home-privacy"><strong>Likely home area: {html.escape(location)}</strong><p>{html.escape(home_evidence)}</p><p><strong>Confidence:</strong> {html.escape(home_confidence)}. The exact address, house number, coordinate, and exact-location map link are suppressed.</p></div>
@@ -2276,13 +2384,13 @@ def render_real_world_behavior_insights(
 <h3>Likely routine</h3>
 <p><strong>Strongest complete routine:</strong> {html.escape(routine_summary)} <span class="evidence-note">Confidence: {html.escape(routine_confidence)}. {html.escape(routine_evidence)}</span></p>
 
-<h3>Major route-choice changes</h3>
-<p>The destination stayed the same, while the balance between route families changed. This is a late-window distribution shift with intermittent returns to the earlier route—not a claim that one route permanently replaced another.</p>
-{_table(transition_frame, transition_columns, empty="No same-OD route-family change met the before/after and persistence thresholds.", max_rows=max_table_rows)}
+<h3>How recurring routes evolved</h3>
+<p><strong>Major route-choice changes</strong> are reported only when the same origin and destination are retained. The most defensible change used a different nearby approach corridor. It was a surface-street adaptation with intermittent returns to the earlier approach—not a highway shift and not evidence of the cause.</p>
+{_table(transition_frame, transition_columns, empty="No same-origin/destination corridor change met the before/after and persistence thresholds.", max_rows=max_table_rows)}
 {route_figure}
 
 <h4>Temporary route deviations</h4>
-<p>A one-month alternative is treated separately from a lasting change.</p>
+<p>A short-lived alternative is reported separately from a lasting change.</p>
 {_table(temporary_frame, temporary_columns, empty="No temporary deviation met the minimum monthly trip threshold and reversion test.", max_rows=max_table_rows)}
 
 <h3>New or disappearing destinations</h3>
@@ -2294,8 +2402,8 @@ def render_real_world_behavior_insights(
 
 <h3>Supporting technical evidence</h3>
 {highway_metrics}
-<details><summary>Route-family shares for the sustained-change OD pair</summary>
-<p class="evidence-note">Monthly route shares are shown even when sparse. A month is marked sufficient only with at least five eligible same-OD trips; the full-window conclusion also requires at least ten trips before and after.</p>
+<details><summary>Monthly approach evidence for the changed nearby trip</summary>
+<p class="evidence-note">These monthly shares are supporting evidence only. A month is marked sufficient only with at least five eligible same-origin/destination trips; the full-window conclusion also requires at least ten trips before and after.</p>
 {_table(monthly_frame, monthly_columns, empty="No monthly route-family records were available.", max_rows=None)}
 </details>
 <details><summary>Adjacent-month RCCI comparisons</summary>
@@ -2337,6 +2445,23 @@ def inject_real_world_behavior_section(document: str, section_html: str) -> str:
         raise BehaviorReportError("Rendered behavior section is empty")
 
     result = document
+    # The behavioral narrative is intentionally the public-facing result. RCCI
+    # remains available as technical supporting evidence rather than framing the
+    # report as an implementation artifact.
+    result = result.replace(
+        "Driver 1003 Route Choice Change Index (RCCI)",
+        "Driver 1003: Three Years of Travel Behavior and Route Choice",
+    )
+    result = re.sub(
+        r'<p\b[^>]*class=["\']subtitle["\'][^>]*>.*?</p>',
+        (
+            '<p class="subtitle">A longitudinal study of recurring places, routines, '
+            "and route choices. Technical RCCI evidence follows the behavioral results.</p>"
+        ),
+        result,
+        count=1,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
     # Remove any existing canonical block before choosing the required
     # near-top insertion point. Older builds placed this section after the long
     # technical tables; retaining that anchor would perpetuate the wrong order.

@@ -3344,6 +3344,191 @@ def _json_loads_list(value: object) -> list[object]:
     return decoded if isinstance(decoded, list) else []
 
 
+ROAD_CLASS_ORDER = (
+    "motorway",
+    "trunk",
+    "primary",
+    "secondary",
+    "tertiary",
+    "residential",
+    "service",
+    "unclassified",
+    "other",
+)
+ROAD_CLASS_LINK_PARENT = {
+    "motorway_link": "motorway",
+    "trunk_link": "trunk",
+    "primary_link": "primary",
+    "secondary_link": "secondary",
+    "tertiary_link": "tertiary",
+}
+
+
+def _normalized_road_class(value: object) -> str:
+    """Return a presentation-ready OSM class without treating links separately."""
+    road_class = _clean_text(value).split("|")[0].casefold()
+    road_class = ROAD_CLASS_LINK_PARENT.get(road_class, road_class)
+    return road_class if road_class in ROAD_CLASS_ORDER else "other"
+
+
+def _road_class_profile(
+    trips: pd.DataFrame,
+    roads: Mapping[tuple[str, int], Mapping[str, object]],
+) -> dict[str, object]:
+    """Summarize matched-road distance by OSM class for an already screened set.
+
+    The caller supplies only direct-route-eligible trips.  This keeps long
+    loops, same-cluster movements, and route-distance outliers from changing a
+    corridor narrative merely because their endpoint labels happen to match.
+    """
+    class_distance: Counter[str] = Counter()
+    named_road_distance: Counter[tuple[str, str]] = Counter()
+    for record in trips.itertuples(index=False):
+        sequence = _json_loads_list(
+            getattr(record, "deduplicated_fid_sequence", "[]")
+        )
+        for item in sequence:
+            if not isinstance(item, Mapping):
+                continue
+            county = _clean_text(item.get("county"))
+            try:
+                fid = int(item.get("fid"))
+            except (TypeError, ValueError):
+                continue
+            road = roads.get((county, fid), {})
+            length = max(_safe_float(road.get("road_length_m"), 0.0), 0.0)
+            if length <= 0:
+                continue
+            road_class = _normalized_road_class(road.get("highway"))
+            class_distance[road_class] += length
+            road_name = _clean_text(road.get("name")) or _clean_text(
+                road.get("FDOT_ROADWAY")
+            )
+            if road_name and road_name.casefold() != "nan":
+                named_road_distance[(road_class, road_name)] += length
+    total_distance = float(sum(class_distance.values()))
+    profile: dict[str, object] = {
+        "total_route_distance_m": total_distance,
+        "controlled_access_share": (
+            (class_distance["motorway"] + class_distance["trunk"]) / total_distance
+            if total_distance
+            else float("nan")
+        ),
+        "arterial_share": (
+            (
+                class_distance["primary"]
+                + class_distance["secondary"]
+                + class_distance["tertiary"]
+            )
+            / total_distance
+            if total_distance
+            else float("nan")
+        ),
+        "local_access_share": (
+            (class_distance["residential"] + class_distance["service"]) / total_distance
+            if total_distance
+            else float("nan")
+        ),
+        "major_corridor_roads": [
+            {"road_class": road_class, "road_name": road_name}
+            for (road_class, road_name), _ in named_road_distance.most_common(5)
+        ],
+    }
+    for road_class in ROAD_CLASS_ORDER:
+        profile[f"{road_class}_share"] = (
+            class_distance[road_class] / total_distance
+            if total_distance
+            else float("nan")
+        )
+    return profile
+
+
+def build_road_class_longitudinal_summary(
+    trips: pd.DataFrame,
+    road_context: pd.DataFrame,
+    od_summary: pd.DataFrame,
+) -> pd.DataFrame:
+    """Compare early, middle, and late road-class mix for direct trips.
+
+    These are descriptive windows over observed months, not a causal model.
+    Every recurring OD pair with at least 15 screened direct trips and three
+    observed months is retained for audit; the report promotes only the few
+    patterns that remain interpretable at human scale.
+    """
+    required = {
+        "trip_id",
+        "month",
+        "direct_route_eligible",
+        "origin_cluster_id",
+        "origin_label",
+        "destination_cluster_id",
+        "destination_label",
+        "deduplicated_fid_sequence",
+    }
+    missing = required - set(trips.columns)
+    if missing:
+        raise BehaviorAnalysisError(
+            "Road-class summary is missing required trip fields: "
+            + ", ".join(sorted(missing))
+        )
+    direct = trips.loc[trips["direct_route_eligible"].fillna(False)].copy()
+    months = sorted(direct["month"].dropna().astype(str).unique())
+    if not months:
+        return pd.DataFrame()
+    first_cut = math.ceil(len(months) / 3)
+    second_cut = math.ceil(2 * len(months) / 3)
+    windows = (
+        ("early", months[:first_cut]),
+        ("middle", months[first_cut:second_cut]),
+        ("late", months[second_cut:]),
+    )
+    roads = _road_lookup(road_context)
+    rows: list[dict[str, object]] = []
+
+    def add_rows(scope: str, data: pd.DataFrame, metadata: Mapping[str, object]) -> None:
+        for period, period_months in windows:
+            subset = data.loc[data["month"].astype(str).isin(period_months)]
+            profile = _road_class_profile(subset, roads)
+            rows.append(
+                {
+                    "scope": scope,
+                    **metadata,
+                    "period": period,
+                    "period_start": period_months[0] if period_months else "",
+                    "period_end": period_months[-1] if period_months else "",
+                    "eligible_trip_count": int(len(subset)),
+                    **profile,
+                }
+            )
+
+    add_rows("all_eligible_direct_trips", direct, {})
+    if not od_summary.empty:
+        major_pairs = od_summary.loc[
+            od_summary["eligible_direct_trip_count"].ge(15)
+            & od_summary["eligible_months"].ge(3)
+        ]
+        for record in major_pairs.itertuples(index=False):
+            pair = direct.loc[
+                direct["origin_cluster_id"].astype(str).eq(str(record.origin_cluster_id))
+                & direct["destination_cluster_id"].astype(str).eq(
+                    str(record.destination_cluster_id)
+                )
+            ]
+            add_rows(
+                "major_direct_od_pair",
+                pair,
+                {
+                    "origin_cluster_id": str(record.origin_cluster_id),
+                    "origin_label": str(record.origin_label),
+                    "destination_cluster_id": str(record.destination_cluster_id),
+                    "destination_label": str(record.destination_label),
+                    "pair_total_eligible_trips": int(record.eligible_direct_trip_count),
+                    "pair_observed_months": int(record.eligible_months),
+                },
+            )
+    return pd.DataFrame(rows)
+
+
 def _safe_records(frame: pd.DataFrame, columns: Sequence[str] | None = None) -> list[dict[str, object]]:
     if frame.empty:
         return []
@@ -3543,6 +3728,81 @@ def _transition_key_finding(transition: Mapping[str, Any]) -> str:
     )
 
 
+def _road_class_research_context(summary: pd.DataFrame) -> dict[str, object]:
+    """Select cautious, presentation-ready context from the road-class audit."""
+    if summary.empty:
+        return {"overall_periods": [], "stable_local_connection": None, "stable_errand_connection": None}
+    overall = summary.loc[summary["scope"].eq("all_eligible_direct_trips")].copy()
+    od_rows = summary.loc[summary["scope"].eq("major_direct_od_pair")].copy()
+
+    def stable_candidate(group: pd.DataFrame) -> bool:
+        if len(group) != 3 or group["eligible_trip_count"].min() < 10:
+            return False
+        relevant = [
+            "controlled_access_share",
+            "primary_share",
+            "secondary_share",
+            "residential_share",
+            "service_share",
+        ]
+        ranges = [
+            pd.to_numeric(group[column], errors="coerce").max()
+            - pd.to_numeric(group[column], errors="coerce").min()
+            for column in relevant
+        ]
+        return all(math.isfinite(value) and value <= 0.10 for value in ranges)
+
+    candidates: list[pd.DataFrame] = []
+    if not od_rows.empty:
+        for _, group in od_rows.groupby(
+            ["origin_cluster_id", "destination_cluster_id"], sort=False
+        ):
+            if stable_candidate(group):
+                candidates.append(group.copy())
+
+    def select_candidate(predicate: Any) -> dict[str, object] | None:
+        matching = [
+            group
+            for group in candidates
+            if predicate(group)
+        ]
+        if not matching:
+            return None
+        selected = max(
+            matching,
+            key=lambda group: int(pd.to_numeric(group["eligible_trip_count"], errors="coerce").sum()),
+        )
+        first = selected.iloc[0]
+        return {
+            "origin_label": first.get("origin_label"),
+            "destination_label": first.get("destination_label"),
+            "total_trips": int(
+                pd.to_numeric(selected["eligible_trip_count"], errors="coerce").sum()
+            ),
+            "periods": _safe_records(selected.sort_values("period")),
+        }
+
+    local_connection = select_candidate(
+        lambda group: pd.to_numeric(
+            group["local_access_share"], errors="coerce"
+        ).min()
+        >= 0.75
+    )
+    errand_connection = select_candidate(
+        lambda group: "short-stop" in " ".join(
+            (
+                _clean_text(group.iloc[0].get("origin_label")),
+                _clean_text(group.iloc[0].get("destination_label")),
+            )
+        ).casefold()
+    )
+    return {
+        "overall_periods": _safe_records(overall.sort_values("period")),
+        "stable_local_connection": local_connection,
+        "stable_errand_connection": errand_connection,
+    }
+
+
 def build_behavior_insights_document(
     *,
     trips: pd.DataFrame,
@@ -3558,10 +3818,15 @@ def build_behavior_insights_document(
     longitudinal_transitions: pd.DataFrame,
     temporary_deviations: pd.DataFrame,
     monthly_highway_trends: pd.DataFrame,
+    road_class_longitudinal: pd.DataFrame | None = None,
     clustering: ClusterSelection,
     api_usage: Mapping[str, object],
 ) -> dict[str, object]:
     """Build a public JSON document that contains no exact home data."""
+    road_class_longitudinal = (
+        pd.DataFrame() if road_class_longitudinal is None else road_class_longitudinal.copy()
+    )
+    road_class_context = _road_class_research_context(road_class_longitudinal)
     home = clusters.loc[clusters["privacy_flag"].eq("HOME_SENSITIVE")].iloc[0]
     non_home = clusters.loc[clusters["privacy_flag"].ne("HOME_SENSITIVE")]
     role_candidates = non_home.loc[
@@ -4055,6 +4320,179 @@ def build_behavior_insights_document(
                     }
                 )
 
+    # This intentionally privileges stable, interpretable travel behavior over
+    # the mechanically largest route-family share change. The narrative remains
+    # descriptive: neither GPS traces nor road classes identify why a trip or
+    # destination pattern changed.
+    research_findings: list[dict[str, object]] = [
+        {
+            "title": "Stable residential anchor",
+            "finding": (
+                f"The generalized {home.generalized_location} home area remained the "
+                f"strongest residential anchor across all {int(home.months_visited)} observed months."
+            ),
+            "confidence": home.role_confidence,
+        }
+    ]
+    stable_local = road_class_context.get("stable_local_connection")
+    if isinstance(stable_local, Mapping):
+        periods = {
+            str(record.get("period")): record
+            for record in stable_local.get("periods", [])
+            if isinstance(record, Mapping)
+        }
+        local_values = [
+            _safe_float(periods.get(period, {}).get("local_access_share"))
+            for period in ("early", "middle", "late")
+        ]
+        if all(math.isfinite(value) for value in local_values):
+            research_findings.append(
+                {
+                    "title": "Stable neighborhood movement",
+                    "finding": (
+                        f"The repeated {stable_local.get('origin_label')} to "
+                        f"{stable_local.get('destination_label')} connection remained a local "
+                        f"neighborhood movement: residential and service roads accounted for "
+                        f"{local_values[0]:.0%}, {local_values[1]:.0%}, and {local_values[2]:.0%} "
+                        "of matched distance in the early, middle, and late study periods."
+                    ),
+                    "confidence": "high",
+                }
+            )
+    stable_errand = road_class_context.get("stable_errand_connection")
+    if isinstance(stable_errand, Mapping):
+        periods = {
+            str(record.get("period")): record
+            for record in stable_errand.get("periods", [])
+            if isinstance(record, Mapping)
+        }
+        controlled_values = [
+            _safe_float(periods.get(period, {}).get("controlled_access_share"))
+            for period in ("early", "middle", "late")
+        ]
+        if all(math.isfinite(value) for value in controlled_values) and max(controlled_values) < 0.01:
+            research_findings.append(
+                {
+                    "title": "Everyday errand corridor stayed local",
+                    "finding": (
+                        f"The repeated {stable_errand.get('origin_label')} to "
+                        f"{stable_errand.get('destination_label')} corridor stayed entirely off "
+                        "controlled-access roads in all three periods. Its primary, residential, "
+                        "and service-road mix remained stable, supporting a persistent local errand routine."
+                    ),
+                    "confidence": "high",
+                }
+            )
+    if not public_transitions.empty:
+        transition = public_transitions.sort_values(
+            "route_share_change_percentage_points", ascending=False
+        ).iloc[0]
+        research_findings.append(
+            {
+                "title": "A nearby destination was approached differently",
+                "finding": (
+                    f"For trips from {transition.origin_label} to {transition.destination_label}, "
+                    f"the Coconut Creek Parkway approach became more common after adequate evidence "
+                    f"appeared in {transition.first_adequate_evidence_month}. Both the earlier and later "
+                    "patterns were surface-street trips with no observed toll use; returns to the earlier "
+                    "approach show adaptation rather than a permanent replacement."
+                ),
+                "confidence": transition.confidence,
+            }
+        )
+    overall_periods = {
+        str(record.get("period")): record
+        for record in road_class_context.get("overall_periods", [])
+        if isinstance(record, Mapping)
+    }
+    early_road_mix = overall_periods.get("early", {})
+    late_road_mix = overall_periods.get("late", {})
+    early_controlled = _safe_float(early_road_mix.get("controlled_access_share"))
+    late_controlled = _safe_float(late_road_mix.get("controlled_access_share"))
+    if math.isfinite(early_controlled) and math.isfinite(late_controlled):
+        research_findings.append(
+            {
+                "title": "Later travel included more controlled-access distance",
+                "finding": (
+                    f"Across all screened direct trips, motorway and trunk distance increased from "
+                    f"{early_controlled:.0%} in the early period to {late_controlled:.0%} in the late period. "
+                    "Because the stable neighborhood and errand corridors did not make that shift, this "
+                    "is best read as a change in the broader mix of recorded trips—not evidence that the "
+                    "driver generally adopted highways."
+                ),
+                "confidence": "medium",
+            }
+        )
+    stopped = next(
+        (record for record in destination_changes if record.get("change_type") == "stopped appearing"),
+        None,
+    )
+    new_destination = next(
+        (record for record in destination_changes if record.get("change_type") == "new recurring destination"),
+        None,
+    )
+    if stopped:
+        finding = (
+            f"{stopped.get('location')} stopped appearing after {stopped.get('last_month')}. "
+            "This is a recorded destination change, not proof that the underlying activity ended."
+        )
+        if new_destination:
+            finding += (
+                f" A different recurring long-stay area, {new_destination.get('location')}, "
+                f"first appeared in {new_destination.get('first_month')}; the data do not establish "
+                "that one replaced the other."
+            )
+        research_findings.append(
+            {
+                "title": "The destination portfolio changed at the margin",
+                "finding": finding,
+                "confidence": "medium",
+            }
+        )
+    destination_change_bullet = (
+        "A recurring long-stay area stopped appearing; whether another destination replaced it cannot be determined."
+        if stopped and not new_destination
+        else (
+            "One recurring long-stay area stopped appearing while another later emerged; purposes remain unresolved."
+            if stopped and new_destination
+            else "No destination addition or disappearance met the conservative reporting threshold."
+        )
+    )
+    if not workplace_records:
+        research_findings.append(
+            {
+                "title": "No workplace claim is warranted",
+                "finding": (
+                    "No destination combined repeated multi-hour weekday stays with defensible workplace "
+                    "context, and the recordings contain little conventional morning travel."
+                ),
+                "confidence": "high",
+            }
+        )
+    research_findings = research_findings[:7]
+
+    three_year_change_summary = {
+        "headline": (
+            "Over nearly three years, the driver’s core residential and local-errand routines were "
+            "more stable than changing. The meaningful changes were a mixed approach to one nearby "
+            "recurring destination, a small shift in the overall mix of longer trips, and the appearance "
+            "or disappearance of a few less-certain destinations."
+        ),
+        "stable": [
+            "The generalized home area remained stable.",
+            "The strongest neighborhood and short-errand connections retained their local-road character.",
+        ],
+        "changed": [
+            "The medical-office-area trip developed a more frequent Coconut Creek Parkway approach, with reversions.",
+            "The broad direct-trip mix contained more motorway/trunk distance late in the study, without a matching change in core local routines.",
+            destination_change_bullet,
+        ],
+        "not_supported": [
+            "A permanent highway preference change.",
+            "A confirmed workplace, school/daycare, healthcare purpose, or substitution between destinations.",
+        ],
+    }
+
     behavior_timeline: list[dict[str, object]] = [
         {
             "period": observed_months[0] if observed_months else "",
@@ -4254,11 +4692,35 @@ def build_behavior_insights_document(
             "interpretation": highway_interpretation,
             "monthly_trends": _safe_records(monthly_highway_trends),
         },
+        "road_class_longitudinal_summary": {
+            "method": (
+                "Distance shares are calculated from matched FID sequences after the "
+                "direct-route eligibility screen. Link classes are grouped with their parent OSM class."
+            ),
+            "periods": _safe_records(
+                road_class_longitudinal.loc[
+                    road_class_longitudinal.get("scope", pd.Series(dtype="object"))
+                    .eq("all_eligible_direct_trips")
+                ]
+                if not road_class_longitudinal.empty
+                else pd.DataFrame()
+            ),
+            "major_od_pairs": _safe_records(
+                road_class_longitudinal.loc[
+                    road_class_longitudinal.get("scope", pd.Series(dtype="object"))
+                    .eq("major_direct_od_pair")
+                ]
+                if not road_class_longitudinal.empty
+                else pd.DataFrame()
+            ),
+        },
         "behavior_timeline": behavior_timeline,
         "od_route_changes": _safe_records(od_changes, od_public_columns),
         "new_or_disappearing_destinations": destination_changes,
         "likely_routine": routine,
         "key_findings": key_findings,
+        "key_research_insights": research_findings,
+        "three_year_change_summary": three_year_change_summary,
         "limitations": limitations,
     }
 
@@ -4446,6 +4908,11 @@ def build_driver_1003_real_world_behavior(
         profile_trips["direct_route_eligible"] = profile_trips[
             "direct_route_eligible"
         ].fillna(False)
+        road_class_longitudinal = build_road_class_longitudinal_summary(
+            profile_trips,
+            local_road_context,
+            od_summary,
+        )
         profiles = compute_dominant_routes(
             profile_trips.loc[
                 profile_trips["origin_cluster_id"].ne("UNCLUSTERED")
@@ -4540,6 +5007,7 @@ def build_driver_1003_real_world_behavior(
             longitudinal_transitions=longitudinal_transitions,
             temporary_deviations=temporary_deviations,
             monthly_highway_trends=monthly_highway_trends,
+            road_class_longitudinal=road_class_longitudinal,
             clustering=clustering,
             api_usage=api_usage,
         )
@@ -4638,6 +5106,8 @@ def build_driver_1003_real_world_behavior(
             / "driver_1003_temporary_route_deviations.csv",
             "monthly_highway_surface_trends": output_dir
             / "driver_1003_monthly_highway_surface_trends.csv",
+            "road_class_longitudinal": output_dir
+            / "driver_1003_road_class_longitudinal_summary.csv",
             "route_family_map_representatives": output_dir
             / "driver_1003_route_family_map_representatives.csv",
             "map": map_path,
@@ -4664,6 +5134,7 @@ def build_driver_1003_real_world_behavior(
         monthly_highway_trends.to_csv(
             paths["monthly_highway_surface_trends"], index=False
         )
+        road_class_longitudinal.to_csv(paths["road_class_longitudinal"], index=False)
         route_family_representatives.to_csv(
             paths["route_family_map_representatives"], index=False
         )

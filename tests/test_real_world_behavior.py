@@ -34,6 +34,7 @@ from roadnet.real_world_behavior import (
     _candidate_record,
     _transition_key_finding,
     assign_location_clusters,
+    build_road_class_longitudinal_summary,
     build_recurring_patterns,
     classify_location_roles,
     dbscan_projected,
@@ -155,6 +156,81 @@ class DistanceAndClusteringTests(unittest.TestCase):
             county_paths={},
         )
         self.assertAlmostEqual(float(clusters.iloc[0]["medoid_lat"]), 26.0001)
+
+
+class RoadClassSummaryTests(unittest.TestCase):
+    def test_road_class_summary_uses_direct_trips_and_normalizes_links(self) -> None:
+        rows = []
+        sequences = {
+            "2022-01": [1, 2],
+            "2022-02": [3, 4],
+            "2022-03": [5, 6],
+        }
+        for month, fids in sequences.items():
+            for suffix in ("a", "b"):
+                rows.append(
+                    {
+                        "trip_id": f"{month}-{suffix}",
+                        "month": month,
+                        "direct_route_eligible": True,
+                        "origin_cluster_id": "C001",
+                        "origin_label": "Generalized home area",
+                        "destination_cluster_id": "C002",
+                        "destination_label": "Recurring place",
+                        "deduplicated_fid_sequence": json.dumps(
+                            [{"county": "Broward", "fid": fid} for fid in fids]
+                        ),
+                    }
+                )
+        # This out-of-scope trip would dominate the early road mix if the
+        # eligibility screen were ignored.
+        rows.append(
+            {
+                "trip_id": "excluded",
+                "month": "2022-01",
+                "direct_route_eligible": False,
+                "origin_cluster_id": "C001",
+                "origin_label": "Generalized home area",
+                "destination_cluster_id": "C002",
+                "destination_label": "Recurring place",
+                "deduplicated_fid_sequence": json.dumps(
+                    [{"county": "Broward", "fid": 5}]
+                ),
+            }
+        )
+        roads = pd.DataFrame(
+            [
+                {"county": "Broward", "fid": 1, "highway": "motorway_link", "road_length_m": 100},
+                {"county": "Broward", "fid": 2, "highway": "primary", "road_length_m": 100},
+                {"county": "Broward", "fid": 3, "highway": "secondary", "road_length_m": 100},
+                {"county": "Broward", "fid": 4, "highway": "residential", "road_length_m": 100},
+                {"county": "Broward", "fid": 5, "highway": "trunk_link", "road_length_m": 100},
+                {"county": "Broward", "fid": 6, "highway": "service", "road_length_m": 100},
+            ]
+        )
+        od_summary = pd.DataFrame(
+            [
+                {
+                    "origin_cluster_id": "C001",
+                    "origin_label": "Generalized home area",
+                    "destination_cluster_id": "C002",
+                    "destination_label": "Recurring place",
+                    "eligible_direct_trip_count": 6,
+                    "eligible_months": 3,
+                }
+            ]
+        )
+        summary = build_road_class_longitudinal_summary(
+            pd.DataFrame(rows), roads, od_summary
+        )
+        overall = summary.loc[
+            summary["scope"].eq("all_eligible_direct_trips")
+        ].set_index("period")
+        self.assertEqual(int(overall.loc["early", "eligible_trip_count"]), 2)
+        self.assertAlmostEqual(float(overall.loc["early", "motorway_share"]), 0.5)
+        self.assertAlmostEqual(float(overall.loc["late", "trunk_share"]), 0.5)
+        self.assertAlmostEqual(float(overall.loc["late", "service_share"]), 0.5)
+        self.assertFalse((summary["eligible_trip_count"] == 3).any())
 
 
 class CacheAndBudgetTests(unittest.TestCase):
