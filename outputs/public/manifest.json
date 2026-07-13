@@ -1,0 +1,40 @@
+{
+  "artifact_policy": "public-reviewed",
+  "files": [
+    {
+      "classification": "public-reviewed",
+      "media_type": "application/octet-stream",
+      "path": "README.md",
+      "sha256": "ad6eee1af865ad13f10923b1abcd61409559b123e5dc70969851602c2b3b6583",
+      "size_bytes": 890
+    },
+    {
+      "classification": "public-reviewed",
+      "media_type": "text/html",
+      "path": "driver_1003_poi_route_insights_map.html",
+      "sha256": "4eae220d015d066a32360ab0cbb029154db298e84d44816a45d79b4ce7f14c47",
+      "size_bytes": 1433381
+    },
+    {
+      "classification": "public-reviewed",
+      "media_type": "application/json",
+      "path": "driver_1003_real_world_behavior_insights.json",
+      "sha256": "0675768b78cc20b460fd07f3c66d9d4190f55b1ac9309daf74d280d1a08c16ea",
+      "size_bytes": 1248079
+    },
+    {
+      "classification": "public-reviewed",
+      "media_type": "text/html",
+      "path": "driver_1003_route_choice_change_index_report.html",
+      "sha256": "f3ccb7424fd44f9cd5e0208ec9816b9cc3de918f99119595a8054613dae02640",
+      "size_bytes": 97022
+    }
+  ],
+  "generator": "scripts/generate_output_manifest.py",
+  "schema_version": 1,
+  "source_revision": "d10cda5ff2955f7a6ad5aad83801a575fef1bd34",
+  "summary": {
+    "file_count": 4,
+    "total_bytes": 2779372
+  }
+}

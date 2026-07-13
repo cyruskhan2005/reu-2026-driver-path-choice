@@ -4,24 +4,75 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+junit*.xml
+.venv/
+venv/
 *.egg-info/
+pip-wheel-metadata/
 build/
 dist/
+site/
+
+# Local environment files may contain API credentials.
+.env
+.env.*
+!.env.example
+.envrc
+config.yaml
+config.local.yaml
+config.*.local.yaml
+.secrets/
+secrets.local/
+credentials.json
+token.json
+service-account*.json
+service_account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+.npmrc
+.pypirc
 
 # Generated pipeline outputs and caches
 data/
 *.gdb/
 sflorida_outputs/
 *_outputs/
-outputs/
 cache/
+
+# Analysis outputs are private by default. Only the policy README and files
+# deliberately copied into the reviewed public boundary may be committed.
+/outputs/*
+!/outputs/README.md
+!/outputs/public/
+!/outputs/public/**
 
 # Large data/export formats
 *.parquet
 *.jsonl
+*.ndjson
+*.inspect.*
 
 # Local run logs
 run_log*.txt
+*.log
+logs/
+
+# Generated research-process figures, animations, and frame sequences are
+# review inputs, not release artifacts. Curated copies belong in outputs/public.
+/visuals/research_process/
+/deliverables/driver_1003/**/research_process_figures/
 
 # External drive mounts or copied mount contents
 /Volumes/
