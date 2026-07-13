@@ -21,9 +21,11 @@ REPORT_SOURCE = (
 )
 MAP_SOURCE = ROOT / "outputs" / "driver_1003_poi_route_insights_map.html"
 JSON_SOURCE = ROOT / "outputs" / "driver_1003_real_world_behavior_insights.json"
+ROAD_CLASS_SOURCE = ROOT / "outputs" / "driver_1003_road_class_longitudinal_summary.csv"
 REPORT_NAME = "driver_1003_route_choice_change_index_report.html"
 MAP_NAME = "driver_1003_poi_route_insights_map.html"
 JSON_NAME = "driver_1003_real_world_behavior_insights.json"
+ROAD_CLASS_NAME = "driver_1003_road_class_longitudinal_summary.csv"
 
 _REFERENCE = re.compile(
     r"\s+(?P<attribute>href|src)=(?P<quote>['\"])(?P<value>.*?)(?P=quote)",
@@ -54,7 +56,7 @@ def make_report_self_contained(document: str) -> str:
 
 
 def package(public_dir: Path = DEFAULT_PUBLIC_DIR) -> list[Path]:
-    sources = (REPORT_SOURCE, MAP_SOURCE, JSON_SOURCE)
+    sources = (REPORT_SOURCE, MAP_SOURCE, JSON_SOURCE, ROAD_CLASS_SOURCE)
     missing = [path for path in sources if not path.is_file()]
     if missing:
         raise FileNotFoundError("Required generated Driver 1003 artifacts are missing")
@@ -66,13 +68,15 @@ def package(public_dir: Path = DEFAULT_PUBLIC_DIR) -> list[Path]:
     )
     map_target = public_dir / MAP_NAME
     json_target = public_dir / JSON_NAME
+    road_class_target = public_dir / ROAD_CLASS_NAME
     map_document = MAP_SOURCE.read_text(encoding="utf-8")
     map_target.write_text(
         "\n".join(line.rstrip() for line in map_document.splitlines()) + "\n",
         encoding="utf-8",
     )
     shutil.copyfile(JSON_SOURCE, json_target)
-    return [report_target, map_target, json_target]
+    shutil.copyfile(ROAD_CLASS_SOURCE, road_class_target)
+    return [report_target, map_target, json_target, road_class_target]
 
 
 def main() -> int:

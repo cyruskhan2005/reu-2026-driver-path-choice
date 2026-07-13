@@ -1,4 +1,7 @@
 output_dir: "/path/to/project/sflorida_outputs"
+# Keep this copy local as config.yaml. Google credentials are never YAML values:
+# export GOOGLE_MAPS_API_KEY in the server environment only when network
+# enrichment is explicitly requested.
 # Mapillary can be disabled completely for credential-free/offline runs.
 # Set mapillary_enabled to true and supply a token to enable enrichment.
 mapillary_enabled: false
