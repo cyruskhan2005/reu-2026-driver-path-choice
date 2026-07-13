@@ -2807,7 +2807,7 @@ def build_recurring_patterns(
             patterns.append("possible seasonal pattern")
         if not patterns:
             patterns.append("irregular recurring destination")
-        name = _clean_text(cluster.get("selected_public_label")) or _clean_text(cluster["selected_poi_name"]) or _clean_text(
+        name = _public_label_text(cluster.get("selected_public_label")) or _public_label_text(cluster["selected_poi_name"]) or _public_label_text(
             cluster["generalized_location"]
         )
         period_counts = {
@@ -2907,18 +2907,26 @@ def build_recurring_patterns(
 
 def _cluster_public_label(row: Mapping[str, Any]) -> str:
     if str(row.get("privacy_flag")) == "HOME_SENSITIVE":
-        return _clean_text(row.get("generalized_location")) or "Likely home area"
-    revised = _clean_text(row.get("selected_public_label"))
+        return _public_label_text(row.get("generalized_location")) or "Likely home area"
+    revised = _public_label_text(row.get("selected_public_label"))
     if revised:
         return revised
-    selected = _clean_text(row.get("selected_poi_name"))
+    selected = _public_label_text(row.get("selected_poi_name"))
     if selected:
         return selected
-    generalized = _clean_text(row.get("generalized_location"))
-    county = _clean_text(row.get("county"))
+    generalized = _public_label_text(row.get("generalized_location"))
+    county = _public_label_text(row.get("county"))
     if not generalized or generalized == county:
         return f"Cluster {row.get('cluster_id', '')} ({county or 'unresolved area'})"
     return generalized
+
+
+def _public_label_text(value: object) -> str:
+    """Return readable public text without internal multi-name delimiters."""
+    text = _clean_text(value)
+    if not text:
+        return ""
+    return re.sub(r"\s+", " ", text.replace("|", " / ")).strip()
 
 
 def attach_public_location_labels(
@@ -3115,6 +3123,22 @@ def build_longitudinal_map_frames(
 ) -> dict[str, pd.DataFrame]:
     """Build privacy-safe display frames for longitudinal map layers."""
     representatives = route_family_representatives.copy()
+    home_rows = enriched_clusters.loc[
+        enriched_clusters["privacy_flag"].eq("HOME_SENSITIVE")
+    ]
+    home_id = str(home_rows.iloc[0]["cluster_id"]) if not home_rows.empty else ""
+    private_home_coordinates = (
+        (float(home_rows.iloc[0]["centroid_lat"]), float(home_rows.iloc[0]["centroid_lon"]))
+        if not home_rows.empty
+        else None
+    )
+    point_lookup = {
+        str(row.cluster_id): (float(row.centroid_lat), float(row.centroid_lon))
+        for row in enriched_clusters.loc[
+            enriched_clusters["privacy_flag"].ne("HOME_SENSITIVE")
+        ].itertuples(index=False)
+    }
+    point_lookup[home_id] = generalized_home_coordinates
 
     def fid_sequence(value: object) -> list[tuple[str, int]]:
         decoded = _json_loads_list(value)
@@ -3134,6 +3158,46 @@ def build_longitudinal_map_frames(
     representatives["latlon_sequence"] = representatives[
         "county_fid_sequence_json"
     ].map(lambda value: _route_latlon(fid_sequence(value), road_context_lookup))
+
+    def privacy_safe_route(row: pd.Series) -> tuple[list[tuple[float, float]], bool]:
+        """Clip private home-adjacent geometry and substitute the public center."""
+        points = list(row["latlon_sequence"])
+        origin_id = str(row.get("origin_cluster_id", ""))
+        destination_id = str(row.get("destination_cluster_id", ""))
+        if home_id not in {origin_id, destination_id} or private_home_coordinates is None:
+            return points, False
+        private_latitude, private_longitude = private_home_coordinates
+        clipped = [
+            point
+            for point in points
+            if haversine_m(
+                private_latitude,
+                private_longitude,
+                float(point[0]),
+                float(point[1]),
+            )
+            >= 500.0
+        ]
+        if origin_id == home_id:
+            clipped.insert(0, generalized_home_coordinates)
+            destination_point = point_lookup.get(destination_id)
+            if destination_point and (not clipped or clipped[-1] != destination_point):
+                clipped.append(destination_point)
+        else:
+            origin_point = point_lookup.get(origin_id)
+            if origin_point and (not clipped or clipped[0] != origin_point):
+                clipped.insert(0, origin_point)
+            clipped.append(generalized_home_coordinates)
+        collapsed = [
+            point
+            for index, point in enumerate(clipped)
+            if index == 0 or point != clipped[index - 1]
+        ]
+        return collapsed, True
+
+    privacy_results = representatives.apply(privacy_safe_route, axis=1)
+    representatives["latlon_sequence"] = privacy_results.map(lambda result: result[0])
+    representatives["privacy_safe_geometry"] = privacy_results.map(lambda result: result[1])
     representatives = representatives.loc[
         representatives["latlon_sequence"].map(len).ge(2)
     ].copy()
@@ -3151,6 +3215,7 @@ def build_longitudinal_map_frames(
         "trip_count",
         "overall_route_share",
         "latlon_sequence",
+        "privacy_safe_geometry",
     ]
     representatives = representatives[safe_columns]
     families = representatives.loc[representatives["trip_count"].ge(5)].sort_values(
@@ -3214,17 +3279,6 @@ def build_longitudinal_map_frames(
         temporary_rows.append(row)
     temporary = pd.DataFrame(temporary_rows)
 
-    home_rows = enriched_clusters.loc[
-        enriched_clusters["privacy_flag"].eq("HOME_SENSITIVE")
-    ]
-    home_id = str(home_rows.iloc[0]["cluster_id"]) if not home_rows.empty else ""
-    point_lookup = {
-        str(row.cluster_id): (float(row.centroid_lat), float(row.centroid_lon))
-        for row in enriched_clusters.loc[
-            enriched_clusters["privacy_flag"].ne("HOME_SENSITIVE")
-        ].itertuples(index=False)
-    }
-    point_lookup[home_id] = generalized_home_coordinates
     chain_rows: list[dict[str, object]] = []
     for chain in repeated_chains.loc[
         repeated_chains["occurrence_count"].ge(3)
@@ -3238,8 +3292,8 @@ def build_longitudinal_map_frames(
             continue
         chain_rows.append(
             {
-                "route_label": chain.get("public_chain"),
-                "public_chain": chain.get("public_chain"),
+                "route_label": _public_label_text(chain.get("public_chain")),
+                "public_chain": _public_label_text(chain.get("public_chain")),
                 "occurrence_count": chain.get("occurrence_count"),
                 "trip_count": chain.get("occurrence_count"),
                 "month_a": chain.get("first_observed_date"),
@@ -3418,7 +3472,7 @@ def build_activity_role_validation(enriched_clusters: pd.DataFrame) -> pd.DataFr
                 "cluster_id": record.get("cluster_id"),
                 "previous_label": record.get("previous_label"),
                 "revised_label": record.get("inferred_role"),
-                "selected_public_label": context,
+            "selected_public_label": _public_label_text(context),
                 "poi_or_complex_context": context,
                 "multi_tenant_flag": bool(record.get("multi_tenant_flag", False)),
                 "valid_stay_count": int(_safe_float(record.get("valid_stay_count"), 0.0)),
@@ -3442,8 +3496,8 @@ def build_activity_role_validation(enriched_clusters: pd.DataFrame) -> pd.DataFr
 def _location_record(row: Mapping[str, Any]) -> dict[str, object]:
     return {
         "cluster_id": row.get("cluster_id"),
-        "place_name": _clean_text(row.get("selected_public_label"))
-        or _clean_text(row.get("selected_poi_name")),
+        "place_name": _public_label_text(row.get("selected_public_label"))
+        or _public_label_text(row.get("selected_poi_name")),
         "address": _clean_text(row.get("selected_poi_address")),
         "generalized_location": _clean_text(row.get("generalized_location")),
         "inferred_role": row.get("inferred_role"),
@@ -3466,6 +3520,27 @@ def _location_record(row: Mapping[str, Any]) -> dict[str, object]:
         "classification_reason": row.get("classification_reason"),
         "google_maps_uri": _clean_text(row.get("selected_poi_google_maps_uri")),
     }
+
+
+def _transition_key_finding(transition: Mapping[str, Any]) -> str:
+    """Summarize one route transition without swapping family-share fields."""
+    early_alternate_share = _safe_float(
+        transition.get("early_route_share"),
+        _safe_float(transition.get("baseline_share")),
+    )
+    return (
+        f"For the same {_public_label_text(transition.get('origin_label'))} to "
+        f"{_public_label_text(transition.get('destination_label'))} trip, the "
+        f"{_public_label_text(transition.get('later_route_family'))} family became "
+        f"more common: {early_alternate_share:.0%} of "
+        f"{int(_safe_float(transition.get('trips_before')))} early trips versus "
+        f"{_safe_float(transition.get('later_share')):.0%} of "
+        f"{int(_safe_float(transition.get('trips_after')))} later trips. It appeared "
+        f"intermittently in {int(_safe_float(transition.get('presence_observed_months')))} "
+        f"months (maximum consecutive run "
+        f"{int(_safe_float(transition.get('maximum_consecutive_observed_months')))}) and "
+        "did not permanently replace the earlier route."
+    )
 
 
 def build_behavior_insights_document(
@@ -3679,7 +3754,7 @@ def build_behavior_insights_document(
         key_findings.append(
             {
                 "title": "Sustained route-family change",
-                "finding": transition["plain_english_story"],
+                "finding": _transition_key_finding(transition),
                 "confidence": transition["confidence"],
             }
         )

@@ -11,7 +11,10 @@ from unittest.mock import patch
 import pandas as pd
 
 from roadnet.behavior_report import (
+    GeneralizedHomeArea,
     find_html_privacy_violations,
+    generate_verification_map,
+    inject_real_world_behavior_section,
     render_real_world_behavior_insights,
 )
 from roadnet.google_places import (
@@ -29,6 +32,7 @@ from roadnet.behavior_activity import (
 )
 from roadnet.real_world_behavior import (
     _candidate_record,
+    _transition_key_finding,
     assign_location_clusters,
     build_recurring_patterns,
     classify_location_roles,
@@ -538,6 +542,24 @@ class PrivacyTests(unittest.TestCase):
 
 
 class ReportNarrativeTests(unittest.TestCase):
+    def test_transition_summary_uses_alternate_family_early_share(self) -> None:
+        finding = _transition_key_finding(
+            {
+                "origin_label": "Home area",
+                "destination_label": "Medical offices",
+                "later_route_family": "Alternate corridor",
+                "baseline_share": 0.60,
+                "early_route_share": 0.20,
+                "later_share": 2 / 3,
+                "trips_before": 15,
+                "trips_after": 15,
+                "presence_observed_months": 7,
+                "maximum_consecutive_observed_months": 2,
+            }
+        )
+        self.assertIn("20% of 15 early trips", finding)
+        self.assertNotIn("60% of 15 early trips", finding)
+
     def test_report_prioritizes_longitudinal_story_and_short_stop_correction(self) -> None:
         insights = {
             "likely_home": {
@@ -586,12 +608,86 @@ class ReportNarrativeTests(unittest.TestCase):
             od_route_changes=pd.DataFrame(),
             map_href=None,
         )
-        self.assertIn("Key Long-Term Findings", rendered)
-        self.assertIn("Long-Term Driver Behavior Timeline", rendered)
-        self.assertIn("Sustained Route-Choice Changes", rendered)
-        self.assertIn("Temporary Route Deviations", rendered)
+        for heading in (
+            "Key findings",
+            "Likely home area",
+            "Frequently visited named places",
+            "Recurring monthly/weekly destinations",
+            "Likely routine",
+            "Major route-choice changes",
+            "New or disappearing destinations",
+            "Interactive map",
+            "Research limitations",
+        ):
+            self.assertIn(heading, rendered)
         self.assertIn("frequent does not mean workplace", rendered)
         self.assertIn("median of 16 minutes", rendered)
+
+    def test_recurring_table_uses_current_output_schema_and_formats_dwell(self) -> None:
+        rendered = render_real_world_behavior_insights(
+            {
+                "likely_home": {"generalized_location": "Generalized neighborhood"},
+                "limitations": ["Activity purposes are inferred."],
+            },
+            recurring_patterns=pd.DataFrame(
+                [
+                    {
+                        "named_poi_or_generalized_location": "Named grocery store",
+                        "address": "100 Public Road",
+                        "first_month": "2022-01",
+                        "last_month": "2024-06",
+                        "visit_frequency": "weekly",
+                        "typical_time": "5:30 PM",
+                        "median_dwell_minutes": 16.2,
+                        "inferred_activity": "grocery destination",
+                        "confidence": "medium",
+                        "alternative_interpretation": "A nearby tenant is possible.",
+                    }
+                ]
+            ),
+            map_href=None,
+        )
+        self.assertIn("Named grocery store", rendered)
+        self.assertIn("100 Public Road", rendered)
+        self.assertIn("16 minutes", rendered)
+        self.assertIn("2022-01–2024-06", rendered)
+
+    def test_report_injection_places_behavior_before_technical_snapshot(self) -> None:
+        source = """<html><head><style></style></head><body><nav><a href='#executive-summary'>Executive Summary</a><a href='#research-process-overview'>Process</a></nav><main>
+        <section id='executive-summary'><h2>RCCI technical snapshot</h2></section>
+        <section id='research-process-overview'><h2>Research process</h2></section>
+        </main></body></html>"""
+        section = "<section id='real-world-driver-behavior-insights'>Behavior</section>"
+        rendered = inject_real_world_behavior_section(source, section)
+        self.assertLess(rendered.index("Behavior"), rendered.index("RCCI technical snapshot"))
+        self.assertNotIn("research-process-overview", rendered)
+        self.assertIn("RCCI Technical Snapshot", rendered)
+        self.assertNotIn("Executive Summary", rendered)
+
+    def test_privacy_safe_schematic_route_is_not_collapsed_by_public_circle(self) -> None:
+        home = GeneralizedHomeArea(
+            latitude=26.0,
+            longitude=-80.0,
+            radius_m=800,
+            generalized_location="Generalized neighborhood",
+            generalization_method="unit-test generalized point",
+        )
+        route = pd.DataFrame(
+            [
+                {
+                    "latlon_sequence": [(26.0, -80.0), (26.004, -80.004)],
+                    "privacy_safe_geometry": True,
+                    "route_label": "Public schematic route",
+                }
+            ]
+        )
+        rendered = generate_verification_map(
+            pd.DataFrame(),
+            generalized_home=home,
+            later_preferred_routes=route,
+        ).get_root().render()
+        self.assertIn("L.polyline", rendered)
+        self.assertIn("Public schematic route", rendered)
 
 
 if __name__ == "__main__":

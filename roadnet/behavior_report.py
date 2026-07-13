@@ -725,8 +725,11 @@ def _add_route_rows(
 ) -> list[tuple[float, float]]:
     bounds: list[tuple[float, float]] = []
     for _, row in frame.iterrows():
-        points = _generalize_home_route_points(
-            _route_coordinates(row), generalized_home
+        raw_points = _route_coordinates(row)
+        points = (
+            raw_points
+            if str(row.get("privacy_safe_geometry", "")).casefold() == "true"
+            else _generalize_home_route_points(raw_points, generalized_home)
         )
         if len(points) < 2:
             continue
@@ -872,8 +875,15 @@ def generate_verification_map(
                 _popup_line("Selected POI", row.get("selected_poi_name")),
                 _popup_line("Address", row.get("selected_poi_address")),
                 _popup_line("Behavioral evidence", row.get("behavioral_evidence")),
+                _popup_line(
+                    "Measured stay evidence",
+                    f"{_display(row.get('valid_stay_count'), '0')} valid stays; "
+                    f"median {_display(row.get('median_dwell_minutes'), 'unavailable')} minutes",
+                ),
                 _popup_line("Map evidence", row.get("map_evidence")),
                 _popup_line("Classification reason", row.get("classification_reason")),
+                _popup_line("Competing explanation", row.get("competing_explanation")),
+                _popup_line("Uncertainty", row.get("uncertainty_statement")),
                 _popup_line("Limitations", row.get("limitations")),
             ]
         ) + "</div>"
@@ -1239,19 +1249,40 @@ def _recurring_display(frame: pd.DataFrame) -> pd.DataFrame:
     for _, record in frame.iterrows():
         if _is_home_row(record):
             continue
-        dates = _row_value(record, "visit_dates", "months_seen", "month_counts")
+        first_month = _text(record.get("first_month"))
+        last_month = _text(record.get("last_month"))
+        dates = (
+            f"{first_month}–{last_month}"
+            if first_month and last_month
+            else _row_value(record, "visit_dates", "months_seen", "month_counts")
+        )
         if isinstance(dates, (list, tuple, set, dict)):
             dates = json.dumps(dates, ensure_ascii=False)
+        dwell_value = _row_value(record, "median_dwell_minutes", "median_dwell_time")
+        dwell_minutes = _finite_float(dwell_value)
         rows.append(
             {
-                "place": _row_value(record, "selected_poi_name", "poi_name", "generalized_location", "location_label"),
-                "address": _row_value(record, "selected_poi_address", "poi_address", "address"),
+                "place": _row_value(
+                    record,
+                    "named_poi_or_generalized_location",
+                    "selected_poi_name",
+                    "poi_name",
+                    "generalized_location",
+                    "location_label",
+                ),
+                "address": _row_value(
+                    record, "address", "selected_poi_address", "poi_address"
+                ),
                 "dates": dates,
                 "frequency": _row_value(record, "visit_frequency", "recurrence_pattern", "recurring_frequency", "frequency"),
                 "typical_time": _row_value(record, "typical_time", "typical_arrival_time"),
-                "dwell": _row_value(record, "median_dwell_minutes", "median_dwell_time"),
+                "dwell": (
+                    f"{dwell_minutes:.0f} minutes"
+                    if dwell_minutes is not None
+                    else "not measurable"
+                ),
                 "activity": _row_value(record, "inferred_activity", "inferred_role", "likely_purpose"),
-                "confidence": record.get("confidence"),
+                "confidence": _row_value(record, "confidence", "role_confidence"),
                 "alternative": _row_value(record, "alternative_interpretation", "competing_explanation", "limitations"),
             }
         )
@@ -1896,11 +1927,19 @@ def render_real_world_behavior_insights(
                     ),
                 ),
                 (
-                    f"Emerging change · {_display(transition.get('adoption_start'))}",
-                    "A different corridor began appearing for the same repeated trip.",
+                    "Evidence threshold reached · "
+                    f"{_display(_first_mapping_value(transition, 'first_adequate_evidence_month', 'adoption_start'))}",
+                    "A different corridor gained enough repeated evidence to interpret.",
                     (
-                        f"The {_display(transition.get('later_route_family'))} family crossed "
-                        f"the earlier family in {_display(transition.get('crossover_month'))}. "
+                        (
+                            f"Sparse use was recorded as early as {_display(transition.get('first_recorded_appearance'))}, "
+                            if _text(transition.get("first_recorded_appearance"))
+                            and _text(transition.get("first_recorded_appearance"))
+                            != _text(_first_mapping_value(transition, "first_adequate_evidence_month", "adoption_start"))
+                            else ""
+                        )
+                        + f"but the first adequate evidence month was "
+                        f"{_display(_first_mapping_value(transition, 'first_adequate_evidence_month', 'adoption_start'))}. "
                         "The start and end areas did not change."
                     ),
                 ),
@@ -1909,8 +1948,10 @@ def render_real_world_behavior_insights(
                     "The alternate corridor became more common, but did not replace the earlier route permanently.",
                     (
                         f"Its share reached {_percent(transition.get('later_share'))} across "
-                        f"{_display(transition.get('trips_after'))} late-window trips and it "
-                        f"appeared in {_display(transition.get('persistence_months'))} observed months. "
+                        f"{_display(transition.get('trips_after'))} late-window trips. It appeared "
+                        f"in {_display(_first_mapping_value(transition, 'presence_observed_months', 'persistence_observed_months'))} "
+                        "observed months, with a maximum consecutive run of "
+                        f"{_display(_first_mapping_value(transition, 'maximum_consecutive_observed_months', 'persistence_months'))}. "
                         + (
                             f"The earlier family reappeared beginning in {_display(transition.get('reversion_month'))}."
                             if _text(transition.get("reversion_month"))
@@ -2035,7 +2076,8 @@ def render_real_world_behavior_insights(
                     f"({_percent(record.get('later_share'))})"
                 ),
                 "persistence": (
-                    f"{_display(record.get('persistence_months'))} observed months"
+                    f"{_display(_first_mapping_value(record, 'presence_observed_months', 'persistence_observed_months'))} presence months; "
+                    f"maximum consecutive run {_display(_first_mapping_value(record, 'maximum_consecutive_observed_months', 'persistence_months'))}"
                     + (f"; earlier route reappeared in {reversion}" if reversion else "")
                 ),
                 "interpretation": record.get("plain_english_story"),
@@ -2182,9 +2224,11 @@ def render_real_world_behavior_insights(
     ]
     recurring_columns = [
         ("place", "Place or area"),
+        ("address", "Address (non-home only)"),
+        ("dates", "Observed period"),
         ("frequency", "Visit pattern"),
         ("typical_time", "Typical time"),
-        ("dwell", "Median dwell (minutes)"),
+        ("dwell", "Median dwell"),
         ("activity", "Inferred activity"),
         ("confidence", "Confidence"),
         ("alternative", "Alternative interpretation"),
@@ -2211,50 +2255,55 @@ def render_real_world_behavior_insights(
 <h2>Real-World Driver Behavior Insights</h2>
 <p class="behavior-lead">Across 3,284 recorded trips from September 2021 through June 2024, the residential anchor and several recurring destinations stayed recognizable. The clearest long-term route finding is a shift in how one nearby recurring destination was reached—not proof of why the driver changed roads.</p>
 
-<h3>Key Long-Term Findings</h3>
+<h3>Key findings</h3>
 <div class="finding-grid">{''.join(finding_cards)}</div>
 
-<h3>Long-Term Driver Behavior Timeline</h3>
+<h3>Long-term behavior timeline</h3>
 <p>The timeline separates a stable baseline, the first adequately supported alternate-route period, and the later mixed pattern. Sparse months are not treated as proof of a permanent preference.</p>
 <div class="timeline-grid">{timeline_html}</div>
 
-<h3>Stable Routine and Important Places</h3>
+<h3>Likely home area</h3>
 <div class="home-privacy"><strong>Likely home area: {html.escape(location)}</strong><p>{html.escape(home_evidence)}</p><p><strong>Confidence:</strong> {html.escape(home_confidence)}. The exact address, house number, coordinate, and exact-location map link are suppressed.</p></div>
-<p><strong>Strongest complete routine:</strong> {html.escape(routine_summary)} <span class="evidence-note">Confidence: {html.escape(routine_confidence)}. {html.escape(routine_evidence)}</span></p>
+
+<h3>Frequently visited named places</h3>
 {revision_html}
 {_table(places_frame, place_columns, empty="No non-home place met the importance and evidence thresholds.", link_column="maps_uri", max_rows=max_table_rows)}
 
-<h3>Sustained Route-Choice Changes</h3>
+<h3>Recurring monthly/weekly destinations</h3>
+<p>These patterns count recorded arrivals. A nearby listing or complex does not prove the activity that occurred there.</p>
+{_table(recurring_display, recurring_columns, empty="No recurring non-home destination met the reporting threshold.", max_rows=max_table_rows)}
+
+<h3>Likely routine</h3>
+<p><strong>Strongest complete routine:</strong> {html.escape(routine_summary)} <span class="evidence-note">Confidence: {html.escape(routine_confidence)}. {html.escape(routine_evidence)}</span></p>
+
+<h3>Major route-choice changes</h3>
 <p>The destination stayed the same, while the balance between route families changed. This is a late-window distribution shift with intermittent returns to the earlier route—not a claim that one route permanently replaced another.</p>
 {_table(transition_frame, transition_columns, empty="No same-OD route-family change met the before/after and persistence thresholds.", max_rows=max_table_rows)}
 {route_figure}
 
-<h3>Temporary Route Deviations</h3>
+<h4>Temporary route deviations</h4>
 <p>A one-month alternative is treated separately from a lasting change.</p>
 {_table(temporary_frame, temporary_columns, empty="No temporary deviation met the minimum monthly trip threshold and reversion test.", max_rows=max_table_rows)}
 
-<h3>New or Disappearing Destinations</h3>
+<h3>New or disappearing destinations</h3>
 <p>An ending observation means the place stopped appearing in the recordings; it does not prove the underlying activity ended.</p>
 {_table(destination_changes, destination_columns, empty="No destination met the recurrence, confidence, and observation-gap thresholds for a new/disappearing claim.", max_rows=max_table_rows)}
 
-<h3>Interactive Map</h3>
+<h3>Interactive map</h3>
 {map_html}
 
-<h3>Supporting Monthly Evidence</h3>
+<h3>Supporting technical evidence</h3>
 {highway_metrics}
 <details><summary>Route-family shares for the sustained-change OD pair</summary>
 <p class="evidence-note">Monthly route shares are shown even when sparse. A month is marked sufficient only with at least five eligible same-OD trips; the full-window conclusion also requires at least ten trips before and after.</p>
 {_table(monthly_frame, monthly_columns, empty="No monthly route-family records were available.", max_rows=None)}
-</details>
-<details><summary>Recurring destination evidence</summary>
-{_table(recurring_display, recurring_columns, empty="No recurring non-home destination met the reporting threshold.", max_rows=max_table_rows)}
 </details>
 <details><summary>Adjacent-month RCCI comparisons</summary>
 <p class="evidence-note">RCCI is supporting technical evidence. It measures network change; it does not establish trip purpose or cause.</p>
 {_table(adjacent_od, adjacent_columns, empty="No adjacent-month comparison met the reporting threshold.", max_rows=max_table_rows)}
 </details>
 
-<h3>Methodology and Research Limitations</h3>
+<h3>Research limitations</h3>
 <p>Trips use explicit source boundaries. Consecutive same-session endpoints create measured stays; cross-session and discontinuous intervals remain censored and are excluded from dwell medians. Similar road sequences are grouped into route families after removing endpoint-access variation.</p>
 {_html_list(limitations, empty="No limitations were supplied.")}
 </section>
@@ -2280,7 +2329,7 @@ def _remove_marker_block(document: str, begin: str, end: str) -> str:
 
 
 def inject_real_world_behavior_section(document: str, section_html: str) -> str:
-    """Replace legacy insight blocks and insert one section after the summary."""
+    """Replace legacy insight blocks and lead with the behavioral narrative."""
 
     if not isinstance(document, str) or not document.strip():
         raise BehaviorReportError("Target report HTML is empty")
@@ -2305,6 +2354,35 @@ def inject_real_world_behavior_section(document: str, section_html: str) -> str:
         (NAV_BEGIN, NAV_END),
     ):
         result = _remove_marker_block(result, begin, end)
+    # Research-process map rasters may preserve precise trajectory geography.
+    # They remain available as internal methodology artifacts but are not
+    # embedded in the public behavior report.
+    result = re.sub(
+        r"(?:[ \t]*\r?\n)?<section\b(?=[^>]*\bid\s*=\s*['\"]research-process-overview['\"])[^>]*>.*?</section\s*>(?:[ \t]*\r?\n)?",
+        "\n",
+        result,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    result = re.sub(
+        r"\s*<a\b[^>]*href\s*=\s*['\"]#research-process-overview['\"][^>]*>.*?</a>",
+        "",
+        result,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    result = re.sub(
+        r"(<a\b[^>]*href\s*=\s*['\"]#executive-summary['\"][^>]*>).*?(</a>)",
+        r"\1RCCI Technical Snapshot\2",
+        result,
+        count=1,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    result = re.sub(
+        r"(<section\b(?=[^>]*\bid\s*=\s*['\"]executive-summary['\"])[^>]*>\s*<h2\b[^>]*>).*?(</h2>)",
+        r"\1RCCI technical snapshot\2",
+        result,
+        count=1,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
 
     if SECTION_BEGIN not in section_html or SECTION_END not in section_html:
         section_html = f"{SECTION_BEGIN}\n{section_html}\n{SECTION_END}"
@@ -2323,15 +2401,14 @@ def inject_real_world_behavior_section(document: str, section_html: str) -> str:
         f'<a href="#{SECTION_ID}">Real-World Driver Behavior Insights</a>\n'
         f"{NAV_END}"
     )
-    nav_close = re.search(r"</nav\s*>", result, flags=re.IGNORECASE)
-    if nav_close:
-        before_nav_close = result[: nav_close.start()].rstrip()
+    nav_open = re.search(r"<nav\b[^>]*>", result, flags=re.IGNORECASE)
+    if nav_open:
         result = (
-            before_nav_close
+            result[: nav_open.end()]
             + "\n"
             + nav
             + "\n"
-            + result[nav_close.start() :]
+            + result[nav_open.end() :].lstrip()
         )
 
     placeholders = (
@@ -2354,11 +2431,10 @@ def inject_real_world_behavior_section(document: str, section_html: str) -> str:
         )
         if executive:
             result = (
-                result[: executive.end()]
-                + "\n\n"
+                result[: executive.start()]
                 + section_html
-                + "\n"
-                + result[executive.end() :]
+                + "\n\n"
+                + result[executive.start() :]
             )
             inserted = True
 

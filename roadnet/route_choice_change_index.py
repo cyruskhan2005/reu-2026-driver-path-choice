@@ -934,20 +934,21 @@ def generate_rcci_report_html(
 <style>
 :root{{--bg:#f6f8fb;--card:#ffffff;--text:#182230;--muted:#617085;--blue:#2f6fed;--line:#dbe3ef;--green:#0f8f61;--orange:#b65c00;--red:#b42318}}
 html{{scroll-behavior:smooth}} body{{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}}
-main{{max-width:1180px;margin:0 auto;padding:34px 22px 56px}}
+	main{{max-width:1380px;margin:0 auto;padding:34px 22px 56px}}
 h1{{font-size:34px;margin:0 0 6px}} h2{{margin-top:34px}} p{{color:var(--muted)}}
 .nav{{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 24px}} .nav a{{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;text-decoration:none;font-size:13px}}
 .subtitle{{font-size:17px;margin-top:0}} .cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:24px 0}}
 .card,.box,section{{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(24,34,48,.06)}}
 .card{{padding:16px}} .card.compact strong{{font-size:21px}} .card span{{display:block;color:var(--muted);font-size:13px}} .card strong{{font-size:25px}}
-section{{padding:22px;margin:22px 0}} .formula{{font-size:20px;color:var(--text);background:#f0f5ff;border-left:5px solid var(--blue);padding:16px;border-radius:12px}}
+	section{{padding:22px;margin:22px 0}} .formula{{font-size:20px;color:var(--text);background:#f0f5ff;border-left:5px solid var(--blue);padding:16px;border-radius:12px}}
+	.equation-block{{display:grid;gap:12px;margin:16px 0}} .equation{{background:#f0f5ff;border-left:5px solid var(--blue);border-radius:12px;padding:14px 16px;color:var(--text);font-size:18px;line-height:1.55}} .equation small{{display:block;color:var(--muted);font-size:13px;margin-top:4px}} .var-list{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0}} .var-list div{{background:#f8fbff;border:1px solid var(--line);border-radius:12px;padding:12px}} .tradeoff-table td:nth-child(3){{color:#0f5132}} .tradeoff-table td:nth-child(4){{color:#7c2d12}}
 .note{{background:#fff8e6;border-left:5px solid var(--orange);padding:14px;border-radius:12px;color:#5b3b00}}
 .disclaimer{{background:#fff1f0;border-left:5px solid var(--red);padding:14px;border-radius:12px;color:#6b1d15}}
 .legend{{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:12px 0 8px;color:var(--muted);font-size:13px}} .dot{{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}} .high{{background:var(--green)}} .medium{{background:var(--orange)}} .low{{background:var(--red)}}
 .scale{{display:flex;align-items:center;gap:12px;margin:12px 0 18px;color:var(--muted);font-size:13px}} .scale-bar{{height:10px;flex:1;border-radius:999px;background:linear-gradient(90deg,#d7efe1,#fff0bd,#ffd6d6)}} .muted{{color:var(--muted)}}
 .two-col{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}} .mini-box{{background:#f8fbff;border:1px solid var(--line);border-radius:14px;padding:16px}} .mini-box h4{{margin:0 0 8px}} .mini-box ul{{margin:8px 0 0 20px;padding:0}} .example{{background:#f7fbf9;border-left:5px solid var(--green);border-radius:12px;padding:16px;margin-top:14px}} .formula-list{{display:grid;gap:8px;margin:12px 0 16px}}
-.table-wrap{{overflow-x:auto}} table{{width:100%;border-collapse:collapse;font-size:13px}} th,td{{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}} th{{background:#edf3fb;color:#324052;position:sticky;top:0}} tr:nth-child(even){{background:#fafcff}}
-.timeline{{width:100%;height:auto;background:#fff}} .timeline>rect{{fill:#fff}} .band{{opacity:.75}} .grid line{{stroke:#e2e8f0}} .grid text,.xlabels text{{fill:#617085;font-size:11px}} .axis{{stroke:#7b8aa0;stroke-width:1.2}} .series{{fill:none;stroke:#4b6b98;stroke-width:2.5}} .points circle{{stroke:#fff;stroke-width:2.2;cursor:pointer}} .points a:hover circle{{stroke:#111827;stroke-width:3}} .xlabel,.ylabel{{fill:#334155;font-size:13px;font-weight:600}} .mean-line{{stroke:#111827;stroke-dasharray:6 5;stroke-width:1.5;opacity:.65}} .mean-label,.callout text{{fill:#1f2937;font-size:12px;font-weight:700}} .callout line{{stroke:#334155;stroke-width:1;opacity:.7}}
+	.table-wrap{{overflow-x:auto}} table{{width:100%;border-collapse:collapse;font-size:13px}} th,td{{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}} th{{background:#edf3fb;color:#324052;position:sticky;top:0}} tr:nth-child(even){{background:#fafcff}}
+	.timeline{{width:100%;height:auto;background:#fff}} .timeline>rect{{fill:#fff}} .band{{opacity:.75}} .grid line{{stroke:#e2e8f0}} .grid text,.xlabels text{{fill:#617085;font-size:11px}} .axis{{stroke:#7b8aa0;stroke-width:1.2}} .series{{fill:none;stroke:#4b6b98;stroke-width:2.5}} .points circle{{stroke:#fff;stroke-width:2.2;cursor:pointer}} .points a:hover circle{{stroke:#111827;stroke-width:3}} .xlabel,.ylabel{{fill:#334155;font-size:13px;font-weight:600}} .mean-line{{stroke:#111827;stroke-dasharray:6 5;stroke-width:1.5;opacity:.65}} .mean-label,.callout text{{fill:#1f2937;font-size:12px;font-weight:700}} .callout line{{stroke:#334155;stroke-width:1;opacity:.7}}
 a{{color:var(--blue)}} .empty{{font-style:italic}}
 </style>
 </head>
@@ -955,9 +956,9 @@ a{{color:var(--blue)}} .empty{{font-style:italic}}
 <main>
 <h1>Driver 1003 Route Choice Change Index (RCCI)</h1>
 <p class="subtitle">A month-to-month route-network change index based on FID road-segment usage and directed transition patterns.</p>
-<nav class="nav">
-<a href="#executive-summary">Executive Summary</a>
-<a href="#how-calculated">How RCCI is calculated</a>
+		<nav class="nav">
+		<a href="#executive-summary">RCCI Technical Snapshot</a>
+	<a href="#how-calculated">How RCCI is calculated</a>
 <a href="#timeline">Timeline</a>
 <a href="#highest-rcci">Highest RCCI</a>
 <a href="#lowest-rcci">Lowest RCCI</a>
@@ -966,26 +967,55 @@ a{{color:var(--blue)}} .empty{{font-style:italic}}
 <a href="#full-comparison-table">Full Comparison Table</a>
 </nav>
 
+		<!-- DRIVER 1003 REAL WORLD BEHAVIOR INSIGHTS PLACEHOLDER -->
+
 <section id="executive-summary">
-<h2>Executive summary</h2>
+<h2>RCCI technical snapshot</h2>
 <div class="cards">{card_html}</div>
 <p><strong>Primary longitudinal county:</strong> {html.escape(report_county)}.</p>
-<p>{html.escape(report_county)} is emphasized because it has the highest trip counts, strongest month coverage, highest-confidence comparisons, and the most complete longitudinal route history for Driver 1003. This is a data-quality decision, not a geographic preference.</p>
-</section>
+	<p>{html.escape(report_county)} is emphasized because it has the highest trip counts, strongest month coverage, highest-confidence comparisons, and the most complete longitudinal route history for Driver 1003. This is a data-quality decision, not a geographic preference.</p>
+		</section>
 
-<section id="how-calculated">
-<h2>How RCCI is calculated</h2>
-<p>Each month is represented as a graph. Nodes are road segments/FIDs, and edges are directed transitions from one FID to the next. RCCI compares two consecutive monthly graphs and measures how much road usage and transition usage changed.</p>
-<div class="formula">RCCI = 100 × [0.5 × node change + 0.5 × edge change]</div>
-<div class="formula-list">
-<div><strong>node change</strong> = 1 − weighted node overlap</div>
-<div><strong>edge change</strong> = 1 − weighted edge overlap</div>
-</div>
-<p><strong>Weighted overlap</strong> means frequently used roads count more than rarely used roads. If a road segment was used in 40 trips, a change involving that road should matter more than a road segment used once. RCCI therefore uses trip-use counts and transition counts rather than treating every FID equally.</p>
-<h3>Exact weighted overlap formula</h3>
-<p>Weighted overlap is the shared weighted usage divided by the total weighted usage across the union of roads or transitions:</p>
-<div class="formula">weighted overlap = Σ min(weight in Month A, weight in Month B) ÷ Σ max(weight in Month A, weight in Month B)</div>
-<p>For nodes, the weight is road-segment trip-use count. For edges, the weight is directed transition count. This formula rewards roads and transitions that are used consistently across both months, reduces the impact of rare one-time roads or transitions, and decreases sharply when a heavily used road or transition disappears.</p>
+	<section id="how-calculated">
+	<h2>How RCCI is calculated</h2>
+	<p>Each month is represented as a route graph. In the RCCI computation, nodes are road segments/FIDs used during a month, and edges are directed transitions from one FID to the next. RCCI compares two consecutive monthly graphs and measures how much road usage and transition usage changed.</p>
+	<div class="var-list">
+	  <div><strong>G<sub>t</sub></strong> = route graph for month <em>t</em></div>
+	  <div><strong>V<sub>t</sub></strong> = set of FID nodes used in month <em>t</em></div>
+	  <div><strong>E<sub>t</sub></strong> = set of directed FID transitions in month <em>t</em></div>
+	  <div><strong>w<sub>v</sub><sup>t</sup></strong> = trip-use count for node <em>v</em></div>
+	  <div><strong>w<sub>e</sub><sup>t</sup></strong> = transition count for edge <em>e</em></div>
+	  <div><strong>N<sub>c</sub>, E<sub>c</sub>, R<sub>c</sub></strong> = node change, edge change, and RCCI</div>
+	</div>
+	<h3>Node and edge change definitions</h3>
+	<div class="equation-block">
+	  <div class="equation"><strong>N<sub>c,J</sub>(t,t+1)</strong> = 1 − |V<sub>t</sub> ∩ V<sub>t+1</sub>| / |V<sub>t</sub> ∪ V<sub>t+1</sub>|<small>Unweighted node-set Jaccard distance.</small></div>
+	  <div class="equation"><strong>E<sub>c,J</sub>(t,t+1)</strong> = 1 − |E<sub>t</sub> ∩ E<sub>t+1</sub>| / |E<sub>t</sub> ∪ E<sub>t+1</sub>|<small>Unweighted edge-set Jaccard distance.</small></div>
+	  <div class="equation"><strong>O<sub>V,w</sub>(t,t+1)</strong> = Σ<sub>v ∈ V<sub>t</sub> ∪ V<sub>t+1</sub></sub> min(w<sub>v</sub><sup>t</sup>, w<sub>v</sub><sup>t+1</sup>) / Σ<sub>v ∈ V<sub>t</sub> ∪ V<sub>t+1</sub></sub> max(w<sub>v</sub><sup>t</sup>, w<sub>v</sub><sup>t+1</sup>)<small>Weighted node overlap.</small></div>
+	  <div class="equation"><strong>O<sub>E,w</sub>(t,t+1)</strong> = Σ<sub>e ∈ E<sub>t</sub> ∪ E<sub>t+1</sub></sub> min(w<sub>e</sub><sup>t</sup>, w<sub>e</sub><sup>t+1</sup>) / Σ<sub>e ∈ E<sub>t</sub> ∪ E<sub>t+1</sub></sub> max(w<sub>e</sub><sup>t</sup>, w<sub>e</sub><sup>t+1</sup>)<small>Weighted edge overlap.</small></div>
+	  <div class="equation"><strong>N<sub>c,w</sub>(t,t+1)</strong> = 1 − O<sub>V,w</sub>(t,t+1), &nbsp; <strong>E<sub>c,w</sub>(t,t+1)</strong> = 1 − O<sub>E,w</sub>(t,t+1)<small>Weighted node and edge change used for RCCI v1.</small></div>
+	</div>
+	<p><strong>Weighted overlap</strong> means frequently used roads count more than rarely used roads. If a road segment was used in 40 trips, a change involving that road should matter more than a road segment used once. RCCI therefore uses trip-use counts and transition counts rather than treating every FID equally.</p>
+	<h3>RCCI formulas tested</h3>
+	<div class="equation-block">
+	  <div class="equation"><strong>Node-only:</strong> R<sub>c</sub>(t,t+1) = N<sub>c</sub>(t,t+1)</div>
+	  <div class="equation"><strong>Edge-only:</strong> R<sub>c</sub>(t,t+1) = E<sub>c</sub>(t,t+1)</div>
+	  <div class="equation"><strong>Equal node-edge:</strong> R<sub>c</sub>(t,t+1) = 0.5N<sub>c</sub>(t,t+1) + 0.5E<sub>c</sub>(t,t+1)</div>
+	  <div class="equation"><strong>General weighted:</strong> R<sub>c,α</sub>(t,t+1) = αN<sub>c</sub>(t,t+1) + (1 − α)E<sub>c</sub>(t,t+1)<small>Tested α ∈ {{0.00, 0.25, 0.50, 0.75, 1.00}}. α = 0 is edge-only; α = 1 is node-only.</small></div>
+	  <div class="equation"><strong>Reported RCCI v1:</strong> RCCI<sub>v1</sub> = 100 × [0.5N<sub>c,w</sub>(t,t+1) + 0.5E<sub>c,w</sub>(t,t+1)]<small>The 0-100 scale makes month-to-month route change easier to interpret.</small></div>
+	</div>
+	<h3>Formula tradeoffs</h3>
+	<div class="table-wrap"><table class="tradeoff-table">
+	<thead><tr><th>Formula</th><th>What it emphasizes</th><th>Pros</th><th>Cons</th></tr></thead>
+	<tbody>
+	<tr><td>Node-only R<sub>c</sub> = N<sub>c</sub></td><td>Which road segments/FIDs appear or disappear.</td><td>Simple and easy to explain; robust when transition ordering is noisy.</td><td>Ignores how roads are connected and cannot detect route-sequence changes if the same FIDs remain.</td></tr>
+	<tr><td>Edge-only R<sub>c</sub> = E<sub>c</sub></td><td>Directed movement from one FID to the next.</td><td>Captures path structure and changes in route connectivity.</td><td>More sensitive to sparse trips, short paths, and map-matching transition noise.</td></tr>
+	<tr><td>Equal node-edge R<sub>c</sub> = 0.5N<sub>c</sub> + 0.5E<sub>c</sub></td><td>Balanced road usage and transition change.</td><td>Good default for presentation because it combines structural road changes with sequence changes.</td><td>Assumes node and edge changes are equally important for every driver and month.</td></tr>
+	<tr><td>General weighted R<sub>c,α</sub></td><td>Adjustable emphasis on nodes versus edges.</td><td>Supports sensitivity testing; α shows whether conclusions depend on formula choice.</td><td>Requires a defensible α choice if used as the final metric.</td></tr>
+	<tr><td>Unweighted Jaccard versions</td><td>Presence/absence of nodes or edges.</td><td>Transparent structural baseline.</td><td>Treats a one-time segment the same as a heavily used segment.</td></tr>
+	<tr><td>Weighted overlap versions</td><td>Frequency-weighted route behavior.</td><td>Best aligned with this project because repeated driving patterns matter more than rare observations.</td><td>Can downweight rare but real route changes and depends on month-to-month trip volume quality.</td></tr>
+	</tbody>
+	</table></div>
 <div class="example">
 <h3>Worked node example</h3>
 <div class="table-wrap"><table>
@@ -1099,10 +1129,9 @@ a{{color:var(--blue)}} .empty{{font-style:italic}}
 </main>
 </body>
 </html>"""
-    output.write_text(
-        embed_local_html_assets(document, output.parent),
-        encoding="utf-8",
-    )
+    rendered = embed_local_html_assets(document, output.parent)
+    rendered = "\n".join(line.rstrip() for line in rendered.splitlines()) + "\n"
+    output.write_text(rendered, encoding="utf-8")
     return output
 
 
