@@ -111,7 +111,8 @@ command -v conda || printf '%s\n' 'Install Miniconda or Miniforge, then reopen T
 
 git clone https://github.com/cyruskhan2005/reu-2026-driver-path-choice.git
 cd reu-2026-driver-path-choice
-git checkout feature/driver-1003-longitudinal-insights-and-reproducibility
+git checkout main
+git pull
 git submodule update --init --recursive
 
 # Creates/updates the pipeline environment and builds pinned FMM.
