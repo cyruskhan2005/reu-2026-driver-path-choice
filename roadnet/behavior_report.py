@@ -2276,7 +2276,7 @@ def render_real_world_behavior_insights(
         map_html = (
             '<div class="map-panel"><p><a href="'
             + escaped_href
-            + '"><strong>Open the interactive place, routine, and route-family verification map</strong></a>. '
+            + '"><strong>Open the interactive place, routine, and route verification map</strong></a>. '
             "The home area is deliberately generalized.</p>"
         )
         if embed_map:
