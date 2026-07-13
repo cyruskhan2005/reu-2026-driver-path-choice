@@ -6918,7 +6918,7 @@
       "route_family_count": 2,
       "dominant_route_family_id": "C001__C002__F01",
       "dominant_route_family_share": 0.967741935483871,
-      "early_late_total_variation": 0.05633802816901411,
+      "early_late_total_variation": 0.0563380281690141,
       "assignment_agreement_similarity_0_65": 1.0,
       "assignment_agreement_similarity_0_75": 1.0
     },
@@ -26257,7 +26257,7 @@
         "highway_distance_m": 0.0,
         "surface_street_distance_m": 51559.084607637065,
         "arterial_distance_m": 25536.836964916656,
-        "local_road_distance_m": 26022.247642720413,
+        "local_road_distance_m": 26022.247642720416,
         "distance_weighted_highway_share": 0.0,
         "distance_weighted_surface_share": 1.0,
         "distance_weighted_arterial_share": 0.4952926755634074,
@@ -30347,7 +30347,7 @@
       "surface_street_share_b": 1.0,
       "distance_change": 49.1107750697779,
       "travel_time_change": -46.0,
-      "RCCI": 28.125587549571467,
+      "RCCI": 28.125587549571485,
       "plain_english_story": "Trips continued between the same clustered origin and destination (Broward County to Wynmoor area, Coconut Creek) in 2023-07 and 2023-08. The dominant named-road sequence remained Northwest 55th Avenue → West Copans Road → Lyons Road → Westgate Drive → Wynmoor Circle → Portofino Isle, although the overall matched-route mix changed. The OD-specific balanced RCCI was 28.1 out of 100; it measures route-pattern change, not its cause.",
       "confidence": "medium",
       "limitations": "Origin/destination equality means the same spatial clusters, not a verified activity or exact place. Road classes are OSM-based proxies; FMM and endpoint error can alter FIDs. Distance is deduplicated matched-segment length, and recorded duration may include stops. The data cannot establish whether any change was caused by traffic, construction, toll avoidance, or preference."
