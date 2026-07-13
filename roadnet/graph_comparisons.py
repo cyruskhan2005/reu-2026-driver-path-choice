@@ -964,8 +964,8 @@ def write_comparison_map(
     colors = {"shared": "#64748b", "added": "#16a34a", "removed": "#dc2626"}
     labels = {
         "shared": "Shared FIDs",
-        "added": f"Added in {month_b}",
-        "removed": f"Removed after {month_a}",
+        "added": "Current Month",
+        "removed": "Previous Month",
     }
     maximum = max(
         float(folium_nodes[["trip_use_count_a", "trip_use_count_b"]].max().max()),
@@ -981,7 +981,7 @@ def write_comparison_map(
             popup = folium.Popup(
                 "<table style='font-size:12px'>"
                 f"<tr><th>FID</th><td>{int(row.fid)}</td></tr>"
-                f"<tr><th>Status</th><td>{html.escape(status)}</td></tr>"
+                f"<tr><th>Status</th><td>{html.escape(labels[status])}</td></tr>"
                 f"<tr><th>{html.escape(month_a)} trips</th><td>{int(row.trip_use_count_a)}</td></tr>"
                 f"<tr><th>{html.escape(month_b)} trips</th><td>{int(row.trip_use_count_b)}</td></tr>"
                 f"<tr><th>Count delta</th><td>{int(row.trip_use_count_delta):+d}</td></tr>"
@@ -1002,7 +1002,7 @@ def write_comparison_map(
                     weight=weight,
                     opacity=0.78,
                     popup=popup,
-                    tooltip=f"FID {int(row.fid)} · {status}",
+                    tooltip=f"FID {int(row.fid)} · {labels[status]}",
                 ).add_to(layer)
         layer.add_to(map_object)
     map_object.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
@@ -1023,14 +1023,14 @@ def write_comparison_map(
         <div><span style="color:#64748b;">Unique FIDs</span><br><strong>{nodes_a_count:,} → {nodes_b_count:,}</strong></div>
         <div><span style="color:#64748b;">Quality</span><br><strong>{html.escape(quality_flag)}</strong></div>
         <div><span style="color:#64748b;">Shared</span><br><strong>{shared_nodes:,}</strong></div>
-        <div><span style="color:#64748b;">Added</span><br><strong>{added_nodes:,}</strong></div>
-        <div><span style="color:#64748b;">Removed</span><br><strong>{removed_nodes:,}</strong></div>
+        <div><span style="color:#64748b;">Current Month</span><br><strong>{added_nodes:,}</strong></div>
+        <div><span style="color:#64748b;">Previous Month</span><br><strong>{removed_nodes:,}</strong></div>
       </div>
       {f'<div style="background:#fff7ed;color:#7c2d12;border:1px solid #fed7aa;border-radius:8px;padding:8px;margin-bottom:9px;font-size:12px;line-height:1.4;">{zero_note}</div>' if zero_note else ''}
       <div style="font-size:13px;line-height:1.5;">
         <span style="color:#64748b">━━</span> Shared FIDs<br>
-        <span style="color:#16a34a">━━</span> Added FIDs<br>
-        <span style="color:#dc2626">━━</span> Removed FIDs
+        <span style="color:#16a34a">━━</span> Current Month<br>
+        <span style="color:#dc2626">━━</span> Previous Month
       </div>
     </div>
     """
@@ -1373,8 +1373,8 @@ def write_overview_html(
                     f"<div><span>Trips</span><strong>{int(record.trips_a):,} → {int(record.trips_b):,}</strong></div>"
                     f"<div><span>Unique FIDs</span><strong>{int(record.nodes_a):,} → {int(record.nodes_b):,}</strong></div>"
                     f"<div><span>Shared</span><strong>{int(record.shared_nodes):,}</strong></div>"
-                    f"<div><span>Added</span><strong>{int(record.added_nodes):,}</strong></div>"
-                    f"<div><span>Removed</span><strong>{int(record.removed_nodes):,}</strong></div>"
+                    f"<div><span>Current Month</span><strong>{int(record.added_nodes):,}</strong></div>"
+                    f"<div><span>Previous Month</span><strong>{int(record.removed_nodes):,}</strong></div>"
                     f"<div><span>Quality</span><strong>{html.escape(str(record.data_quality_flag))}</strong></div>"
                     "</div>"
                     f"{zero_note}"

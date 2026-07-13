@@ -90,5 +90,16 @@ KINGSTON/
 /deliverables/driver_1003/**/*.jsonl
 /deliverables/driver_1003/**/debug/
 /deliverables/driver_1003/**/legacy_selected_maps/
-!/deliverables/driver_1003/route_choice_change_index/data/
-!/deliverables/driver_1003/route_choice_change_index/data/*.json
+
+# Restricted historical Driver 1003 products retain detailed routes, timestamps,
+# or endpoint geometry. Keep local copies for approved research use only. The
+# reviewed, public-safe report and map live in outputs/public/ instead.
+/deliverables/driver_1003/graph_comparisons/
+/deliverables/driver_1003/monthly_graphs/
+/deliverables/driver_1003/timeline/
+/deliverables/driver_1003/route_evolution_animation/
+/deliverables/driver_1003/route_choice_change_index/data/
+/deliverables/driver_1003/route_choice_change_index/driver_1003_rcci_validation.md
+
+# Superseded delivery copies are local archival material, never release inputs.
+/deliverables/google_drive_phase2/
